@@ -1,0 +1,304 @@
+:root {
+    /* Editorial Paper & Ink Palette (Strong Figure-Ground Separation) */
+    --bg-page: #F6F4EF;
+    /* Warm archival newsprint background */
+    --bg-card: #FFFFFF;
+    /* Crisp white figure cards */
+    --bg-hero: #141B29;
+    /* Deep slate navy header */
+    --text-main: #18202C;
+    --text-muted: #525E71;
+    --border-subtle: #E2DDD3;
+
+    /* Semantic Data Palette (Colorblind-Safe Essentials vs. Luxuries) */
+    --accent-crimson: #C83E3B;
+    /* Essentials / High Inflation */
+    --accent-teal: #1D7874;
+    /* Discretionary / Recovery */
+    --accent-amber: #D97706;
+    /* Interest Rate / Employee Stress */
+    --accent-navy: #2A4365;
+
+    /* Typography */
+    --font-display: 'Fraunces', Georgia, serif;
+    --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-mono: 'JetBrains Mono', monospace;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html,
+body {
+    background-color: var(--bg-page);
+    color: var(--text-main);
+    font-family: var(--font-sans);
+    font-size: 16px;
+    line-height: 1.65;
+    overflow-x: hidden;
+    /* Prevents horizontal scroll on small laptop screens */
+}
+
+.container {
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 0 24px;
+}
+
+/* ================= HERO HEADER ================= */
+.hero {
+    background-color: var(--bg-hero);
+    color: #F8FAFC;
+    padding: 56px 0 48px;
+    border-bottom: 4px solid var(--accent-crimson);
+}
+
+.eyebrow {
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #94A3B8;
+    margin-bottom: 14px;
+}
+
+.hero-title {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 3.4vw, 2.85rem);
+    font-weight: 700;
+    line-height: 1.15;
+    max-width: 24ch;
+    margin-bottom: 18px;
+}
+
+.hero-lead {
+    font-size: 1.08rem;
+    color: #CBD5E1;
+    max-width: 72ch;
+    margin-bottom: 32px;
+}
+
+.hero-lead strong {
+    color: #FFFFFF;
+}
+
+/* KPI Strip */
+.kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+}
+
+.kpi-card {
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    border-radius: 8px;
+    padding: 16px 18px;
+    display: flex;
+    flex-direction: column;
+}
+
+.kpi-label {
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: #94A3B8;
+}
+
+.kpi-value {
+    font-family: var(--font-mono);
+    font-size: 1.65rem;
+    font-weight: 600;
+    margin: 4px 0;
+}
+
+.accent-crimson {
+    color: #F87171;
+}
+
+.accent-amber {
+    color: #FBBF24;
+}
+
+.accent-teal {
+    color: #2DD4BF;
+}
+
+.kpi-sub {
+    font-size: 0.82rem;
+    color: #CBD5E1;
+    line-height: 1.35;
+}
+
+/* ================= STORY SECTIONS ================= */
+.story-section {
+    padding: 52px 0 28px;
+    border-bottom: 1px solid var(--border-subtle);
+}
+
+.section-header {
+    margin-bottom: 28px;
+    max-width: 76ch;
+}
+
+.section-number {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--accent-crimson);
+    letter-spacing: 0.1em;
+    display: block;
+    margin-bottom: 6px;
+}
+
+.section-header h2 {
+    font-family: var(--font-display);
+    font-size: 1.85rem;
+    line-height: 1.2;
+    color: var(--text-main);
+    margin-bottom: 10px;
+}
+
+.section-intro {
+    color: var(--text-muted);
+    font-size: 1rem;
+    max-width: 68ch;
+    /* Optimal 60-75 character line length for readability */
+}
+
+/* ================= SYMMETRIC ALIGNED GRIDS ================= */
+.grid-2col {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 24px;
+    margin-bottom: 24px;
+    align-items: stretch;
+}
+
+.grid-1col {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    margin-bottom: 24px;
+}
+
+/* Figure-Ground Card Container */
+.vis-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-subtle);
+    border-radius: 10px;
+    padding: 22px 24px;
+    box-shadow: 0 2px 8px rgba(20, 27, 41, 0.04);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.card-header {
+    margin-bottom: 14px;
+}
+
+.idiom-badge {
+    display: inline-block;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: var(--accent-navy);
+    background: #EDF2F7;
+    padding: 3px 8px;
+    border-radius: 4px;
+    margin-bottom: 8px;
+}
+
+.card-header h3 {
+    font-family: var(--font-display);
+    font-size: 1.22rem;
+    font-weight: 600;
+    color: var(--text-main);
+    margin-bottom: 4px;
+}
+
+.card-subtitle {
+    font-size: 0.86rem;
+    color: var(--text-muted);
+}
+
+.vis-container {
+    width: 100%;
+    min-height: 320px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 8px 0 14px;
+}
+
+.card-caption {
+    font-size: 0.88rem;
+    color: var(--text-muted);
+    background: #FAF8F5;
+    border-left: 3px solid var(--accent-crimson);
+    padding: 10px 12px;
+    border-radius: 0 6px 6px 0;
+}
+
+.card-caption strong {
+    color: var(--text-main);
+}
+
+/* ================= FOOTER ================= */
+.site-footer {
+    background: #141B29;
+    color: #CBD5E1;
+    padding: 44px 0;
+    margin-top: 40px;
+    font-size: 0.9rem;
+}
+
+.footer-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 36px;
+}
+
+.site-footer h4 {
+    font-family: var(--font-display);
+    color: #FFFFFF;
+    font-size: 1.05rem;
+    margin-bottom: 10px;
+}
+
+.authorship {
+    margin-top: 14px;
+    color: #94A3B8;
+    font-size: 0.85rem;
+}
+
+.source-list {
+    list-style: none;
+}
+
+.source-list li {
+    margin-bottom: 8px;
+    line-height: 1.45;
+}
+
+.source-list a {
+    color: #38BDF8;
+    text-decoration: none;
+}
+
+.source-list a:hover {
+    text-decoration: underline;
+}
+
+@media (max-width: 960px) {
+    .kpi-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .grid-2col,
+    .footer-grid {
+        grid-template-columns: 1fr;
+    }
+}
