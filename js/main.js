@@ -3,7 +3,6 @@ const embedOptions = {
     renderer: "svg"
 };
 
-// Add all your charts to this registry
 const charts = [
     {
         id: "#vis-s1-c1",
