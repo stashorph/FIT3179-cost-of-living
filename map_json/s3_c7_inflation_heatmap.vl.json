@@ -1,0 +1,143 @@
+{
+    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+    "description": "Temporal heatmap of annual CPI inflation across the 11 major groups using a diverging scale centered on 0%.",
+    "width": "container",
+    "height": 380,
+    "background": "transparent",
+    "config": {
+        "font": "Plus Jakarta Sans, sans-serif",
+        "axis": {
+            "labelColor": "#525E71",
+            "titleColor": "#18202C",
+            "titleFontWeight": 600,
+            "domain": false,
+            "ticks": false
+        },
+        "view": {
+            "stroke": "transparent"
+        }
+    },
+    "params": [
+        {
+            "name": "HeatmapRegion",
+            "value": "Australia",
+            "bind": {
+                "input": "select",
+                "options": [
+                    "Australia",
+                    "Sydney",
+                    "Melbourne",
+                    "Brisbane",
+                    "Perth",
+                    "Adelaide",
+                    "Hobart",
+                    "Darwin",
+                    "Canberra"
+                ],
+                "labels": [
+                    "National (Australia)",
+                    "Sydney (NSW)",
+                    "Melbourne (VIC)",
+                    "Brisbane (QLD)",
+                    "Perth (WA)",
+                    "Adelaide (SA)",
+                    "Hobart (TAS)",
+                    "Darwin (NT)",
+                    "Canberra (ACT)"
+                ],
+                "name": "Select Region: "
+            }
+        }
+    ],
+    "data": {
+        "url": "./data/cpi_slim.csv"
+    },
+    "transform": [
+        {
+            "filter": "datum.Region == HeatmapRegion"
+        },
+        {
+            "filter": "indexof(['Food and non-alcoholic beverages', 'Alcohol and tobacco', 'Housing', 'Furnishings, household equipment and services', 'Transport', 'Recreation and culture', 'Education', 'Insurance and financial services'], datum.Category) >= 0"
+        },
+        {
+            "calculate": "toDate(datum.Date)",
+            "as": "Date_Parsed"
+        },
+        {
+            "calculate": "datum.Category == 'Food and non-alcoholic beverages' ? 'Food & Non-Alc. Drinks' : datum.Category == 'Furnishings, household equipment and services' ? 'Furnishings & Services' : datum.Category == 'Insurance and financial services' ? 'Insurance & Finance' : datum.Category == 'Recreation and culture' ? 'Recreation & Culture' : datum.Category == 'Alcohol and tobacco' ? 'Alcohol & Tobacco' : datum.Category",
+            "as": "ShortCategory"
+        }
+    ],
+    "mark": {
+        "type": "rect",
+        "stroke": "#FAF7F2",
+        "strokeWidth": 0.4
+    },
+    "encoding": {
+        "x": {
+            "field": "Date_Parsed",
+            "timeUnit": "yearmonth",
+            "type": "temporal",
+            "title": null,
+            "axis": {
+                "format": "%Y",
+                "tickCount": 8
+            }
+        },
+        "y": {
+            "field": "ShortCategory",
+            "type": "nominal",
+            "title": null,
+            "sort": {
+                "field": "Annual_CPI_Pct",
+                "op": "mean",
+                "order": "descending"
+            }
+        },
+        "color": {
+            "field": "Annual_CPI_Pct",
+            "type": "quantitative",
+            "title": "Annual CPI (%)",
+            "scale": {
+                "scheme": "blueorange",
+                "domainMid": 0,
+                "domain": [
+                    -6,
+                    14
+                ],
+                "clamp": true
+            },
+            "legend": {
+                "orient": "top",
+                "direction": "horizontal",
+                "gradientLength": 240,
+                "titleFontWeight": 600,
+                "labelColor": "#525E71"
+            }
+        },
+        "tooltip": [
+            {
+                "field": "Category",
+                "type": "nominal",
+                "title": "CPI Group"
+            },
+            {
+                "field": "Region",
+                "type": "nominal",
+                "title": "Region"
+            },
+            {
+                "field": "Date_Parsed",
+                "type": "temporal",
+                "title": "Month",
+                "format": "%b %Y"
+            },
+            {
+                "field": "Annual_CPI_Pct",
+                "type": "quantitative",
+                "title": "Annual Inflation (%)",
+                "format": "+.2f"
+            }
+        ]
+    }
+}

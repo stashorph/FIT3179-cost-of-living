@@ -1,0 +1,297 @@
+{
+    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+    "description": "Concentric circle map showing Discretionary vs Non-Discretionary inflation across capital cities.",
+    "width": "container",
+    "height": 400,
+    "background": "transparent",
+    "config": {
+        "font": "Plus Jakarta Sans, sans-serif",
+        "view": {
+            "stroke": "transparent"
+        }
+    },
+    "projection": {
+        "type": "conicEqualArea",
+        "parallels": [
+            -18,
+            -36
+        ],
+        "rotate": [
+            -132,
+            0,
+            0
+        ],
+        "center": [
+            5,
+            -28
+        ]
+    },
+    "params": [
+        {
+            "name": "SelectedYear",
+            "value": 2023,
+            "bind": {
+                "input": "range",
+                "min": 2019,
+                "max": 2026,
+                "step": 1,
+                "name": "Select Year: "
+            }
+        }
+    ],
+    "layer": [
+        {
+            "data": {
+                "url": "./data/geo/aus_states_simplified.topojson",
+                "format": {
+                    "type": "topojson",
+                    "feature": "aus_states_simplified"
+                }
+            },
+            "mark": {
+                "type": "geoshape",
+                "fill": "#E2DDD3",
+                "stroke": "#FFFFFF",
+                "strokeWidth": 1.2
+            }
+        },
+        {
+            "data": {
+                "url": "./data/cpi_slim.csv"
+            },
+            "transform": [
+                {
+                    "filter": "datum.Category == 'Non-discretionary' || datum.Category == 'Discretionary'"
+                },
+                {
+                    "calculate": "year(toDate(datum.Date))",
+                    "as": "DataYear"
+                },
+                {
+                    "filter": "datum.DataYear == SelectedYear"
+                },
+                {
+                    "pivot": "Category",
+                    "value": "Annual_CPI_Pct",
+                    "groupby": [
+                        "Region",
+                        "DataYear"
+                    ]
+                },
+                {
+                    "lookup": "Region",
+                    "from": {
+                        "data": {
+                            "values": [
+                                {
+                                    "city": "Sydney",
+                                    "lon": 151.2093,
+                                    "lat": -33.8688
+                                },
+                                {
+                                    "city": "Melbourne",
+                                    "lon": 144.9631,
+                                    "lat": -37.8136
+                                },
+                                {
+                                    "city": "Brisbane",
+                                    "lon": 153.0251,
+                                    "lat": -27.4698
+                                },
+                                {
+                                    "city": "Perth",
+                                    "lon": 115.8605,
+                                    "lat": -31.9505
+                                },
+                                {
+                                    "city": "Adelaide",
+                                    "lon": 138.6007,
+                                    "lat": -34.9285
+                                },
+                                {
+                                    "city": "Hobart",
+                                    "lon": 148.0,
+                                    "lat": -43.2
+                                },
+                                {
+                                    "city": "Darwin",
+                                    "lon": 130.8456,
+                                    "lat": -12.4634
+                                },
+                                {
+                                    "city": "Canberra",
+                                    "lon": 149.1300,
+                                    "lat": -35.2809
+                                }
+                            ]
+                        },
+                        "key": "city",
+                        "fields": [
+                            "lon",
+                            "lat"
+                        ]
+                    }
+                },
+                {
+                    "filter": "isValid(datum.lon)"
+                }
+            ],
+            "layer": [
+                {
+                    "mark": {
+                        "type": "circle",
+                        "color": "#B5462F",
+                        "opacity": 0.85
+                    },
+                    "encoding": {
+                        "longitude": {
+                            "field": "lon",
+                            "type": "quantitative"
+                        },
+                        "latitude": {
+                            "field": "lat",
+                            "type": "quantitative"
+                        },
+                        "size": {
+                            "field": "Non-discretionary",
+                            "type": "quantitative",
+                            "scale": {
+                                "domain": [
+                                    0,
+                                    12
+                                ],
+                                "range": [
+                                    50,
+                                    800
+                                ]
+                            },
+                            "legend": null
+                        },
+                        "tooltip": [
+                            {
+                                "field": "Region",
+                                "title": "City"
+                            },
+                            {
+                                "field": "DataYear",
+                                "title": "Year"
+                            },
+                            {
+                                "field": "Non-discretionary",
+                                "title": "Essentials Inflation (%)",
+                                "format": ".1f"
+                            },
+                            {
+                                "field": "Discretionary",
+                                "title": "Luxuries Inflation (%)",
+                                "format": ".1f"
+                            }
+                        ]
+                    }
+                },
+                {
+                    "mark": {
+                        "type": "point",
+                        "shape": "circle",
+                        "color": "#1D7874",
+                        "filled": false,
+                        "strokeWidth": 2.5
+                    },
+                    "encoding": {
+                        "longitude": {
+                            "field": "lon",
+                            "type": "quantitative"
+                        },
+                        "latitude": {
+                            "field": "lat",
+                            "type": "quantitative"
+                        },
+                        "size": {
+                            "field": "Discretionary",
+                            "type": "quantitative",
+                            "title": "Inflation (%)",
+                            "scale": {
+                                "domain": [
+                                    0,
+                                    12
+                                ],
+                                "range": [
+                                    50,
+                                    800
+                                ]
+                            },
+                            "legend": {
+                                "orient": "bottom-right",
+                                "symbolStrokeWidth": 2,
+                                "titleFontWeight": 600,
+                                "labelColor": "#525E71"
+                            }
+                        }
+                    }
+                },
+                {
+                    "mark": {
+                        "type": "text",
+                        "align": "left",
+                        "baseline": "middle",
+                        "dx": 12,
+                        "fontSize": 11,
+                        "fontWeight": 600,
+                        "color": "#18202C"
+                    },
+                    "encoding": {
+                        "longitude": {
+                            "field": "lon",
+                            "type": "quantitative"
+                        },
+                        "latitude": {
+                            "field": "lat",
+                            "type": "quantitative"
+                        },
+                        "text": {
+                            "field": "Region"
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "data": {
+                "values": [
+                    {
+                        "Label": "Essentials (Filled Circle)"
+                    },
+                    {
+                        "Label": "Luxuries (Teal Ring)"
+                    }
+                ]
+            },
+            "mark": {
+                "type": "point",
+                "size": 0
+            },
+            "encoding": {
+                "color": {
+                    "field": "Label",
+                    "type": "nominal",
+                    "scale": {
+                        "domain": [
+                            "Essentials (Filled Circle)",
+                            "Luxuries (Teal Ring)"
+                        ],
+                        "range": [
+                            "#B5462F",
+                            "#1D7874"
+                        ]
+                    },
+                    "legend": {
+                        "title": "Legend",
+                        "orient": "top-right",
+                        "titleFontWeight": 600,
+                        "labelColor": "#525E71"
+                    }
+                }
+            }
+        }
+    ]
+}

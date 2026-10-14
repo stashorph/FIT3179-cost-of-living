@@ -1,0 +1,174 @@
+{
+    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+    "description": "Choropleth of annual nominal household spending growth by state.",
+    "width": "container",
+    "height": 400,
+    "background": "transparent",
+    "config": {
+        "font": "Plus Jakarta Sans, sans-serif",
+        "view": {
+            "stroke": "transparent"
+        }
+    },
+    "projection": {
+        "type": "conicEqualArea",
+        "parallels": [
+            -18,
+            -36
+        ],
+        "rotate": [
+            -132,
+            0,
+            0
+        ],
+        "center": [
+            5,
+            -28
+        ]
+    },
+    "params": [
+        {
+            "name": "SelectedYear",
+            "value": 2024,
+            "bind": {
+                "input": "range",
+                "min": 2019,
+                "max": 2026,
+                "step": 1,
+                "name": "Select Year: "
+            }
+        },
+        {
+            "name": "SpendingCategory",
+            "value": "Total (Household Spending Categories)",
+            "bind": {
+                "input": "select",
+                "options": [
+                    "Total (Household Spending Categories)",
+                    "Goods",
+                    "Services",
+                    "Discretionary",
+                    "Non Discretionary"
+                ],
+                "name": "Spending Category: "
+            }
+        }
+    ],
+    "layer": [
+        {
+            "data": {
+                "url": "./data/geo/aus_states_simplified.topojson",
+                "format": {
+                    "type": "topojson",
+                    "feature": "aus_states_simplified"
+                }
+            },
+            "mark": {
+                "type": "geoshape",
+                "fill": "#E2DDD3",
+                "stroke": "#FFFFFF",
+                "strokeWidth": 1.2
+            }
+        },
+        {
+            "data": {
+                "url": "./data/household_spending_state.csv"
+            },
+            "transform": [
+                {
+                    "calculate": "datum.State == 'NSW' ? 'New South Wales' : datum.State == 'VIC' ? 'Victoria' : datum.State == 'QLD' ? 'Queensland' : datum.State == 'SA' ? 'South Australia' : datum.State == 'WA' ? 'Western Australia' : datum.State == 'TAS' ? 'Tasmania' : datum.State == 'NT' ? 'Northern Territory' : datum.State == 'ACT' ? 'Australian Capital Territory' : datum.State",
+                    "as": "State_Full"
+                },
+                {
+                    "filter": "datum.Category == SpendingCategory"
+                },
+                {
+                    "calculate": "year(toDate(datum.Date))",
+                    "as": "DataYear"
+                },
+                {
+                    "filter": "datum.DataYear == SelectedYear"
+                },
+                {
+                    "aggregate": [
+                        {
+                            "op": "mean",
+                            "field": "Value",
+                            "as": "AvgValue"
+                        }
+                    ],
+                    "groupby": [
+                        "State_Full",
+                        "DataYear",
+                        "Category"
+                    ]
+                },
+                {
+                    "lookup": "State_Full",
+                    "from": {
+                        "data": {
+                            "url": "./data/geo/aus_states_simplified.topojson",
+                            "format": {
+                                "type": "topojson",
+                                "feature": "aus_states_simplified"
+                            }
+                        },
+                        "key": "properties.STE_NAME21",
+                        "fields": [
+                            "type",
+                            "geometry"
+                        ]
+                    }
+                }
+            ],
+            "mark": {
+                "type": "geoshape",
+                "stroke": "#18202C",
+                "strokeWidth": 0.5
+            },
+            "encoding": {
+                "shape": {
+                    "field": "geometry",
+                    "type": "geojson"
+                },
+                "color": {
+                    "field": "AvgValue",
+                    "type": "quantitative",
+                    "title": "Nominal Growth (%)",
+                    "scale": {
+                        "scheme": "oranges"
+                    },
+                    "legend": {
+                        "orient": "bottom-right",
+                        "direction": "horizontal",
+                        "titleFontWeight": 600,
+                        "labelColor": "#525E71"
+                    }
+                },
+                "tooltip": [
+                    {
+                        "field": "State_Full",
+                        "type": "nominal",
+                        "title": "State/Territory"
+                    },
+                    {
+                        "field": "Category",
+                        "type": "nominal",
+                        "title": "Category"
+                    },
+                    {
+                        "field": "DataYear",
+                        "type": "nominal",
+                        "title": "Year"
+                    },
+                    {
+                        "field": "AvgValue",
+                        "type": "quantitative",
+                        "title": "Avg Nominal Growth (%)",
+                        "format": ".1f"
+                    }
+                ]
+            }
+        }
+    ]
+}

@@ -1,0 +1,302 @@
+{
+    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+    "description": "Bump chart ranking the 11 official ABS CPI major groups by annual inflation across years.",
+    "width": "container",
+    "height": 420,
+    "autosize": {
+        "type": "fit-x",
+        "contains": "padding"
+    },
+    "padding": {
+        "right": 15,
+        "left": 5,
+        "top": 10,
+        "bottom": 10
+    },
+    "background": "transparent",
+    "config": {
+        "font": "Plus Jakarta Sans, sans-serif",
+        "axis": {
+            "labelColor": "#525E71",
+            "titleColor": "#18202C",
+            "titleFontWeight": 600,
+            "gridColor": "#E2DDD3",
+            "gridDash": [
+                3,
+                3
+            ],
+            "domainColor": "#CBD5E1"
+        },
+        "view": {
+            "stroke": "transparent"
+        }
+    },
+    "params": [
+        {
+            "name": "SelectedRegion",
+            "value": "Australia",
+            "bind": {
+                "input": "select",
+                "options": [
+                    "Australia",
+                    "Sydney",
+                    "Melbourne",
+                    "Brisbane",
+                    "Perth",
+                    "Adelaide",
+                    "Hobart",
+                    "Darwin",
+                    "Canberra"
+                ],
+                "labels": [
+                    "National (Australia)",
+                    "Sydney (NSW)",
+                    "Melbourne (VIC)",
+                    "Brisbane (QLD)",
+                    "Perth (WA)",
+                    "Adelaide (SA)",
+                    "Hobart (TAS)",
+                    "Darwin (NT)",
+                    "Canberra (ACT)"
+                ],
+                "name": "Select Region: "
+            }
+        }
+    ],
+    "data": {
+        "url": "./data/cpi_slim.csv"
+    },
+    "transform": [
+        {
+            "filter": "datum.Region == SelectedRegion"
+        },
+        {
+            "filter": "indexof(['Food and non-alcoholic beverages', 'Alcohol and tobacco', 'Clothing and footwear', 'Housing', 'Furnishings, household equipment and services', 'Health', 'Transport', 'Communication', 'Recreation and culture', 'Education', 'Insurance and financial services'], datum.Category) >= 0"
+        },
+        {
+            "calculate": "year(toDate(datum.Date))",
+            "as": "Year"
+        },
+        {
+            "calculate": "datum.Category == 'Food and non-alcoholic beverages' ? 'Food & Non-Alc. Drinks' : datum.Category == 'Furnishings, household equipment and services' ? 'Furnishings & Services' : datum.Category == 'Insurance and financial services' ? 'Insurance & Finance' : datum.Category == 'Recreation and culture' ? 'Recreation & Culture' : datum.Category == 'Alcohol and tobacco' ? 'Alcohol & Tobacco' : datum.Category == 'Clothing and footwear' ? 'Clothing & Footwear' : datum.Category",
+            "as": "ShortCategory"
+        },
+        {
+            "aggregate": [
+                {
+                    "op": "mean",
+                    "field": "Annual_CPI_Pct",
+                    "as": "Mean_CPI_Pct"
+                }
+            ],
+            "groupby": [
+                "Year",
+                "Category",
+                "ShortCategory",
+                "Region"
+            ]
+        },
+        {
+            "window": [
+                {
+                    "op": "rank",
+                    "as": "Rank"
+                }
+            ],
+            "sort": [
+                {
+                    "field": "Mean_CPI_Pct",
+                    "order": "descending"
+                }
+            ],
+            "groupby": [
+                "Year"
+            ]
+        }
+    ],
+    "layer": [
+        {
+            "params": [
+                {
+                    "name": "hoverCat",
+                    "select": {
+                        "type": "point",
+                        "fields": [
+                            "Category"
+                        ],
+                        "on": "mouseover",
+                        "clear": "mouseout"
+                    }
+                }
+            ],
+            "mark": {
+                "type": "line",
+                "interpolate": "monotone"
+            },
+            "encoding": {
+                "x": {
+                    "field": "Year",
+                    "type": "ordinal",
+                    "title": null,
+                    "axis": {
+                        "labelAngle": 0,
+                        "labelPadding": 8,
+                        "labelFontWeight": 600
+                    }
+                },
+                "y": {
+                    "field": "Rank",
+                    "type": "ordinal",
+                    "title": "Inflation Rank (1 = Fastest Rising)",
+                    "scale": {
+                        "domain": [
+                            1,
+                            2,
+                            3,
+                            4,
+                            5,
+                            6,
+                            7,
+                            8,
+                            9,
+                            10,
+                            11
+                        ]
+                    }
+                },
+                "color": {
+                    "field": "Category",
+                    "type": "nominal",
+                    "scale": {
+                        "scheme": "tableau20"
+                    },
+                    "legend": null
+                },
+                "strokeWidth": {
+                    "condition": {
+                        "param": "hoverCat",
+                        "empty": false,
+                        "value": 4.5
+                    },
+                    "value": 2.4
+                },
+                "opacity": {
+                    "condition": {
+                        "param": "hoverCat",
+                        "empty": true,
+                        "value": 0.9
+                    },
+                    "value": 0.15
+                }
+            }
+        },
+        {
+            "mark": {
+                "type": "circle",
+                "size": 110
+            },
+            "encoding": {
+                "x": {
+                    "field": "Year",
+                    "type": "ordinal"
+                },
+                "y": {
+                    "field": "Rank",
+                    "type": "ordinal"
+                },
+                "color": {
+                    "field": "Category",
+                    "type": "nominal",
+                    "legend": null
+                },
+                "opacity": {
+                    "condition": {
+                        "param": "hoverCat",
+                        "empty": true,
+                        "value": 1
+                    },
+                    "value": 0.2
+                },
+                "tooltip": [
+                    {
+                        "field": "Category",
+                        "type": "nominal",
+                        "title": "CPI Group"
+                    },
+                    {
+                        "field": "Region",
+                        "type": "nominal",
+                        "title": "Region"
+                    },
+                    {
+                        "field": "Year",
+                        "type": "ordinal",
+                        "title": "Year"
+                    },
+                    {
+                        "field": "Rank",
+                        "type": "ordinal",
+                        "title": "Inflation Rank (# out of 11)"
+                    },
+                    {
+                        "field": "Mean_CPI_Pct",
+                        "type": "quantitative",
+                        "title": "Avg Annual CPI (%)",
+                        "format": "+.2f"
+                    }
+                ]
+            }
+        },
+        {
+            "transform": [
+                {
+                    "joinaggregate": [
+                        {
+                            "op": "max",
+                            "field": "Year",
+                            "as": "MaxYear"
+                        }
+                    ]
+                },
+                {
+                    "filter": "datum.Year == datum.MaxYear"
+                }
+            ],
+            "mark": {
+                "type": "text",
+                "align": "left",
+                "baseline": "middle",
+                "dx": 14,
+                "fontSize": 11,
+                "fontWeight": 600
+            },
+            "encoding": {
+                "x": {
+                    "field": "Year",
+                    "type": "ordinal"
+                },
+                "y": {
+                    "field": "Rank",
+                    "type": "ordinal"
+                },
+                "text": {
+                    "field": "ShortCategory",
+                    "type": "nominal"
+                },
+                "color": {
+                    "field": "Category",
+                    "type": "nominal",
+                    "legend": null
+                },
+                "opacity": {
+                    "condition": {
+                        "param": "hoverCat",
+                        "empty": true,
+                        "value": 1
+                    },
+                    "value": 0.25
+                }
+            }
+        }
+    ]
+}

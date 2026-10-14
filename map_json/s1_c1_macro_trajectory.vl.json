@@ -1,0 +1,363 @@
+{
+    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+    "width": "container",
+    "height": 340,
+    "background": "transparent",
+    "config": {
+        "font": "Plus Jakarta Sans, sans-serif",
+        "axis": {
+            "labelColor": "#525E71",
+            "titleColor": "#18202C",
+            "titleFontWeight": 600,
+            "gridColor": "#E2DDD3",
+            "gridDash": [
+                3,
+                3
+            ],
+            "domainColor": "#CBD5E1"
+        },
+        "legend": {
+            "labelColor": "#18202C",
+            "titleColor": "#18202C",
+            "orient": "top",
+            "direction": "horizontal",
+            "symbolType": "stroke"
+        },
+        "view": {
+            "stroke": "transparent"
+        }
+    },
+    "params": [
+        {
+            "name": "SelectedCity",
+            "value": "Melbourne",
+            "bind": {
+                "input": "select",
+                "options": [
+                    "None",
+                    "Sydney",
+                    "Melbourne",
+                    "Brisbane",
+                    "Perth",
+                    "Adelaide",
+                    "Hobart",
+                    "Darwin",
+                    "Canberra"
+                ],
+                "labels": [
+                    "Hide City Overlay (National Only)",
+                    "Compare: Sydney (NSW)",
+                    "Compare: Melbourne (VIC)",
+                    "Compare: Brisbane (QLD)",
+                    "Compare: Perth (WA)",
+                    "Compare: Adelaide (SA)",
+                    "Compare: Hobart (TAS)",
+                    "Compare: Darwin (NT)",
+                    "Compare: Canberra (ACT)"
+                ],
+                "name": "Capital City Overlay: "
+            }
+        }
+    ],
+    "layer": [
+        {
+            "data": {
+                "values": [
+                    {
+                        "ymin": 2.0,
+                        "ymax": 3.0
+                    }
+                ]
+            },
+            "mark": {
+                "type": "rect",
+                "fill": "#1D7874",
+                "opacity": 0.10
+            },
+            "encoding": {
+                "y": {
+                    "field": "ymin",
+                    "type": "quantitative"
+                },
+                "y2": {
+                    "field": "ymax"
+                }
+            }
+        },
+        {
+            "data": {
+                "values": [
+                    {
+                        "date": "2016-07-01",
+                        "y": 2.85,
+                        "note": "RBA Target Band (2%–3% inflation)"
+                    }
+                ]
+            },
+            "mark": {
+                "type": "text",
+                "align": "left",
+                "baseline": "bottom",
+                "fontSize": 10.5,
+                "fontStyle": "italic",
+                "color": "#1D7874"
+            },
+            "encoding": {
+                "x": {
+                    "field": "date",
+                    "type": "temporal"
+                },
+                "y": {
+                    "field": "y",
+                    "type": "quantitative"
+                },
+                "text": {
+                    "field": "note"
+                }
+            }
+        },
+        {
+            "data": {
+                "values": [
+                    {
+                        "y": 0
+                    }
+                ]
+            },
+            "mark": {
+                "type": "rule",
+                "color": "#94A3B8",
+                "strokeWidth": 1
+            },
+            "encoding": {
+                "y": {
+                    "field": "y",
+                    "type": "quantitative"
+                }
+            }
+        },
+        {
+            "data": {
+                "url": "data/cpi_slim.csv"
+            },
+            "transform": [
+                {
+                    "filter": "datum.Category == 'All groups CPI' && datum.Region == 'Australia'"
+                },
+                {
+                    "calculate": "'National CPI Inflation'",
+                    "as": "Series"
+                }
+            ],
+            "mark": {
+                "type": "line",
+                "strokeWidth": 2.8,
+                "interpolate": "monotone"
+            },
+            "encoding": {
+                "x": {
+                    "field": "Date",
+                    "type": "temporal",
+                    "title": null,
+                    "axis": {
+                        "format": "%Y",
+                        "tickCount": 10
+                    }
+                },
+                "y": {
+                    "field": "Annual_CPI_Pct",
+                    "type": "quantitative",
+                    "title": "Annual Rate (%)",
+                    "scale": {
+                        "domain": [
+                            -2,
+                            10
+                        ]
+                    }
+                },
+                "color": {
+                    "field": "Series",
+                    "type": "nominal",
+                    "title": null,
+                    "scale": {
+                        "domain": [
+                            "National CPI Inflation",
+                            "Selected Capital City CPI",
+                            "RBA Cash Rate Target"
+                        ],
+                        "range": [
+                            "#C83E3B",
+                            "#2A4365",
+                            "#D97706"
+                        ]
+                    }
+                },
+                "tooltip": [
+                    {
+                        "field": "Region",
+                        "type": "nominal",
+                        "title": "Scope"
+                    },
+                    {
+                        "field": "Date",
+                        "type": "temporal",
+                        "title": "Time",
+                        "format": "%b %Y"
+                    },
+                    {
+                        "field": "Annual_CPI_Pct",
+                        "type": "quantitative",
+                        "title": "Annual CPI (%)",
+                        "format": ".1f"
+                    }
+                ]
+            }
+        },
+        {
+            "data": {
+                "url": "data/cpi_slim.csv"
+            },
+            "transform": [
+                {
+                    "filter": "datum.Category == 'All groups CPI' && datum.Region == SelectedCity"
+                },
+                {
+                    "calculate": "'Selected Capital City CPI'",
+                    "as": "Series"
+                }
+            ],
+            "mark": {
+                "type": "line",
+                "strokeWidth": 2.2,
+                "strokeDash": [
+                    4,
+                    2
+                ],
+                "interpolate": "monotone"
+            },
+            "encoding": {
+                "x": {
+                    "field": "Date",
+                    "type": "temporal"
+                },
+                "y": {
+                    "field": "Annual_CPI_Pct",
+                    "type": "quantitative"
+                },
+                "color": {
+                    "field": "Series",
+                    "type": "nominal"
+                },
+                "tooltip": [
+                    {
+                        "field": "Region",
+                        "type": "nominal",
+                        "title": "Capital City"
+                    },
+                    {
+                        "field": "Date",
+                        "type": "temporal",
+                        "title": "Time",
+                        "format": "%b %Y"
+                    },
+                    {
+                        "field": "Annual_CPI_Pct",
+                        "type": "quantitative",
+                        "title": "City CPI (%)",
+                        "format": ".1f"
+                    }
+                ]
+            }
+        },
+        {
+            "data": {
+                "url": "data/rba_rates_monthly.csv"
+            },
+            "transform": [
+                {
+                    "calculate": "toNumber(datum['Cash Rate Target'])",
+                    "as": "Cash_Rate"
+                },
+                {
+                    "calculate": "'RBA Cash Rate Target'",
+                    "as": "Series"
+                }
+            ],
+            "mark": {
+                "type": "line",
+                "interpolate": "step-after",
+                "strokeWidth": 2.4,
+                "strokeDash": [
+                    6,
+                    3
+                ]
+            },
+            "encoding": {
+                "x": {
+                    "field": "Date",
+                    "type": "temporal"
+                },
+                "y": {
+                    "field": "Cash_Rate",
+                    "type": "quantitative"
+                },
+                "color": {
+                    "field": "Series",
+                    "type": "nominal"
+                },
+                "tooltip": [
+                    {
+                        "field": "Date",
+                        "type": "temporal",
+                        "title": "Month",
+                        "format": "%b %Y"
+                    },
+                    {
+                        "field": "Cash_Rate",
+                        "type": "quantitative",
+                        "title": "RBA Cash Rate (%)",
+                        "format": ".2f"
+                    }
+                ]
+            }
+        },
+        {
+            "data": {
+                "values": [
+                    {
+                        "date": "2022-12-01",
+                        "y": 7.8,
+                        "note": "Late 2022 Peak (7.8%)"
+                    },
+                    {
+                        "date": "2023-11-01",
+                        "y": 4.35,
+                        "note": "Peak RBA Rate (4.35%)"
+                    }
+                ]
+            },
+            "mark": {
+                "type": "text",
+                "align": "right",
+                "dx": -6,
+                "dy": -6,
+                "fontSize": 10.5,
+                "fontWeight": 600,
+                "color": "#18202C"
+            },
+            "encoding": {
+                "x": {
+                    "field": "date",
+                    "type": "temporal"
+                },
+                "y": {
+                    "field": "y",
+                    "type": "quantitative"
+                },
+                "text": {
+                    "field": "note"
+                }
+            }
+        }
+    ]
+}

@@ -1,0 +1,250 @@
+{
+    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+    "description": "Annual price growth for essential and non-essential items in Australia.",
+    "width": "container",
+    "height": 340,
+    "background": "transparent",
+    "config": {
+        "font": "Plus Jakarta Sans, sans-serif",
+        "axis": {
+            "labelColor": "#525E71",
+            "titleColor": "#18202C",
+            "titleFontWeight": 600,
+            "gridColor": "#E2DDD3",
+            "gridDash": [
+                3,
+                3
+            ],
+            "domainColor": "#CBD5E1"
+        },
+        "view": {
+            "stroke": "transparent"
+        }
+    },
+    "layer": [
+        {
+            "data": {
+                "values": [
+                    {
+                        "y": 0
+                    }
+                ]
+            },
+            "mark": {
+                "type": "rule",
+                "color": "#94A3B8",
+                "strokeWidth": 1
+            },
+            "encoding": {
+                "y": {
+                    "field": "y",
+                    "type": "quantitative",
+                    "title": "Annual price change (%)"
+                }
+            }
+        },
+        {
+            "data": {
+                "url": "./data/cpi_slim.csv"
+            },
+            "transform": [
+                {
+                    "filter": "datum.Region == 'Australia' && (datum.Category == 'Non-discretionary' || datum.Category == 'Discretionary')"
+                },
+                {
+                    "calculate": "toDate(datum.Date)",
+                    "as": "Date_Parsed"
+                },
+                {
+                    "pivot": "Category",
+                    "value": "Annual_CPI_Pct",
+                    "groupby": [
+                        "Date_Parsed"
+                    ]
+                },
+                {
+                    "calculate": "datum['Non-discretionary']",
+                    "as": "nd"
+                },
+                {
+                    "calculate": "datum['Discretionary']",
+                    "as": "d"
+                },
+                {
+                    "filter": "isValid(datum.nd) && isValid(datum.d)"
+                },
+                {
+                    "calculate": "datum.nd - datum.d",
+                    "as": "gap"
+                },
+                {
+                    "calculate": "max(datum.nd, datum.d)",
+                    "as": "hi"
+                },
+                {
+                    "calculate": "min(datum.nd, datum.d)",
+                    "as": "lo"
+                }
+            ],
+            "layer": [
+                {
+                    "transform": [
+                        {
+                            "calculate": "datum.nd >= datum.d ? datum.d : datum.nd",
+                            "as": "yBase"
+                        }
+                    ],
+                    "mark": {
+                        "type": "area",
+                        "interpolate": "monotone",
+                        "fill": "#C83E3B",
+                        "opacity": 0.25
+                    },
+                    "encoding": {
+                        "x": {
+                            "field": "Date_Parsed",
+                            "type": "temporal",
+                            "title": null
+                        },
+                        "y": {
+                            "field": "yBase",
+                            "type": "quantitative"
+                        },
+                        "y2": {
+                            "field": "nd"
+                        }
+                    }
+                },
+                {
+                    "transform": [
+                        {
+                            "calculate": "datum.d > datum.nd ? datum.nd : datum.d",
+                            "as": "yBase"
+                        }
+                    ],
+                    "mark": {
+                        "type": "area",
+                        "interpolate": "monotone",
+                        "fill": "#1D7874",
+                        "opacity": 0.25
+                    },
+                    "encoding": {
+                        "x": {
+                            "field": "Date_Parsed",
+                            "type": "temporal",
+                            "title": null
+                        },
+                        "y": {
+                            "field": "yBase",
+                            "type": "quantitative"
+                        },
+                        "y2": {
+                            "field": "d"
+                        }
+                    }
+                },
+                {
+                    "transform": [
+                        {
+                            "fold": [
+                                "nd",
+                                "d"
+                            ],
+                            "as": [
+                                "key",
+                                "value"
+                            ]
+                        }
+                    ],
+                    "mark": {
+                        "type": "line",
+                        "interpolate": "monotone",
+                        "strokeWidth": 2.5
+                    },
+                    "encoding": {
+                        "x": {
+                            "field": "Date_Parsed",
+                            "type": "temporal"
+                        },
+                        "y": {
+                            "field": "value",
+                            "type": "quantitative"
+                        },
+                        "detail": {
+                            "field": "key",
+                            "type": "nominal"
+                        },
+                        "color": {
+                            "condition": {
+                                "test": "datum.key == 'nd'",
+                                "value": "#C83E3B"
+                            },
+                            "value": "#1D7874"
+                        }
+                    }
+                },
+                {
+                    "params": [
+                        {
+                            "name": "hover",
+                            "select": {
+                                "type": "point",
+                                "fields": [
+                                    "Date_Parsed"
+                                ],
+                                "nearest": true,
+                                "on": "mouseover",
+                                "clear": "mouseout"
+                            }
+                        }
+                    ],
+                    "mark": {
+                        "type": "rule",
+                        "color": "#18202C",
+                        "strokeWidth": 1
+                    },
+                    "encoding": {
+                        "x": {
+                            "field": "Date_Parsed",
+                            "type": "temporal"
+                        },
+                        "opacity": {
+                            "condition": {
+                                "param": "hover",
+                                "value": 0.35,
+                                "empty": false
+                            },
+                            "value": 0
+                        },
+                        "tooltip": [
+                            {
+                                "field": "Date_Parsed",
+                                "type": "temporal",
+                                "title": "Month",
+                                "format": "%b %Y"
+                            },
+                            {
+                                "field": "nd",
+                                "type": "quantitative",
+                                "title": "Essentials (Non-Discretionary) %",
+                                "format": ".1f"
+                            },
+                            {
+                                "field": "d",
+                                "type": "quantitative",
+                                "title": "Luxuries (Discretionary) %",
+                                "format": ".1f"
+                            },
+                            {
+                                "field": "gap",
+                                "type": "quantitative",
+                                "title": "Gap (points)",
+                                "format": "+.1f"
+                            }
+                        ]
+                    }
+                }
+            ]
+        }
+    ]
+}

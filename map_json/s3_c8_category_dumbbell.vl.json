@@ -1,0 +1,201 @@
+{
+    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+    "description": "Dumbbell chart comparing pre-pandemic (2019) vs current (2026) annual inflation.",
+    "width": "container",
+    "height": 400,
+    "background": "transparent",
+    "config": {
+        "font": "Plus Jakarta Sans, sans-serif",
+        "axis": {
+            "labelColor": "#525E71",
+            "titleColor": "#18202C",
+            "titleFontWeight": 600,
+            "gridColor": "#E2DDD3",
+            "gridDash": [
+                3,
+                3
+            ],
+            "domainColor": "#CBD5E1"
+        },
+        "view": {
+            "stroke": "transparent"
+        }
+    },
+    "data": {
+        "url": "./data/cpi_slim.csv"
+    },
+    "transform": [
+        {
+            "filter": "datum.Region == 'Australia'"
+        },
+        {
+            "filter": "indexof(['Food and non-alcoholic beverages', 'Alcohol and tobacco', 'Clothing and footwear', 'Housing', 'Furnishings, household equipment and services', 'Health', 'Transport', 'Communication', 'Recreation and culture', 'Education', 'Insurance and financial services'], datum.Category) >= 0"
+        },
+        {
+            "calculate": "year(toDate(datum.Date))",
+            "as": "Year"
+        },
+        {
+            "filter": "datum.Year == 2019 || datum.Year == 2026"
+        },
+        {
+            "aggregate": [
+                {
+                    "op": "mean",
+                    "field": "Annual_CPI_Pct",
+                    "as": "Avg_CPI"
+                }
+            ],
+            "groupby": [
+                "Category",
+                "Year"
+            ]
+        },
+        {
+            "calculate": "datum.Category == 'Food and non-alcoholic beverages' ? 'Food & Non-Alc.' : datum.Category == 'Furnishings, household equipment and services' ? 'Furnishings' : datum.Category == 'Insurance and financial services' ? 'Insurance & Finance' : datum.Category == 'Recreation and culture' ? 'Recreation' : datum.Category == 'Alcohol and tobacco' ? 'Alcohol & Tobacco' : datum.Category == 'Clothing and footwear' ? 'Clothing' : datum.Category",
+            "as": "ShortCategory"
+        },
+        {
+            "pivot": "Year",
+            "value": "Avg_CPI",
+            "groupby": [
+                "ShortCategory"
+            ]
+        },
+        {
+            "filter": "isValid(datum['2019']) && isValid(datum['2026'])"
+        },
+        {
+            "calculate": "datum['2026'] - datum['2019']",
+            "as": "Difference"
+        },
+        {
+            "calculate": "datum.Difference > 0 ? '#C83E3B' : '#1D7874'",
+            "as": "ShiftColor"
+        }
+    ],
+    "encoding": {
+        "y": {
+            "field": "ShortCategory",
+            "type": "nominal",
+            "title": null,
+            "sort": {
+                "field": "2026",
+                "order": "descending"
+            },
+            "axis": {
+                "labelFontWeight": 600,
+                "labelPadding": 10
+            }
+        }
+    },
+    "layer": [
+        {
+            "mark": {
+                "type": "rule",
+                "strokeWidth": 3.5,
+                "opacity": 0.3
+            },
+            "encoding": {
+                "x": {
+                    "field": "2019",
+                    "type": "quantitative",
+                    "title": "Annual Inflation (%)"
+                },
+                "x2": {
+                    "field": "2026"
+                },
+                "color": {
+                    "field": "ShiftColor",
+                    "type": "nominal",
+                    "scale": null
+                }
+            }
+        },
+        {
+            "mark": {
+                "type": "circle",
+                "size": 180,
+                "opacity": 1,
+                "color": "#94A3B8"
+            },
+            "encoding": {
+                "x": {
+                    "field": "2019",
+                    "type": "quantitative"
+                },
+                "tooltip": [
+                    {
+                        "field": "ShortCategory",
+                        "title": "Category"
+                    },
+                    {
+                        "field": "2019",
+                        "title": "2019 Baseline (%)",
+                        "format": ".1f"
+                    }
+                ]
+            }
+        },
+        {
+            "mark": {
+                "type": "circle",
+                "size": 250,
+                "opacity": 1
+            },
+            "encoding": {
+                "x": {
+                    "field": "2026",
+                    "type": "quantitative"
+                },
+                "color": {
+                    "field": "ShiftColor",
+                    "type": "nominal",
+                    "scale": null
+                },
+                "tooltip": [
+                    {
+                        "field": "ShortCategory",
+                        "title": "Category"
+                    },
+                    {
+                        "field": "2026",
+                        "title": "2026 Current (%)",
+                        "format": ".1f"
+                    },
+                    {
+                        "field": "Difference",
+                        "title": "Percentage Point Shift",
+                        "format": "+.1f"
+                    }
+                ]
+            }
+        },
+        {
+            "mark": {
+                "type": "text",
+                "align": "center",
+                "baseline": "middle",
+                "dy": -14,
+                "fontSize": 10.5,
+                "fontWeight": 700
+            },
+            "encoding": {
+                "x": {
+                    "field": "2026",
+                    "type": "quantitative"
+                },
+                "text": {
+                    "field": "2026",
+                    "type": "quantitative",
+                    "format": ".1f"
+                },
+                "color": {
+                    "field": "ShiftColor",
+                    "type": "nominal",
+                    "scale": null
+                }
+            }
+        }
+    ]
+}

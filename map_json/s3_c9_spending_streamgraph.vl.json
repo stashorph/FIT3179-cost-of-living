@@ -1,0 +1,157 @@
+{
+    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+    "description": "Streamgraph of nominal household spending across categories.",
+    "width": "container",
+    "height": 400,
+    "background": "transparent",
+    "config": {
+        "font": "Plus Jakarta Sans, sans-serif",
+        "axis": {
+            "labelColor": "#525E71",
+            "gridColor": "#E2DDD3",
+            "gridDash": [
+                3,
+                3
+            ],
+            "domainColor": "#CBD5E1"
+        },
+        "view": {
+            "stroke": "transparent"
+        }
+    },
+    "params": [
+        {
+            "name": "StateParam",
+            "value": "Australia",
+            "bind": {
+                "input": "select",
+                "options": [
+                    "Australia",
+                    "New South Wales",
+                    "Victoria",
+                    "Queensland",
+                    "Western Australia",
+                    "South Australia",
+                    "Tasmania",
+                    "Northern Territory",
+                    "Australian Capital Territory"
+                ],
+                "labels": [
+                    "National (Australia)",
+                    "New South Wales",
+                    "Victoria",
+                    "Queensland",
+                    "Western Australia",
+                    "South Australia",
+                    "Tasmania",
+                    "Northern Territory",
+                    "ACT"
+                ],
+                "name": "Select Region: "
+            }
+        }
+    ],
+    "data": {
+        "url": "./data/household_spending_state.csv"
+    },
+    "transform": [
+        {
+            "filter": "datum.State == StateParam"
+        },
+        {
+            "filter": "datum.Measure == 'Current_Price'"
+        },
+        {
+            "filter": "indexof(['Food', 'Alcoholic beverages and tobacco', 'Clothing and footwear', 'Furnishings and household equipment', 'Health', 'Transport', 'Recreation and culture', 'Hotels, cafes and restaurants', 'Miscellaneous goods and services'], datum.Category) >= 0"
+        },
+        {
+            "calculate": "toDate(datum.Date)",
+            "as": "ParsedDate"
+        }
+    ],
+    "layer": [
+        {
+            "params": [
+                {
+                    "name": "hover",
+                    "select": {
+                        "type": "point",
+                        "fields": [
+                            "Category"
+                        ],
+                        "on": "mouseover",
+                        "clear": "mouseout"
+                    }
+                }
+            ],
+            "mark": {
+                "type": "area",
+                "interpolate": "monotone",
+                "line": {
+                    "color": "#FFFFFF",
+                    "size": 0.5
+                }
+            },
+            "encoding": {
+                "x": {
+                    "field": "ParsedDate",
+                    "type": "temporal",
+                    "title": null,
+                    "axis": {
+                        "format": "%Y",
+                        "tickCount": 6,
+                        "labelFontWeight": 600
+                    }
+                },
+                "y": {
+                    "field": "Value",
+                    "type": "quantitative",
+                    "stack": "center",
+                    "title": null,
+                    "axis": null
+                },
+                "color": {
+                    "field": "Category",
+                    "type": "nominal",
+                    "scale": {
+                        "scheme": "tableau10"
+                    },
+                    "legend": {
+                        "title": "Spending Category",
+                        "orient": "bottom",
+                        "columns": 3,
+                        "titleFontWeight": 600,
+                        "labelColor": "#525E71"
+                    }
+                },
+                "opacity": {
+                    "condition": {
+                        "param": "hover",
+                        "empty": false,
+                        "value": 1
+                    },
+                    "value": 0.8
+                },
+                "tooltip": [
+                    {
+                        "field": "ParsedDate",
+                        "type": "temporal",
+                        "title": "Month",
+                        "format": "%b %Y"
+                    },
+                    {
+                        "field": "Category",
+                        "type": "nominal",
+                        "title": "Category"
+                    },
+                    {
+                        "field": "Value",
+                        "type": "quantitative",
+                        "title": "Spending Index/Value",
+                        "format": ",.1f"
+                    }
+                ]
+            }
+        }
+    ]
+}
