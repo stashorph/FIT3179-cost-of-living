@@ -1,31 +1,114 @@
 {
     "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-    "description": "Price growth volatility and inflation range across 11 primary CPI expenditure categories in Australia.",
+    "description": "Ranged volatility distribution (IQR box, full min-max range, and Typical Middle Year marker) for the 11 CPI categories.",
     "width": "container",
-    "height": 340,
+    "height": 420,
     "background": "transparent",
+    "config": {
+        "font": "Plus Jakarta Sans, sans-serif",
+        "axis": {
+            "labelColor": "#525E71",
+            "titleColor": "#18202C",
+            "titleFontWeight": 600,
+            "gridColor": "#E2DDD3",
+            "gridDash": [
+                3,
+                3
+            ],
+            "domainColor": "#CBD5E1"
+        },
+        "view": {
+            "stroke": "transparent"
+        }
+    },
+    "params": [
+        {
+            "name": "VolRegion",
+            "value": "Australia",
+            "bind": {
+                "input": "select",
+                "options": [
+                    "Australia",
+                    "Sydney",
+                    "Melbourne",
+                    "Brisbane",
+                    "Perth",
+                    "Adelaide",
+                    "Hobart",
+                    "Darwin",
+                    "Canberra"
+                ],
+                "labels": [
+                    "National (Australia)",
+                    "Sydney (NSW)",
+                    "Melbourne (VIC)",
+                    "Brisbane (QLD)",
+                    "Perth (WA)",
+                    "Adelaide (SA)",
+                    "Hobart (TAS)",
+                    "Darwin (NT)",
+                    "Canberra (ACT)"
+                ],
+                "name": "Select Region: "
+            }
+        }
+    ],
     "data": {
         "url": "./data/cpi_slim.csv"
     },
     "transform": [
         {
-            "filter": "datum.Region == 'Australia' && datum.Category != 'All groups CPI' && datum.Category != 'Non-discretionary' && datum.Category != 'Discretionary'"
+            "filter": "datum.Region == VolRegion"
         },
         {
-            "calculate": "datum.Category == 'Food and non-alcoholic beverages' ? 'Food & Staples' : datum.Category == 'Alcohol and tobacco' ? 'Alcohol & Tobacco' : datum.Category == 'Clothing and footwear' ? 'Clothing & Footwear' : datum.Category == 'Furnishings, household equipment and services' ? 'Furnishings' : datum.Category == 'Insurance and financial services' ? 'Insurance & Finance' : datum.Category == 'Recreation and culture' ? 'Recreation' : datum.Category",
+            "filter": "indexof(['Food and non-alcoholic beverages', 'Alcohol and tobacco', 'Clothing and footwear', 'Housing', 'Furnishings, household equipment and services', 'Health', 'Transport', 'Communication', 'Recreation and culture', 'Education', 'Insurance and financial services'], datum.Category) >= 0"
+        },
+        {
+            "calculate": "datum.Category == 'Food and non-alcoholic beverages' ? 'Food & Non-Alc. Drinks' : datum.Category == 'Furnishings, household equipment and services' ? 'Furnishings & Services' : datum.Category == 'Insurance and financial services' ? 'Insurance & Finance' : datum.Category == 'Recreation and culture' ? 'Recreation & Culture' : datum.Category == 'Alcohol and tobacco' ? 'Alcohol & Tobacco' : datum.Category == 'Clothing and footwear' ? 'Clothing & Footwear' : datum.Category",
             "as": "ShortCategory"
         },
         {
-            "aggregate": [
-                { "op": "min", "field": "Annual_CPI_Pct", "as": "Min_Rate" },
-                { "op": "max", "field": "Annual_CPI_Pct", "as": "Max_Rate" },
-                { "op": "mean", "field": "Annual_CPI_Pct", "as": "Mean_Rate" }
-            ],
-            "groupby": ["ShortCategory"]
+            "calculate": "indexof(['Housing', 'Food and non-alcoholic beverages', 'Transport', 'Health', 'Education'], datum.Category) >= 0 ? 'Essentials (Non-Discretionary)' : 'Luxuries (Discretionary)'",
+            "as": "BasketType"
         },
         {
-            "calculate": "datum.Max_Rate - datum.Min_Rate",
-            "as": "Volatility_Spread"
+            "aggregate": [
+                {
+                    "op": "min",
+                    "field": "Annual_CPI_Pct",
+                    "as": "MinCPI"
+                },
+                {
+                    "op": "max",
+                    "field": "Annual_CPI_Pct",
+                    "as": "MaxCPI"
+                },
+                {
+                    "op": "q1",
+                    "field": "Annual_CPI_Pct",
+                    "as": "Q1CPI"
+                },
+                {
+                    "op": "q3",
+                    "field": "Annual_CPI_Pct",
+                    "as": "Q3CPI"
+                },
+                {
+                    "op": "median",
+                    "field": "Annual_CPI_Pct",
+                    "as": "TypicalMiddleYear"
+                }
+            ],
+            "groupby": [
+                "ShortCategory",
+                "Category",
+                "BasketType",
+                "Region"
+            ]
+        },
+        {
+            "calculate": "datum.MaxCPI - datum.MinCPI",
+            "as": "ShockSpread"
         }
     ],
     "encoding": {
@@ -33,10 +116,13 @@
             "field": "ShortCategory",
             "type": "nominal",
             "title": null,
-            "sort": { "field": "Volatility_Spread", "order": "descending" },
+            "sort": {
+                "field": "ShockSpread",
+                "order": "descending"
+            },
             "axis": {
-                "labelFontSize": 11,
-                "labelColor": "#2C2C2C"
+                "labelFontWeight": 600,
+                "labelPadding": 10
             }
         }
     },
@@ -44,32 +130,121 @@
         {
             "mark": {
                 "type": "rule",
-                "color": "rgba(44, 44, 44, 0.2)",
-                "size": 4
+                "color": "#94A3B8",
+                "strokeDash": [
+                    4,
+                    4
+                ],
+                "strokeWidth": 1.2
             },
             "encoding": {
                 "x": {
-                    "field": "Min_Rate",
+                    "datum": 0
+                }
+            }
+        },
+        {
+            "mark": {
+                "type": "rule",
+                "strokeWidth": 2,
+                "opacity": 0.45
+            },
+            "encoding": {
+                "x": {
+                    "field": "MinCPI",
                     "type": "quantitative",
-                    "title": "Annual Inflation Spread (% Min to Peak)",
-                    "axis": { "grid": true, "gridColor": "rgba(0,0,0,0.06)" }
+                    "title": "Annual Inflation Volatility Range (Min, IQR, and Typical Middle Year %)"
                 },
-                "x2": { "field": "Max_Rate" }
+                "x2": {
+                    "field": "MaxCPI"
+                },
+                "color": {
+                    "field": "BasketType",
+                    "type": "nominal",
+                    "title": "Spending Classification",
+                    "scale": {
+                        "domain": [
+                            "Essentials (Non-Discretionary)",
+                            "Luxuries (Discretionary)"
+                        ],
+                        "range": [
+                            "#B5462F",
+                            "#1D7874"
+                        ]
+                    },
+                    "legend": {
+                        "orient": "top",
+                        "titleFontWeight": 600
+                    }
+                }
             }
         },
         {
             "mark": {
-                "type": "point",
-                "filled": true,
-                "size": 90,
-                "color": "#C85A5A"
+                "type": "bar",
+                "height": 14,
+                "cornerRadius": 3,
+                "opacity": 0.85
             },
             "encoding": {
-                "x": { "field": "Max_Rate", "type": "quantitative" },
+                "x": {
+                    "field": "Q1CPI",
+                    "type": "quantitative"
+                },
+                "x2": {
+                    "field": "Q3CPI"
+                },
+                "color": {
+                    "field": "BasketType",
+                    "type": "nominal"
+                },
                 "tooltip": [
-                    { "field": "ShortCategory", "type": "nominal", "title": "Category" },
-                    { "field": "Max_Rate", "type": "quantitative", "title": "Peak Inflation (%)", "format": ".1f" },
-                    { "field": "Volatility_Spread", "type": "quantitative", "title": "Total Spread (pts)", "format": ".1f" }
+                    {
+                        "field": "Category",
+                        "type": "nominal",
+                        "title": "CPI Group"
+                    },
+                    {
+                        "field": "BasketType",
+                        "type": "nominal",
+                        "title": "Classification"
+                    },
+                    {
+                        "field": "TypicalMiddleYear",
+                        "type": "quantitative",
+                        "title": "Typical (Middle) Year (%)",
+                        "format": "+.2f"
+                    },
+                    {
+                        "field": "Q1CPI",
+                        "type": "quantitative",
+                        "title": "25th Percentile (Q1 %)",
+                        "format": "+.2f"
+                    },
+                    {
+                        "field": "Q3CPI",
+                        "type": "quantitative",
+                        "title": "75th Percentile (Q3 %)",
+                        "format": "+.2f"
+                    },
+                    {
+                        "field": "MinCPI",
+                        "type": "quantitative",
+                        "title": "Lowest Shock (%)",
+                        "format": "+.2f"
+                    },
+                    {
+                        "field": "MaxCPI",
+                        "type": "quantitative",
+                        "title": "Highest Peak Shock (%)",
+                        "format": "+.2f"
+                    },
+                    {
+                        "field": "ShockSpread",
+                        "type": "quantitative",
+                        "title": "Total Volatility Spread (pts)",
+                        "format": ".1f"
+                    }
                 ]
             }
         },
@@ -77,29 +252,52 @@
             "mark": {
                 "type": "point",
                 "filled": true,
-                "size": 75,
-                "color": "#2D5A60"
+                "shape": "diamond",
+                "size": 140,
+                "color": "#18202C",
+                "stroke": "#FFFFFF",
+                "strokeWidth": 1.2
             },
             "encoding": {
-                "x": { "field": "Min_Rate", "type": "quantitative" },
+                "x": {
+                    "field": "TypicalMiddleYear",
+                    "type": "quantitative"
+                },
+                "shape": {
+                    "datum": "Typical (Middle) Year",
+                    "type": "nominal",
+                    "scale": {
+                        "domain": [
+                            "Typical (Middle) Year"
+                        ],
+                        "range": [
+                            "diamond"
+                        ]
+                    },
+                    "legend": {
+                        "title": "Center Benchmark",
+                        "orient": "top",
+                        "titleFontWeight": 600
+                    }
+                },
                 "tooltip": [
-                    { "field": "ShortCategory", "type": "nominal", "title": "Category" },
-                    { "field": "Min_Rate", "type": "quantitative", "title": "Trough Inflation (%)", "format": ".1f" }
-                ]
-            }
-        },
-        {
-            "mark": {
-                "type": "tick",
-                "color": "#C68A4C",
-                "thickness": 2.5,
-                "size": 14
-            },
-            "encoding": {
-                "x": { "field": "Mean_Rate", "type": "quantitative" },
-                "tooltip": [
-                    { "field": "ShortCategory", "type": "nominal", "title": "Category" },
-                    { "field": "Mean_Rate", "type": "quantitative", "title": "10-Year Average (%)", "format": ".1f" }
+                    {
+                        "field": "Category",
+                        "type": "nominal",
+                        "title": "CPI Group"
+                    },
+                    {
+                        "field": "TypicalMiddleYear",
+                        "type": "quantitative",
+                        "title": "Typical (Middle) Year (%)",
+                        "format": "+.2f"
+                    },
+                    {
+                        "field": "ShockSpread",
+                        "type": "quantitative",
+                        "title": "Total Volatility Spread (pts)",
+                        "format": ".1f"
+                    }
                 ]
             }
         }

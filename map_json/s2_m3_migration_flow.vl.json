@@ -1,167 +1,927 @@
 {
     "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-    "description": "Net Interstate Migration flows across Australian States (2016-2024).",
+    "description": "Colourful choropleth and directional arrow flow map of Australian interstate migration.",
     "width": "container",
-    "height": 360,
+    "height": 480,
     "background": "transparent",
-    "data": {
-        "url": "./data/interstate_migration_flows.csv"
-    },
-    "transform": [
-        {
-            "filter": "datum.State != 'Australia'"
+    "config": {
+        "font": "Plus Jakarta Sans, sans-serif",
+        "view": {
+            "stroke": "transparent"
         },
-        {
-            "calculate": "toDate(datum.Date)",
-            "as": "Date_Parsed"
-        },
-        {
-            "calculate": "toNumber(datum.Net_Migration)",
-            "as": "Net_Migration_Num"
+        "legend": {
+            "labelColor": "#334155",
+            "titleColor": "#18202C",
+            "titleFontWeight": 700,
+            "labelFontSize": 11,
+            "titleFontSize": 11.5
         }
-    ],
+    },
+    "projection": {
+        "type": "conicEqualArea",
+        "parallels": [
+            -18,
+            -36
+        ],
+        "rotate": [
+            -132,
+            0,
+            0
+        ],
+        "center": [
+            2,
+            -28.5
+        ]
+    },
+    "resolve": {
+        "scale": {
+            "color": "independent",
+            "size": "independent"
+        }
+    },
     "params": [
         {
-            "name": "State_Select",
+            "name": "OriginFilter",
             "value": "All",
             "bind": {
                 "input": "select",
                 "options": [
                     "All",
-                    "Queensland",
-                    "Victoria",
-                    "New South Wales",
-                    "Western Australia",
-                    "South Australia",
-                    "Tasmania",
-                    "Australian Capital Territory",
-                    "Northern Territory"
+                    "NSW",
+                    "VIC"
                 ],
                 "labels": [
-                    "All States & Territories",
-                    "Queensland (+ Inflow Leader)",
-                    "Victoria (Pandemic Outflow)",
-                    "New South Wales (High Cost Outflow)",
-                    "Western Australia",
-                    "South Australia",
-                    "Tasmania",
-                    "Australian Capital Territory",
-                    "Northern Territory"
+                    "All Major Corridors",
+                    "From Sydney (NSW Outflows)",
+                    "From Melbourne (VIC Outflows)"
                 ],
-                "name": "Focus State: "
+                "name": "Origin Corridor: "
             }
         }
     ],
     "layer": [
         {
-            "mark": {
-                "type": "rule",
-                "color": "rgba(44, 44, 44, 0.2)",
-                "strokeWidth": 1.2,
-                "strokeDash": [4, 4]
-            },
-            "encoding": {
-                "y": {
-                    "datum": 0
+            "data": {
+                "url": "./data/geo/aus_states_simplified.topojson",
+                "format": {
+                    "type": "topojson",
+                    "feature": "aus_states_simplified"
                 }
-            }
-        },
-        {
+            },
+            "transform": [
+                {
+                    "lookup": "properties.STE_NAME21",
+                    "from": {
+                        "data": {
+                            "values": [
+                                {
+                                    "state_name": "Queensland",
+                                    "net_migration": 31200,
+                                    "status": "Strong Net Gain (+31.2k)"
+                                },
+                                {
+                                    "state_name": "Western Australia",
+                                    "net_migration": 14800,
+                                    "status": "Moderate Net Gain (+14.8k)"
+                                },
+                                {
+                                    "state_name": "South Australia",
+                                    "net_migration": 3100,
+                                    "status": "Slight Net Gain (+3.1k)"
+                                },
+                                {
+                                    "state_name": "Australian Capital Territory",
+                                    "net_migration": 1200,
+                                    "status": "Balanced (+1.2k)"
+                                },
+                                {
+                                    "state_name": "Northern Territory",
+                                    "net_migration": -1400,
+                                    "status": "Slight Outflow (-1.4k)"
+                                },
+                                {
+                                    "state_name": "Tasmania",
+                                    "net_migration": -2000,
+                                    "status": "Slight Outflow (-2.0k)"
+                                },
+                                {
+                                    "state_name": "Victoria",
+                                    "net_migration": -18400,
+                                    "status": "Heavy Outflow (-18.4k)"
+                                },
+                                {
+                                    "state_name": "New South Wales",
+                                    "net_migration": -28500,
+                                    "status": "Heavy Outflow (-28.5k)"
+                                }
+                            ]
+                        },
+                        "key": "state_name",
+                        "fields": [
+                            "net_migration",
+                            "status"
+                        ]
+                    }
+                }
+            ],
             "mark": {
-                "type": "line",
-                "interpolate": "monotone"
+                "type": "geoshape",
+                "stroke": "#FAF7F2",
+                "strokeWidth": 1.6
             },
             "encoding": {
-                "x": {
-                    "field": "Date_Parsed",
-                    "type": "temporal",
-                    "title": null,
-                    "axis": {
-                        "format": "%Y",
-                        "tickCount": 8,
-                        "grid": false
-                    }
-                },
-                "y": {
-                    "field": "Net_Migration_Num",
-                    "type": "quantitative",
-                    "title": "Net Quarterly Migration (Persons)",
-                    "axis": {
-                        "format": "~s"
-                    }
-                },
                 "color": {
-                    "field": "State",
-                    "type": "nominal",
-                    "title": "State / Territory",
+                    "field": "net_migration",
+                    "type": "quantitative",
+                    "title": "State Net Migration (Annual)",
                     "scale": {
                         "domain": [
-                            "Queensland",
-                            "New South Wales",
-                            "Victoria",
-                            "Western Australia",
-                            "South Australia",
-                            "Tasmania",
-                            "Australian Capital Territory",
-                            "Northern Territory"
+                            -30000,
+                            -10000,
+                            0,
+                            15000,
+                            32000
                         ],
                         "range": [
-                            "#2D5A60",
-                            "#C85A5A",
-                            "#C68A4C",
-                            "#5A735E",
-                            "#6B7280",
-                            "#8B5CF6",
-                            "#EC4899",
-                            "#F59E0B"
+                            "#F4A28C",
+                            "#F9C6B6",
+                            "#EBF0EC",
+                            "#94D2BD",
+                            "#48B29F"
                         ]
                     },
                     "legend": {
-                        "orient": "bottom",
-                        "columns": 4,
-                        "labelFontSize": 11,
-                        "symbolSize": 80
+                        "orient": "top",
+                        "direction": "horizontal",
+                        "gradientLength": 170
                     }
                 },
-                "opacity": {
-                    "condition": {
-                        "test": "State_Select == 'All' || datum.State == State_Select",
-                        "value": 0.95
-                    },
-                    "value": 0.15
-                },
-                "strokeWidth": {
-                    "condition": {
-                        "test": "State_Select != 'All' && datum.State == State_Select",
-                        "value": 3.5
-                    },
-                    "value": 1.8
-                },
                 "tooltip": [
-                    { "field": "State", "type": "nominal", "title": "State" },
-                    { "field": "Date_Parsed", "type": "temporal", "title": "Quarter", "format": "%B %Y" },
-                    { "field": "Net_Migration_Num", "type": "quantitative", "title": "Net Migration", "format": ",d" },
-                    { "field": "Arrivals", "type": "quantitative", "title": "Arrivals", "format": ",d" },
-                    { "field": "Departures", "type": "quantitative", "title": "Departures", "format": ",d" }
+                    {
+                        "field": "properties.STE_NAME21",
+                        "type": "nominal",
+                        "title": "State / Territory"
+                    },
+                    {
+                        "field": "status",
+                        "type": "nominal",
+                        "title": "Net Migration Balance"
+                    }
                 ]
             }
         },
         {
+            "data": {
+                "values": [
+                    {
+                        "name": "QUEENSLAND",
+                        "sub": "+31.2k Net",
+                        "lon": 144.5,
+                        "lat": -23.0
+                    },
+                    {
+                        "name": "WESTERN AUSTRALIA",
+                        "sub": "+14.8k Net",
+                        "lon": 122.2,
+                        "lat": -25.5
+                    },
+                    {
+                        "name": "SOUTH AUSTRALIA",
+                        "sub": "+3.1k Net",
+                        "lon": 135.2,
+                        "lat": -30.0
+                    },
+                    {
+                        "name": "NEW SOUTH WALES",
+                        "sub": "-28.5k Net",
+                        "lon": 145.8,
+                        "lat": -32.3
+                    },
+                    {
+                        "name": "VICTORIA",
+                        "sub": "-18.4k Net",
+                        "lon": 143.2,
+                        "lat": -36.6
+                    },
+                    {
+                        "name": "NORTHERN TERRITORY",
+                        "sub": "-1.4k Net",
+                        "lon": 133.5,
+                        "lat": -19.8
+                    },
+                    {
+                        "name": "TAS",
+                        "sub": "-2.0k",
+                        "lon": 146.5,
+                        "lat": -42.0
+                    }
+                ]
+            },
+            "layer": [
+                {
+                    "mark": {
+                        "type": "text",
+                        "fontSize": 10,
+                        "fontWeight": 800,
+                        "letterSpacing": 0.8,
+                        "fill": "#1E293B",
+                        "stroke": "#FFFFFF",
+                        "strokeWidth": 3,
+                        "strokeLinejoin": "round",
+                        "dy": -6
+                    },
+                    "encoding": {
+                        "longitude": {
+                            "field": "lon",
+                            "type": "quantitative"
+                        },
+                        "latitude": {
+                            "field": "lat",
+                            "type": "quantitative"
+                        },
+                        "text": {
+                            "field": "name",
+                            "type": "nominal"
+                        }
+                    }
+                },
+                {
+                    "mark": {
+                        "type": "text",
+                        "fontSize": 10,
+                        "fontWeight": 800,
+                        "letterSpacing": 0.8,
+                        "fill": "#1E293B",
+                        "dy": -6
+                    },
+                    "encoding": {
+                        "longitude": {
+                            "field": "lon",
+                            "type": "quantitative"
+                        },
+                        "latitude": {
+                            "field": "lat",
+                            "type": "quantitative"
+                        },
+                        "text": {
+                            "field": "name",
+                            "type": "nominal"
+                        }
+                    }
+                },
+                {
+                    "mark": {
+                        "type": "text",
+                        "fontSize": 10.5,
+                        "fontWeight": 700,
+                        "fill": "#0F172A",
+                        "stroke": "#FFFFFF",
+                        "strokeWidth": 2.5,
+                        "strokeLinejoin": "round",
+                        "dy": 8
+                    },
+                    "encoding": {
+                        "longitude": {
+                            "field": "lon",
+                            "type": "quantitative"
+                        },
+                        "latitude": {
+                            "field": "lat",
+                            "type": "quantitative"
+                        },
+                        "text": {
+                            "field": "sub",
+                            "type": "nominal"
+                        }
+                    }
+                },
+                {
+                    "mark": {
+                        "type": "text",
+                        "fontSize": 10.5,
+                        "fontWeight": 700,
+                        "fill": "#0F172A",
+                        "dy": 8
+                    },
+                    "encoding": {
+                        "longitude": {
+                            "field": "lon",
+                            "type": "quantitative"
+                        },
+                        "latitude": {
+                            "field": "lat",
+                            "type": "quantitative"
+                        },
+                        "text": {
+                            "field": "sub",
+                            "type": "nominal"
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "data": {
+                "values": [
+                    {
+                        "route": "NSW_QLD",
+                        "order": 1,
+                        "origin_code": "NSW",
+                        "origin": "From Sydney (NSW)",
+                        "dest": "Brisbane (QLD)",
+                        "lon": 151.21,
+                        "lat": -33.87,
+                        "flow": 34800,
+                        "corridor": "Sydney → Brisbane (34,800 movers/yr)"
+                    },
+                    {
+                        "route": "NSW_QLD",
+                        "order": 2,
+                        "origin_code": "NSW",
+                        "origin": "From Sydney (NSW)",
+                        "dest": "Brisbane (QLD)",
+                        "lon": 155.00,
+                        "lat": -30.50,
+                        "flow": 34800,
+                        "corridor": "Sydney → Brisbane (34,800 movers/yr)"
+                    },
+                    {
+                        "route": "NSW_QLD",
+                        "order": 3,
+                        "origin_code": "NSW",
+                        "origin": "From Sydney (NSW)",
+                        "dest": "Brisbane (QLD)",
+                        "lon": 153.02,
+                        "lat": -27.47,
+                        "flow": 34800,
+                        "corridor": "Sydney → Brisbane (34,800 movers/yr)"
+                    },
+                    {
+                        "route": "VIC_QLD",
+                        "order": 1,
+                        "origin_code": "VIC",
+                        "origin": "From Melbourne (VIC)",
+                        "dest": "Brisbane (QLD)",
+                        "lon": 144.96,
+                        "lat": -37.81,
+                        "flow": 22400,
+                        "corridor": "Melbourne → Brisbane (22,400 movers/yr)"
+                    },
+                    {
+                        "route": "VIC_QLD",
+                        "order": 2,
+                        "origin_code": "VIC",
+                        "origin": "From Melbourne (VIC)",
+                        "dest": "Brisbane (QLD)",
+                        "lon": 148.00,
+                        "lat": -31.00,
+                        "flow": 22400,
+                        "corridor": "Melbourne → Brisbane (22,400 movers/yr)"
+                    },
+                    {
+                        "route": "VIC_QLD",
+                        "order": 3,
+                        "origin_code": "VIC",
+                        "origin": "From Melbourne (VIC)",
+                        "dest": "Brisbane (QLD)",
+                        "lon": 153.02,
+                        "lat": -27.47,
+                        "flow": 22400,
+                        "corridor": "Melbourne → Brisbane (22,400 movers/yr)"
+                    },
+                    {
+                        "route": "NSW_VIC",
+                        "order": 1,
+                        "origin_code": "NSW",
+                        "origin": "From Sydney (NSW)",
+                        "dest": "Melbourne (VIC)",
+                        "lon": 151.21,
+                        "lat": -33.87,
+                        "flow": 18200,
+                        "corridor": "Sydney → Melbourne (18,200 movers/yr)"
+                    },
+                    {
+                        "route": "NSW_VIC",
+                        "order": 2,
+                        "origin_code": "NSW",
+                        "origin": "From Sydney (NSW)",
+                        "dest": "Melbourne (VIC)",
+                        "lon": 150.20,
+                        "lat": -37.80,
+                        "flow": 18200,
+                        "corridor": "Sydney → Melbourne (18,200 movers/yr)"
+                    },
+                    {
+                        "route": "NSW_VIC",
+                        "order": 3,
+                        "origin_code": "NSW",
+                        "origin": "From Sydney (NSW)",
+                        "dest": "Melbourne (VIC)",
+                        "lon": 144.96,
+                        "lat": -37.81,
+                        "flow": 18200,
+                        "corridor": "Sydney → Melbourne (18,200 movers/yr)"
+                    },
+                    {
+                        "route": "VIC_WA",
+                        "order": 1,
+                        "origin_code": "VIC",
+                        "origin": "From Melbourne (VIC)",
+                        "dest": "Perth (WA)",
+                        "lon": 144.96,
+                        "lat": -37.81,
+                        "flow": 9600,
+                        "corridor": "Melbourne → Perth (9,600 movers/yr)"
+                    },
+                    {
+                        "route": "VIC_WA",
+                        "order": 2,
+                        "origin_code": "VIC",
+                        "origin": "From Melbourne (VIC)",
+                        "dest": "Perth (WA)",
+                        "lon": 129.00,
+                        "lat": -37.80,
+                        "flow": 9600,
+                        "corridor": "Melbourne → Perth (9,600 movers/yr)"
+                    },
+                    {
+                        "route": "VIC_WA",
+                        "order": 3,
+                        "origin_code": "VIC",
+                        "origin": "From Melbourne (VIC)",
+                        "dest": "Perth (WA)",
+                        "lon": 115.86,
+                        "lat": -31.95,
+                        "flow": 9600,
+                        "corridor": "Melbourne → Perth (9,600 movers/yr)"
+                    },
+                    {
+                        "route": "NSW_WA",
+                        "order": 1,
+                        "origin_code": "NSW",
+                        "origin": "From Sydney (NSW)",
+                        "dest": "Perth (WA)",
+                        "lon": 151.21,
+                        "lat": -33.87,
+                        "flow": 8900,
+                        "corridor": "Sydney → Perth (8,900 movers/yr)"
+                    },
+                    {
+                        "route": "NSW_WA",
+                        "order": 2,
+                        "origin_code": "NSW",
+                        "origin": "From Sydney (NSW)",
+                        "dest": "Perth (WA)",
+                        "lon": 133.00,
+                        "lat": -33.80,
+                        "flow": 8900,
+                        "corridor": "Sydney → Perth (8,900 movers/yr)"
+                    },
+                    {
+                        "route": "NSW_WA",
+                        "order": 3,
+                        "origin_code": "NSW",
+                        "origin": "From Sydney (NSW)",
+                        "dest": "Perth (WA)",
+                        "lon": 115.86,
+                        "lat": -31.95,
+                        "flow": 8900,
+                        "corridor": "Sydney → Perth (8,900 movers/yr)"
+                    },
+                    {
+                        "route": "VIC_SA",
+                        "order": 1,
+                        "origin_code": "VIC",
+                        "origin": "From Melbourne (VIC)",
+                        "dest": "Adelaide (SA)",
+                        "lon": 144.96,
+                        "lat": -37.81,
+                        "flow": 6800,
+                        "corridor": "Melbourne → Adelaide (6,800 movers/yr)"
+                    },
+                    {
+                        "route": "VIC_SA",
+                        "order": 2,
+                        "origin_code": "VIC",
+                        "origin": "From Melbourne (VIC)",
+                        "dest": "Adelaide (SA)",
+                        "lon": 141.00,
+                        "lat": -37.60,
+                        "flow": 6800,
+                        "corridor": "Melbourne → Adelaide (6,800 movers/yr)"
+                    },
+                    {
+                        "route": "VIC_SA",
+                        "order": 3,
+                        "origin_code": "VIC",
+                        "origin": "From Melbourne (VIC)",
+                        "dest": "Adelaide (SA)",
+                        "lon": 138.60,
+                        "lat": -34.93,
+                        "flow": 6800,
+                        "corridor": "Melbourne → Adelaide (6,800 movers/yr)"
+                    },
+                    {
+                        "route": "VIC_TAS",
+                        "order": 1,
+                        "origin_code": "VIC",
+                        "origin": "From Melbourne (VIC)",
+                        "dest": "Hobart (TAS)",
+                        "lon": 144.96,
+                        "lat": -37.81,
+                        "flow": 4100,
+                        "corridor": "Melbourne → Hobart (4,100 movers/yr)"
+                    },
+                    {
+                        "route": "VIC_TAS",
+                        "order": 2,
+                        "origin_code": "VIC",
+                        "origin": "From Melbourne (VIC)",
+                        "dest": "Hobart (TAS)",
+                        "lon": 145.60,
+                        "lat": -40.50,
+                        "flow": 4100,
+                        "corridor": "Melbourne → Hobart (4,100 movers/yr)"
+                    },
+                    {
+                        "route": "VIC_TAS",
+                        "order": 3,
+                        "origin_code": "VIC",
+                        "origin": "From Melbourne (VIC)",
+                        "dest": "Hobart (TAS)",
+                        "lon": 147.33,
+                        "lat": -42.88,
+                        "flow": 4100,
+                        "corridor": "Melbourne → Hobart (4,100 movers/yr)"
+                    }
+                ]
+            },
             "transform": [
                 {
-                    "filter": "State_Select != 'All' && datum.State == State_Select"
+                    "filter": "OriginFilter == 'All' || datum.origin_code == OriginFilter"
+                }
+            ],
+            "mark": {
+                "type": "line",
+                "interpolate": "basis",
+                "opacity": 0.88,
+                "strokeCap": "round"
+            },
+            "encoding": {
+                "longitude": {
+                    "field": "lon",
+                    "type": "quantitative"
+                },
+                "latitude": {
+                    "field": "lat",
+                    "type": "quantitative"
+                },
+                "order": {
+                    "field": "order",
+                    "type": "ordinal"
+                },
+                "detail": {
+                    "field": "route",
+                    "type": "nominal"
+                },
+                "strokeWidth": {
+                    "field": "flow",
+                    "type": "quantitative",
+                    "title": "Annual Movers",
+                    "scale": {
+                        "domain": [
+                            4000,
+                            35000
+                        ],
+                        "range": [
+                            2.2,
+                            8.5
+                        ]
+                    },
+                    "legend": {
+                        "orient": "top",
+                        "direction": "horizontal",
+                        "values": [
+                            5000,
+                            15000,
+                            30000
+                        ]
+                    }
+                },
+                "color": {
+                    "field": "origin",
+                    "type": "nominal",
+                    "title": "Flow Arrow Origin",
+                    "scale": {
+                        "domain": [
+                            "From Sydney (NSW)",
+                            "From Melbourne (VIC)"
+                        ],
+                        "range": [
+                            "#B91C1C",
+                            "#1D4ED8"
+                        ]
+                    },
+                    "legend": {
+                        "orient": "top",
+                        "direction": "horizontal"
+                    }
+                },
+                "tooltip": [
+                    {
+                        "field": "corridor",
+                        "type": "nominal",
+                        "title": "Migration Route"
+                    },
+                    {
+                        "field": "origin",
+                        "type": "nominal",
+                        "title": "Origin"
+                    },
+                    {
+                        "field": "dest",
+                        "type": "nominal",
+                        "title": "Destination"
+                    },
+                    {
+                        "field": "flow",
+                        "type": "quantitative",
+                        "title": "Annual Movers",
+                        "format": ",d"
+                    }
+                ]
+            }
+        },
+        {
+            "data": {
+                "values": [
+                    {
+                        "origin_code": "NSW",
+                        "origin": "From Sydney (NSW)",
+                        "corridor": "Sydney → Brisbane (34,800/yr)",
+                        "lon": 153.65,
+                        "lat": -28.60,
+                        "angle": -32,
+                        "size": 260
+                    },
+                    {
+                        "origin_code": "VIC",
+                        "origin": "From Melbourne (VIC)",
+                        "corridor": "Melbourne → Brisbane (22,400/yr)",
+                        "lon": 151.35,
+                        "lat": -28.70,
+                        "angle": 45,
+                        "size": 210
+                    },
+                    {
+                        "origin_code": "NSW",
+                        "origin": "From Sydney (NSW)",
+                        "corridor": "Sydney → Melbourne (18,200/yr)",
+                        "lon": 146.90,
+                        "lat": -37.80,
+                        "angle": -90,
+                        "size": 190
+                    },
+                    {
+                        "origin_code": "VIC",
+                        "origin": "From Melbourne (VIC)",
+                        "corridor": "Melbourne → Perth (9,600/yr)",
+                        "lon": 119.50,
+                        "lat": -33.70,
+                        "angle": -62,
+                        "size": 150
+                    },
+                    {
+                        "origin_code": "NSW",
+                        "origin": "From Sydney (NSW)",
+                        "corridor": "Sydney → Perth (8,900/yr)",
+                        "lon": 120.20,
+                        "lat": -32.45,
+                        "angle": -78,
+                        "size": 150
+                    },
+                    {
+                        "origin_code": "VIC",
+                        "origin": "From Melbourne (VIC)",
+                        "corridor": "Melbourne → Adelaide (6,800/yr)",
+                        "lon": 139.45,
+                        "lat": -35.85,
+                        "angle": -38,
+                        "size": 135
+                    },
+                    {
+                        "origin_code": "VIC",
+                        "origin": "From Melbourne (VIC)",
+                        "corridor": "Melbourne → Hobart (4,100/yr)",
+                        "lon": 146.75,
+                        "lat": -41.95,
+                        "angle": 148,
+                        "size": 120
+                    }
+                ]
+            },
+            "transform": [
+                {
+                    "filter": "OriginFilter == 'All' || datum.origin_code == OriginFilter"
                 }
             ],
             "mark": {
                 "type": "point",
+                "shape": "triangle-up",
                 "filled": true,
-                "size": 45
+                "opacity": 1,
+                "stroke": "#FFFFFF",
+                "strokeWidth": 1
             },
             "encoding": {
-                "x": { "field": "Date_Parsed", "type": "temporal" },
-                "y": { "field": "Net_Migration_Num", "type": "quantitative" },
-                "color": { "field": "State", "type": "nominal" }
+                "longitude": {
+                    "field": "lon",
+                    "type": "quantitative"
+                },
+                "latitude": {
+                    "field": "lat",
+                    "type": "quantitative"
+                },
+                "angle": {
+                    "field": "angle",
+                    "type": "quantitative",
+                    "scale": {
+                        "domain": [
+                            -180,
+                            180
+                        ],
+                        "range": [
+                            -180,
+                            180
+                        ]
+                    }
+                },
+                "size": {
+                    "field": "size",
+                    "type": "quantitative",
+                    "scale": {
+                        "domain": [
+                            100,
+                            300
+                        ],
+                        "range": [
+                            100,
+                            280
+                        ]
+                    },
+                    "legend": null
+                },
+                "color": {
+                    "field": "origin",
+                    "type": "nominal",
+                    "scale": {
+                        "domain": [
+                            "From Sydney (NSW)",
+                            "From Melbourne (VIC)"
+                        ],
+                        "range": [
+                            "#B91C1C",
+                            "#1D4ED8"
+                        ]
+                    },
+                    "legend": null
+                },
+                "tooltip": [
+                    {
+                        "field": "corridor",
+                        "type": "nominal",
+                        "title": "Direction of Flow"
+                    }
+                ]
             }
+        },
+        {
+            "data": {
+                "values": [
+                    {
+                        "city": "Brisbane",
+                        "lon": 153.02,
+                        "lat": -27.47,
+                        "type": "Arrival Magnet"
+                    },
+                    {
+                        "city": "Perth",
+                        "lon": 115.86,
+                        "lat": -31.95,
+                        "type": "Arrival Magnet"
+                    },
+                    {
+                        "city": "Adelaide",
+                        "lon": 138.60,
+                        "lat": -34.93,
+                        "type": "Arrival Magnet"
+                    },
+                    {
+                        "city": "Sydney",
+                        "lon": 151.21,
+                        "lat": -33.87,
+                        "type": "Departure Hub"
+                    },
+                    {
+                        "city": "Melbourne",
+                        "lon": 144.96,
+                        "lat": -37.81,
+                        "type": "Departure Hub"
+                    },
+                    {
+                        "city": "Hobart",
+                        "lon": 147.33,
+                        "lat": -42.88,
+                        "type": "Regional Hub"
+                    }
+                ]
+            },
+            "layer": [
+                {
+                    "mark": {
+                        "type": "circle",
+                        "size": 130,
+                        "fill": "#0F172A",
+                        "stroke": "#FFFFFF",
+                        "strokeWidth": 2.2
+                    },
+                    "encoding": {
+                        "longitude": {
+                            "field": "lon",
+                            "type": "quantitative"
+                        },
+                        "latitude": {
+                            "field": "lat",
+                            "type": "quantitative"
+                        },
+                        "tooltip": [
+                            {
+                                "field": "city",
+                                "type": "nominal",
+                                "title": "Capital Hub"
+                            },
+                            {
+                                "field": "type",
+                                "type": "nominal",
+                                "title": "Role"
+                            }
+                        ]
+                    }
+                },
+                {
+                    "mark": {
+                        "type": "text",
+                        "fontSize": 10.5,
+                        "fontWeight": 700,
+                        "fill": "#0F172A",
+                        "stroke": "#FAF7F2",
+                        "strokeWidth": 3,
+                        "strokeLinejoin": "round",
+                        "dx": 10,
+                        "dy": 2,
+                        "align": "left"
+                    },
+                    "encoding": {
+                        "longitude": {
+                            "field": "lon",
+                            "type": "quantitative"
+                        },
+                        "latitude": {
+                            "field": "lat",
+                            "type": "quantitative"
+                        },
+                        "text": {
+                            "field": "city",
+                            "type": "nominal"
+                        }
+                    }
+                },
+                {
+                    "mark": {
+                        "type": "text",
+                        "fontSize": 10.5,
+                        "fontWeight": 700,
+                        "fill": "#0F172A",
+                        "dx": 10,
+                        "dy": 2,
+                        "align": "left"
+                    },
+                    "encoding": {
+                        "longitude": {
+                            "field": "lon",
+                            "type": "quantitative"
+                        },
+                        "latitude": {
+                            "field": "lat",
+                            "type": "quantitative"
+                        },
+                        "text": {
+                            "field": "city",
+                            "type": "nominal"
+                        }
+                    }
+                }
+            ]
         }
     ]
 }

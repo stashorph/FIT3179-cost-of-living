@@ -1,123 +1,445 @@
 {
     "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-    "description": "Annual household spending growth for Discretionary vs Non-Discretionary spending across Australian states.",
-    "width": "container",
-    "height": 340,
+    "description": "2-band Horizon chart of Selected Living Cost Indexes (SLCI) by household type.",
     "background": "transparent",
+    "title": {
+        "text": "How to read this Horizon Chart: Values above 5% (Band 2, Dark Red) are folded down to the baseline and layered over 0–5% (Band 1, Light Orange).",
+        "fontSize": 11,
+        "fontWeight": 500,
+        "color": "#525E71",
+        "anchor": "start",
+        "offset": 12
+    },
+    "config": {
+        "font": "Plus Jakarta Sans, sans-serif",
+        "axis": {
+            "labelColor": "#525E71",
+            "titleColor": "#18202C",
+            "gridColor": "#E2DDD3",
+            "domainColor": "#CBD5E1"
+        },
+        "facet": {
+            "spacing": 10
+        },
+        "view": {
+            "stroke": "#E2DDD3",
+            "strokeWidth": 0.8
+        }
+    },
     "data": {
-        "url": "./data/household_spending_state.csv"
+        "values": [
+            {
+                "Date": "2019-06-01",
+                "Household": "Employee Households",
+                "LCI": 1.6
+            },
+            {
+                "Date": "2019-12-01",
+                "Household": "Employee Households",
+                "LCI": 1.3
+            },
+            {
+                "Date": "2020-06-01",
+                "Household": "Employee Households",
+                "LCI": -2.1
+            },
+            {
+                "Date": "2020-12-01",
+                "Household": "Employee Households",
+                "LCI": 0.5
+            },
+            {
+                "Date": "2021-06-01",
+                "Household": "Employee Households",
+                "LCI": 3.4
+            },
+            {
+                "Date": "2021-12-01",
+                "Household": "Employee Households",
+                "LCI": 2.6
+            },
+            {
+                "Date": "2022-06-01",
+                "Household": "Employee Households",
+                "LCI": 5.0
+            },
+            {
+                "Date": "2022-12-01",
+                "Household": "Employee Households",
+                "LCI": 9.3
+            },
+            {
+                "Date": "2023-06-01",
+                "Household": "Employee Households",
+                "LCI": 9.6
+            },
+            {
+                "Date": "2023-12-01",
+                "Household": "Employee Households",
+                "LCI": 6.9
+            },
+            {
+                "Date": "2024-06-01",
+                "Household": "Employee Households",
+                "LCI": 6.2
+            },
+            {
+                "Date": "2024-12-01",
+                "Household": "Employee Households",
+                "LCI": 4.7
+            },
+            {
+                "Date": "2025-06-01",
+                "Household": "Employee Households",
+                "LCI": 3.8
+            },
+            {
+                "Date": "2026-01-01",
+                "Household": "Employee Households",
+                "LCI": 3.4
+            },
+            {
+                "Date": "2019-06-01",
+                "Household": "Age Pensioner Households",
+                "LCI": 1.8
+            },
+            {
+                "Date": "2019-12-01",
+                "Household": "Age Pensioner Households",
+                "LCI": 2.2
+            },
+            {
+                "Date": "2020-06-01",
+                "Household": "Age Pensioner Households",
+                "LCI": 0.6
+            },
+            {
+                "Date": "2020-12-01",
+                "Household": "Age Pensioner Households",
+                "LCI": 1.2
+            },
+            {
+                "Date": "2021-06-01",
+                "Household": "Age Pensioner Households",
+                "LCI": 3.3
+            },
+            {
+                "Date": "2021-12-01",
+                "Household": "Age Pensioner Households",
+                "LCI": 3.4
+            },
+            {
+                "Date": "2022-06-01",
+                "Household": "Age Pensioner Households",
+                "LCI": 5.9
+            },
+            {
+                "Date": "2022-12-01",
+                "Household": "Age Pensioner Households",
+                "LCI": 7.3
+            },
+            {
+                "Date": "2023-06-01",
+                "Household": "Age Pensioner Households",
+                "LCI": 6.7
+            },
+            {
+                "Date": "2023-12-01",
+                "Household": "Age Pensioner Households",
+                "LCI": 4.4
+            },
+            {
+                "Date": "2024-06-01",
+                "Household": "Age Pensioner Households",
+                "LCI": 4.1
+            },
+            {
+                "Date": "2024-12-01",
+                "Household": "Age Pensioner Households",
+                "LCI": 3.1
+            },
+            {
+                "Date": "2025-06-01",
+                "Household": "Age Pensioner Households",
+                "LCI": 2.9
+            },
+            {
+                "Date": "2026-01-01",
+                "Household": "Age Pensioner Households",
+                "LCI": 2.7
+            },
+            {
+                "Date": "2019-06-01",
+                "Household": "Other Govt Transfer Recipients",
+                "LCI": 1.9
+            },
+            {
+                "Date": "2019-12-01",
+                "Household": "Other Govt Transfer Recipients",
+                "LCI": 2.3
+            },
+            {
+                "Date": "2020-06-01",
+                "Household": "Other Govt Transfer Recipients",
+                "LCI": 0.1
+            },
+            {
+                "Date": "2020-12-01",
+                "Household": "Other Govt Transfer Recipients",
+                "LCI": 1.6
+            },
+            {
+                "Date": "2021-06-01",
+                "Household": "Other Govt Transfer Recipients",
+                "LCI": 3.7
+            },
+            {
+                "Date": "2021-12-01",
+                "Household": "Other Govt Transfer Recipients",
+                "LCI": 3.2
+            },
+            {
+                "Date": "2022-06-01",
+                "Household": "Other Govt Transfer Recipients",
+                "LCI": 5.6
+            },
+            {
+                "Date": "2022-12-01",
+                "Household": "Other Govt Transfer Recipients",
+                "LCI": 7.4
+            },
+            {
+                "Date": "2023-06-01",
+                "Household": "Other Govt Transfer Recipients",
+                "LCI": 7.1
+            },
+            {
+                "Date": "2023-12-01",
+                "Household": "Other Govt Transfer Recipients",
+                "LCI": 5.3
+            },
+            {
+                "Date": "2024-06-01",
+                "Household": "Other Govt Transfer Recipients",
+                "LCI": 4.9
+            },
+            {
+                "Date": "2024-12-01",
+                "Household": "Other Govt Transfer Recipients",
+                "LCI": 3.8
+            },
+            {
+                "Date": "2025-06-01",
+                "Household": "Other Govt Transfer Recipients",
+                "LCI": 3.3
+            },
+            {
+                "Date": "2026-01-01",
+                "Household": "Other Govt Transfer Recipients",
+                "LCI": 3.0
+            },
+            {
+                "Date": "2019-06-01",
+                "Household": "Self-Funded Retirees",
+                "LCI": 1.8
+            },
+            {
+                "Date": "2019-12-01",
+                "Household": "Self-Funded Retirees",
+                "LCI": 2.0
+            },
+            {
+                "Date": "2020-06-01",
+                "Household": "Self-Funded Retirees",
+                "LCI": -0.3
+            },
+            {
+                "Date": "2020-12-01",
+                "Household": "Self-Funded Retirees",
+                "LCI": 0.9
+            },
+            {
+                "Date": "2021-06-01",
+                "Household": "Self-Funded Retirees",
+                "LCI": 3.6
+            },
+            {
+                "Date": "2021-12-01",
+                "Household": "Self-Funded Retirees",
+                "LCI": 3.4
+            },
+            {
+                "Date": "2022-06-01",
+                "Household": "Self-Funded Retirees",
+                "LCI": 5.8
+            },
+            {
+                "Date": "2022-12-01",
+                "Household": "Self-Funded Retirees",
+                "LCI": 7.6
+            },
+            {
+                "Date": "2023-06-01",
+                "Household": "Self-Funded Retirees",
+                "LCI": 6.3
+            },
+            {
+                "Date": "2023-12-01",
+                "Household": "Self-Funded Retirees",
+                "LCI": 4.0
+            },
+            {
+                "Date": "2024-06-01",
+                "Household": "Self-Funded Retirees",
+                "LCI": 3.8
+            },
+            {
+                "Date": "2024-12-01",
+                "Household": "Self-Funded Retirees",
+                "LCI": 2.8
+            },
+            {
+                "Date": "2025-06-01",
+                "Household": "Self-Funded Retirees",
+                "LCI": 2.6
+            },
+            {
+                "Date": "2026-01-01",
+                "Household": "Self-Funded Retirees",
+                "LCI": 2.4
+            }
+        ]
     },
     "transform": [
         {
-            "filter": "datum.Measure == 'Annual_Pct_Change' && (datum.Category == 'Non Discretionary' || datum.Category == 'Discretionary')"
-        },
-        {
             "calculate": "toDate(datum.Date)",
-            "as": "Date_Parsed"
+            "as": "ParsedDate"
         },
         {
-            "calculate": "toNumber(datum.Value)",
-            "as": "Spending_Growth_Pct"
-        }
-    ],
-    "params": [
-        {
-            "name": "State_Filter",
-            "value": "Australia",
-            "bind": {
-                "input": "select",
-                "options": [
-                    "Australia",
-                    "New South Wales",
-                    "Victoria",
-                    "Queensland",
-                    "Western Australia",
-                    "South Australia",
-                    "Tasmania",
-                    "Australian Capital Territory",
-                    "Northern Territory"
-                ],
-                "name": "Location: "
-            }
-        }
-    ],
-    "layer": [
-        {
-            "mark": {
-                "type": "rule",
-                "color": "rgba(44, 44, 44, 0.2)",
-                "strokeDash": [3, 3]
-            },
-            "encoding": {
-                "y": { "datum": 0 }
-            }
+            "calculate": "clamp(datum.LCI, 0, 5)",
+            "as": "Band1"
         },
         {
-            "transform": [
-                {
-                    "filter": "datum.State == State_Filter"
-                }
+            "calculate": "datum.LCI > 5 ? datum.LCI - 5 : 0",
+            "as": "Band2"
+        }
+    ],
+    "facet": {
+        "row": {
+            "field": "Household",
+            "type": "nominal",
+            "title": null,
+            "sort": [
+                "Employee Households",
+                "Other Govt Transfer Recipients",
+                "Age Pensioner Households",
+                "Self-Funded Retirees"
             ],
-            "mark": {
-                "type": "line",
-                "interpolate": "monotone",
-                "strokeWidth": 2.5
-            },
-            "encoding": {
-                "x": {
-                    "field": "Date_Parsed",
-                    "type": "temporal",
-                    "title": null,
-                    "axis": {
-                        "format": "%Y",
-                        "tickCount": 6,
-                        "grid": false
-                    }
+            "header": {
+                "labelAngle": 0,
+                "labelAlign": "left",
+                "labelFontWeight": 700,
+                "labelFontSize": 11.5,
+                "labelColor": "#18202C"
+            }
+        }
+    },
+    "spec": {
+        "width": "container",
+        "height": 68,
+        "layer": [
+            {
+                "mark": {
+                    "type": "area",
+                    "interpolate": "monotone",
+                    "opacity": 0.65
                 },
-                "y": {
-                    "field": "Spending_Growth_Pct",
-                    "type": "quantitative",
-                    "title": "Annual Nominal Spending Growth (%)",
-                    "axis": { "gridColor": "rgba(0,0,0,0.06)" }
-                },
-                "color": {
-                    "field": "Category",
-                    "type": "nominal",
-                    "title": "Spending Type",
-                    "scale": {
-                        "domain": ["Non Discretionary", "Discretionary"],
-                        "range": ["#C85A5A", "#2D5A60"]
+                "encoding": {
+                    "x": {
+                        "field": "ParsedDate",
+                        "type": "temporal",
+                        "title": null,
+                        "axis": {
+                            "format": "%Y",
+                            "tickCount": 7
+                        }
                     },
-                    "legend": {
-                        "orient": "top-left",
-                        "labelFontSize": 11,
-                        "symbolSize": 80
+                    "y": {
+                        "field": "Band1",
+                        "type": "quantitative",
+                        "scale": {
+                            "domain": [
+                                0,
+                                5
+                            ]
+                        },
+                        "title": "0–5%",
+                        "axis": {
+                            "tickCount": 2,
+                            "labelFontSize": 9.5
+                        }
+                    },
+                    "color": {
+                        "datum": "Band 1: Moderate (0% to 5%)",
+                        "type": "nominal",
+                        "scale": {
+                            "domain": [
+                                "Band 1: Moderate (0% to 5%)",
+                                "Band 2: Severe Excess (5% to 10%+)"
+                            ],
+                            "range": [
+                                "#F59E0B",
+                                "#B5462F"
+                            ]
+                        },
+                        "legend": {
+                            "title": "Horizon Fold Bands",
+                            "orient": "top",
+                            "titleFontWeight": 600
+                        }
                     }
-                },
-                "tooltip": [
-                    { "field": "State", "type": "nominal", "title": "State" },
-                    { "field": "Category", "type": "nominal", "title": "Category" },
-                    { "field": "Date_Parsed", "type": "temporal", "title": "Month", "format": "%B %Y" },
-                    { "field": "Spending_Growth_Pct", "type": "quantitative", "title": "Annual Growth (%)", "format": ".2f" }
-                ]
-            }
-        },
-        {
-            "transform": [
-                {
-                    "filter": "datum.State == State_Filter"
                 }
-            ],
-            "mark": {
-                "type": "point",
-                "filled": true,
-                "size": 30
             },
-            "encoding": {
-                "x": { "field": "Date_Parsed", "type": "temporal" },
-                "y": { "field": "Spending_Growth_Pct", "type": "quantitative" },
-                "color": { "field": "Category", "type": "nominal" }
+            {
+                "mark": {
+                    "type": "area",
+                    "interpolate": "monotone",
+                    "opacity": 0.9
+                },
+                "encoding": {
+                    "x": {
+                        "field": "ParsedDate",
+                        "type": "temporal"
+                    },
+                    "y": {
+                        "field": "Band2",
+                        "type": "quantitative"
+                    },
+                    "color": {
+                        "datum": "Band 2: Severe Excess (5% to 10%+)",
+                        "type": "nominal"
+                    },
+                    "tooltip": [
+                        {
+                            "field": "Household",
+                            "type": "nominal",
+                            "title": "Household Group"
+                        },
+                        {
+                            "field": "ParsedDate",
+                            "type": "temporal",
+                            "title": "Quarter",
+                            "format": "%b %Y"
+                        },
+                        {
+                            "field": "LCI",
+                            "type": "quantitative",
+                            "title": "Annual Living Cost Growth (%)",
+                            "format": "+.1f"
+                        }
+                    ]
+                }
             }
-        }
-    ]
+        ]
+    }
 }
