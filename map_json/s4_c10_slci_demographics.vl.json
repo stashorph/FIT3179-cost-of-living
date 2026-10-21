@@ -3,10 +3,13 @@
     "description": "2-band Horizon chart of Selected Living Cost Indexes (SLCI) by household type.",
     "background": "transparent",
     "title": {
-        "text": "How to read this Horizon Chart: Values above 5% (Band 2, Dark Red) are folded down to the baseline and layered over 0–5% (Band 1, Light Orange).",
-        "fontSize": 11,
-        "fontWeight": 500,
-        "color": "#525E71",
+        "text": "Living Cost Rate by Household Type — 2-Band Horizon Chart",
+        "subtitle": "Values exceeding 5% (Band 2, Dark Red) are folded down over 0–5% (Band 1, Light Orange)",
+        "fontSize": 12,
+        "subtitleFontSize": 10.5,
+        "fontWeight": 600,
+        "color": "#18202C",
+        "subtitleColor": "#525E71",
         "anchor": "start",
         "offset": 12
     },

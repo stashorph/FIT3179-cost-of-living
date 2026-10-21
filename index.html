@@ -18,7 +18,7 @@
     <script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
     <script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
 
-    <link rel="stylesheet" href="css/styles.css?v=3" />
+    <link rel="stylesheet" href="css/styles.css?v=4" />
 </head>
 
 <body>
@@ -259,24 +259,25 @@
                 </p>
             </div>
 
-            <!-- Chart 10 & 11 Spread -->
+            <!-- Chart 10: Living Cost Rate by Demographic (Horizon Chart) -->
             <div class="chart-breakout">
-                <div class="editorial-chart-pair">
-                    <div class="native-chart-block">
-                        <div class="chart-header">
-                            <h3 class="chart-title">Essential vs. Discretionary Spending Growth</h3>
-                            <p class="chart-dek">Monthly nominal household spending changes by state and spending flexibility.</p>
-                        </div>
-                        <div id="vis-s4-c10" class="vis-container"></div>
+                <div class="native-chart-block">
+                    <div class="chart-header">
+                        <h3 class="chart-title">Living Cost Surge by Household Type (SLCI)</h3>
+                        <p class="chart-dek">2-band horizon analysis tracking out-of-pocket living cost indices across four demographic groups.</p>
                     </div>
+                    <div id="vis-s4-c10" class="vis-container"></div>
+                </div>
+            </div>
 
-                    <div class="native-chart-block">
-                        <div class="chart-header slate-accent">
-                            <h3 class="chart-title">Price Growth Volatility Across Categories</h3>
-                            <p class="chart-dek">Inflation range spread showing minimum, peak, and 10-year mean rates across CPI categories.</p>
-                        </div>
-                        <div id="vis-s4-c11" class="vis-container"></div>
+            <!-- Chart 11: Volatility Spread Across Categories -->
+            <div class="chart-breakout">
+                <div class="native-chart-block">
+                    <div class="chart-header slate-accent">
+                        <h3 class="chart-title">Price Growth Volatility Across Categories</h3>
+                        <p class="chart-dek">Interquartile range (IQR), full min-max spread, and typical middle year across the 11 CPI categories.</p>
                     </div>
+                    <div id="vis-s4-c11" class="vis-container"></div>
                 </div>
             </div>
 
@@ -320,7 +321,7 @@
         </div>
     </footer>
 
-    <script src="js/main.js?v=3"></script>
+    <script src="js/main.js?v=4"></script>
 </body>
 
 </html>

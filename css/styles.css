@@ -282,6 +282,12 @@ body {
     width: 100%;
     min-height: 340px;
     background: transparent;
+    overflow-x: auto;
+}
+
+.vis-container svg {
+    max-width: 100%;
+    height: auto;
 }
 
 /* Remove deprecated badges */
