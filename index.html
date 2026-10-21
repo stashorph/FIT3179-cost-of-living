@@ -18,7 +18,7 @@
     <script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
     <script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
 
-    <link rel="stylesheet" href="css/styles.css?v=4" />
+    <link rel="stylesheet" href="css/styles.css?v=5" />
 </head>
 
 <body>
@@ -261,23 +261,53 @@
 
             <!-- Chart 10: Living Cost Rate by Demographic (Horizon Chart) -->
             <div class="chart-breakout">
-                <div class="native-chart-block">
-                    <div class="chart-header">
-                        <h3 class="chart-title">Living Cost Surge by Household Type (SLCI)</h3>
-                        <p class="chart-dek">2-band horizon analysis tracking out-of-pocket living cost indices across four demographic groups.</p>
+                <div class="editorial-spread reversed">
+                    <div class="story-aside">
+                        <h3 class="sub-headline">The Mortgaged Majority</h3>
+                        <p class="prose-text">
+                            Standard CPI calculations exclude mortgage interest charges, masking the true financial pressure on everyday families.
+                            The ABS Selected Living Cost Indexes (SLCI) track actual household expenditure, exposing how rapid policy tightening
+                            penalised employee households far more severely than asset-owning retirees.
+                        </p>
+                        <div class="stat-callout">
+                            <span class="num">+9.6%</span>
+                            <span class="label">Peak annual surge in living costs for employee households during the rate-hiking cycle</span>
+                        </div>
                     </div>
-                    <div id="vis-s4-c10" class="vis-container"></div>
+
+                    <div class="native-chart-block">
+                        <div class="chart-header">
+                            <h3 class="chart-title">Living Cost Surge by Household Type (SLCI)</h3>
+                            <p class="chart-dek">2-band horizon analysis tracking out-of-pocket living cost indices across four demographic groups.</p>
+                        </div>
+                        <div id="vis-s4-c10" class="vis-container"></div>
+                    </div>
                 </div>
             </div>
 
             <!-- Chart 11: Volatility Spread Across Categories -->
             <div class="chart-breakout">
-                <div class="native-chart-block">
-                    <div class="chart-header slate-accent">
-                        <h3 class="chart-title">Price Growth Volatility Across Categories</h3>
-                        <p class="chart-dek">Interquartile range (IQR), full min-max spread, and typical middle year across the 11 CPI categories.</p>
+                <div class="editorial-spread">
+                    <div class="native-chart-block">
+                        <div class="chart-header slate-accent">
+                            <h3 class="chart-title">Price Growth Volatility Across Categories</h3>
+                            <p class="chart-dek">Interquartile range (IQR), full min-max spread, and typical middle year across the 11 CPI categories.</p>
+                        </div>
+                        <div id="vis-s4-c11" class="vis-container"></div>
                     </div>
-                    <div id="vis-s4-c11" class="vis-container"></div>
+
+                    <div class="story-aside">
+                        <h3 class="sub-headline">Unequal Price Shocks</h3>
+                        <p class="prose-text">
+                            Across the 11 major expenditure groups, volatility tells the true story of household instability. While energy
+                            and automotive fuel swung wildly due to geopolitical shocks, non-discretionary categories like food and rent
+                            rarely retreated, creating a ratchet effect that permanently lifted everyday expenses.
+                        </p>
+                        <div class="stat-callout slate-accent">
+                            <span class="num slate">17.8 pts</span>
+                            <span class="label">Peak-to-trough inflation spread in transport and automotive fuel over the decade</span>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -321,7 +351,7 @@
         </div>
     </footer>
 
-    <script src="js/main.js?v=4"></script>
+    <script src="js/main.js?v=5"></script>
 </body>
 
 </html>

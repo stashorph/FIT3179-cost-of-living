@@ -436,6 +436,14 @@ body {
     color: var(--text-secondary);
 }
 
+.stat-callout.slate-accent {
+    border-left-color: var(--accent-slate);
+}
+
+.stat-callout.slate-accent .num {
+    color: var(--accent-slate);
+}
+
 /* ================= NARRATIVE INTERLUDES (REPLACING PLACEHOLDERS) ================= */
 .editorial-interlude {
     margin: 64px auto;
