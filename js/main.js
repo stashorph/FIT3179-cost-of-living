@@ -27,10 +27,11 @@ document.addEventListener("DOMContentLoaded", () => {
                 console.log(`${name} rendered successfully!`);
             })
             .catch((err) => {
-                console.error(`Error loading ${name}:`, err);
+                console.warn(`Chart spec unavailable for ${name} (${spec}):`, err);
                 container.innerHTML = `
-                    <div style="color: #DC2626; background: #FEF2F2; border: 1px solid #FCA5A5; padding: 12px; border-radius: 6px; font-family: monospace; font-size: 0.8rem;">
-                        <strong>${name} Load Error:</strong> ${err.message}
+                    <div style="background: #F8FAFC; border: 1.5px dashed #CBD5E1; border-radius: 8px; padding: 36px 20px; text-align: center; color: #64748B;">
+                        <div style="font-family: var(--font-mono, monospace); font-size: 0.82rem; font-weight: 600; color: #475569; letter-spacing: 0.05em; text-transform: uppercase;">${name} • Specification In Progress</div>
+                        <div style="font-size: 0.78rem; color: #94A3B8; margin-top: 6px;">Visualization spec file <code>${spec}</code> will render here once created.</div>
                     </div>
                 `;
             });

@@ -188,7 +188,7 @@ body {
 /* ================= FEATURE LAYOUTS (STORYTELLING) ================= */
 .story-feature {
     display: grid;
-    grid-template-columns: 1fr 1.5fr;
+    grid-template-columns: 1.5fr 1fr;
     gap: 40px;
     align-items: center;
     margin-bottom: 48px;
@@ -196,6 +196,10 @@ body {
 
 .story-feature.alt-layout {
     grid-template-columns: 1fr 1.5fr;
+}
+
+.story-feature.two-charts {
+    grid-template-columns: 1fr 1fr;
 }
 
 .story-text .badge {
