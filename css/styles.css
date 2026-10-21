@@ -1,23 +1,19 @@
 :root {
-    /* Editorial Paper & Ink Palette (Strong Figure-Ground Separation) */
-    --bg-page: #F6F4EF;
-    /* Warm archival newsprint background */
+    /* Editorial Paper & Palette */
+    --bg-page: #FBF9F5;
+    --bg-alt: #F2EFE8;
     --bg-card: #FFFFFF;
-    /* Crisp white figure cards */
-    --bg-hero: #141B29;
-    /* Deep slate navy header */
-    --text-main: #18202C;
-    --text-muted: #525E71;
-    --border-subtle: #E2DDD3;
+    --bg-hero: #0F172A;
+    --text-main: #1E293B;
+    --text-muted: #64748B;
+    --border-subtle: #E2E8F0;
+    --border-dark: #CBD5E1;
 
-    /* Semantic Data Palette (Colorblind-Safe Essentials vs. Luxuries) */
-    --accent-crimson: #C83E3B;
-    /* Essentials / High Inflation */
-    --accent-teal: #1D7874;
-    /* Discretionary / Recovery */
+    /* Semantic Accents */
+    --accent-crimson: #DC2626;
+    --accent-teal: #0D9488;
     --accent-amber: #D97706;
-    /* Interest Rate / Employee Stress */
-    --accent-navy: #2A4365;
+    --accent-navy: #1E3A8A;
 
     /* Typography */
     --font-display: 'Fraunces', Georgia, serif;
@@ -31,88 +27,104 @@
     padding: 0;
 }
 
-html,
 body {
     background-color: var(--bg-page);
     color: var(--text-main);
     font-family: var(--font-sans);
     font-size: 16px;
-    line-height: 1.65;
-    overflow-x: hidden;
-    /* Prevents horizontal scroll on small laptop screens */
+    line-height: 1.7;
 }
 
 .container {
-    max-width: 1180px;
+    max-width: 1200px;
     margin: 0 auto;
     padding: 0 24px;
 }
 
 /* ================= HERO HEADER ================= */
 .hero {
+    position: relative;
     background-color: var(--bg-hero);
     color: #F8FAFC;
-    padding: 56px 0 48px;
-    border-bottom: 4px solid var(--accent-crimson);
+    padding: 80px 0 64px;
+    border-bottom: 5px solid var(--accent-crimson);
 }
 
-.eyebrow {
+.hero-backdrop {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    opacity: 0.04;
+    background-image: radial-gradient(#FFFFFF 1px, transparent 1px);
+    background-size: 24px 24px;
+    pointer-events: none;
+}
+
+.eyebrow-badge {
+    display: inline-block;
     font-family: var(--font-mono);
-    font-size: 0.78rem;
+    font-size: 0.75rem;
     letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: #94A3B8;
-    margin-bottom: 14px;
+    color: #38BDF8;
+    background: rgba(56, 189, 248, 0.1);
+    padding: 4px 12px;
+    border-radius: 4px;
+    margin-bottom: 20px;
 }
 
 .hero-title {
     font-family: var(--font-display);
-    font-size: clamp(2rem, 3.4vw, 2.85rem);
+    font-size: clamp(2.5rem, 5vw, 4rem);
     font-weight: 700;
-    line-height: 1.15;
-    max-width: 24ch;
-    margin-bottom: 18px;
+    line-height: 1.1;
+    margin-bottom: 8px;
+}
+
+.hero-subtitle {
+    font-family: var(--font-display);
+    font-size: clamp(1.2rem, 2.5vw, 1.8rem);
+    font-weight: 400;
+    font-style: italic;
+    color: #94A3B8;
+    margin-bottom: 24px;
 }
 
 .hero-lead {
-    font-size: 1.08rem;
+    font-size: 1.15rem;
     color: #CBD5E1;
-    max-width: 72ch;
-    margin-bottom: 32px;
-}
-
-.hero-lead strong {
-    color: #FFFFFF;
+    max-width: 75ch;
+    margin-bottom: 40px;
 }
 
 /* KPI Strip */
 .kpi-grid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
     gap: 16px;
 }
 
 .kpi-card {
-    background: rgba(255, 255, 255, 0.06);
-    border: 1px solid rgba(255, 255, 255, 0.14);
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 8px;
-    padding: 16px 18px;
-    display: flex;
-    flex-direction: column;
+    padding: 20px;
 }
 
 .kpi-label {
-    font-size: 0.78rem;
+    font-size: 0.75rem;
     text-transform: uppercase;
-    letter-spacing: 0.06em;
+    letter-spacing: 0.08em;
     color: #94A3B8;
 }
 
 .kpi-value {
     font-family: var(--font-mono);
-    font-size: 1.65rem;
+    font-size: 1.8rem;
     font-weight: 600;
-    margin: 4px 0;
+    margin: 6px 0;
+    display: block;
 }
 
 .accent-crimson {
@@ -129,148 +141,238 @@ body {
 
 .kpi-sub {
     font-size: 0.82rem;
-    color: #CBD5E1;
-    line-height: 1.35;
+    color: #94A3B8;
 }
 
 /* ================= STORY SECTIONS ================= */
 .story-section {
-    padding: 52px 0 28px;
+    padding: 80px 0;
     border-bottom: 1px solid var(--border-subtle);
 }
 
-.section-header {
-    margin-bottom: 28px;
-    max-width: 76ch;
+.bg-alt {
+    background-color: var(--bg-alt);
 }
 
-.section-number {
+.section-lead-block {
+    max-width: 75ch;
+    margin-bottom: 48px;
+}
+
+.chapter-tag {
     font-family: var(--font-mono);
     font-size: 0.8rem;
     font-weight: 600;
     color: var(--accent-crimson);
-    letter-spacing: 0.1em;
+    letter-spacing: 0.15em;
     display: block;
-    margin-bottom: 6px;
-}
-
-.section-header h2 {
-    font-family: var(--font-display);
-    font-size: 1.85rem;
-    line-height: 1.2;
-    color: var(--text-main);
-    margin-bottom: 10px;
-}
-
-.section-intro {
-    color: var(--text-muted);
-    font-size: 1rem;
-    max-width: 68ch;
-    /* Optimal 60-75 character line length for readability */
-}
-
-/* ================= SYMMETRIC ALIGNED GRIDS ================= */
-.grid-2col {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 24px;
-    margin-bottom: 24px;
-    align-items: stretch;
-}
-
-.grid-1col {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr);
-    margin-bottom: 24px;
-}
-
-/* Figure-Ground Card Container */
-.vis-card {
-    background: var(--bg-card);
-    border: 1px solid var(--border-subtle);
-    border-radius: 10px;
-    padding: 22px 24px;
-    box-shadow: 0 2px 8px rgba(20, 27, 41, 0.04);
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-}
-
-.card-header {
-    margin-bottom: 14px;
-}
-
-.idiom-badge {
-    display: inline-block;
-    font-family: var(--font-mono);
-    font-size: 0.72rem;
-    color: var(--accent-navy);
-    background: #EDF2F7;
-    padding: 3px 8px;
-    border-radius: 4px;
     margin-bottom: 8px;
 }
 
-.card-header h3 {
+.section-lead-block h2 {
     font-family: var(--font-display);
-    font-size: 1.22rem;
-    font-weight: 600;
-    color: var(--text-main);
+    font-size: 2.25rem;
+    line-height: 1.2;
+    margin-bottom: 16px;
+}
+
+.has-dropcap::first-letter {
+    font-family: var(--font-display);
+    font-size: 3.5rem;
+    float: left;
+    line-height: 0.8;
+    padding-right: 12px;
+    color: var(--accent-navy);
+}
+
+/* ================= FEATURE LAYOUTS (STORYTELLING) ================= */
+.story-feature {
+    display: grid;
+    grid-template-columns: 1fr 1.5fr;
+    gap: 40px;
+    align-items: center;
+    margin-bottom: 48px;
+}
+
+.story-feature.alt-layout {
+    grid-template-columns: 1fr 1.5fr;
+}
+
+.story-text .badge {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    background: #E2E8F0;
+    padding: 2px 8px;
+    border-radius: 4px;
+    color: var(--text-muted);
+}
+
+.story-text h3 {
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    margin: 8px 0 12px;
+}
+
+.editorial-quote {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-size: 1.1rem;
+    border-left: 3px solid var(--accent-crimson);
+    padding-left: 16px;
+    margin: 20px 0;
+    color: #334155;
+}
+
+.stat-callout {
+    margin-top: 24px;
+    padding: 16px;
+    background: #FEF2F2;
+    border-radius: 8px;
+    border: 1px solid #FCA5A5;
+    display: inline-block;
+}
+
+.stat-callout .num {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--accent-crimson);
+}
+
+.stat-callout .label {
+    font-size: 0.85rem;
+    color: #7F1D1D;
+}
+
+/* ================= VIS CARDS ================= */
+.vis-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-subtle);
+    border-radius: 12px;
+    padding: 24px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+}
+
+.card-header {
+    margin-bottom: 16px;
+}
+
+.idiom-badge {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    color: var(--accent-navy);
+    display: block;
     margin-bottom: 4px;
 }
 
+.card-header h3,
+.card-header h4 {
+    font-family: var(--font-display);
+    font-size: 1.2rem;
+    color: var(--text-main);
+}
+
 .card-subtitle {
-    font-size: 0.86rem;
+    font-size: 0.85rem;
     color: var(--text-muted);
 }
 
 .vis-container {
     width: 100%;
-    min-height: 320px;
+    min-height: 300px;
+    margin-top: 12px;
+}
+
+/* GRIDS */
+.map-grid-narrative,
+.chart-matrix {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(480px, 1fr));
+    gap: 24px;
+    margin-bottom: 32px;
+}
+
+.full-width-feature {
+    grid-template-columns: 2fr 1fr;
+}
+
+/* ================= ILLUSTRATION PLACEHOLDERS ================= */
+.illustration-placeholder {
+    border: 2px dashed var(--border-dark);
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.5);
+    padding: 32px;
     display: flex;
     align-items: center;
     justify-content: center;
-    margin: 8px 0 14px;
+    text-align: center;
 }
 
-.card-caption {
-    font-size: 0.88rem;
+.banner-style {
+    margin: 40px 0;
+    width: 100%;
+}
+
+.side-style {
+    height: 100%;
+}
+
+.illustration-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    max-width: 400px;
+}
+
+.placeholder-icon {
+    width: 40px;
+    height: 40px;
+    stroke: var(--text-muted);
+}
+
+.placeholder-text h4 {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    letter-spacing: 0.08em;
     color: var(--text-muted);
-    background: #FAF8F5;
-    border-left: 3px solid var(--accent-crimson);
-    padding: 10px 12px;
-    border-radius: 0 6px 6px 0;
+    margin-bottom: 4px;
 }
 
-.card-caption strong {
-    color: var(--text-main);
+.placeholder-text p {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    font-style: italic;
+}
+
+.margin-top-lg {
+    margin-top: 48px;
 }
 
 /* ================= FOOTER ================= */
 .site-footer {
-    background: #141B29;
-    color: #CBD5E1;
-    padding: 44px 0;
-    margin-top: 40px;
+    background: var(--bg-hero);
+    color: #94A3B8;
+    padding: 60px 0;
     font-size: 0.9rem;
 }
 
 .footer-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 36px;
+    gap: 40px;
 }
 
 .site-footer h4 {
     font-family: var(--font-display);
     color: #FFFFFF;
-    font-size: 1.05rem;
-    margin-bottom: 10px;
+    margin-bottom: 12px;
 }
 
 .authorship {
-    margin-top: 14px;
-    color: #94A3B8;
+    margin-top: 16px;
     font-size: 0.85rem;
 }
 
@@ -280,25 +382,14 @@ body {
 
 .source-list li {
     margin-bottom: 8px;
-    line-height: 1.45;
 }
 
-.source-list a {
-    color: #38BDF8;
-    text-decoration: none;
-}
+@media (max-width: 900px) {
 
-.source-list a:hover {
-    text-decoration: underline;
-}
-
-@media (max-width: 960px) {
-    .kpi-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
-
-    .grid-2col,
-    .footer-grid {
+    .story-feature,
+    .full-width-feature,
+    .map-grid-narrative,
+    .chart-matrix {
         grid-template-columns: 1fr;
     }
 }
