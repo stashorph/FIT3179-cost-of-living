@@ -193,7 +193,7 @@
                     "mark": {
                         "type": "point",
                         "shape": "circle",
-                        "color": "#1D7874",
+                        "color": "#2D5A60",
                         "filled": false,
                         "strokeWidth": 2.5
                     },
@@ -280,8 +280,8 @@
                             "Luxuries (Teal Ring)"
                         ],
                         "range": [
-                            "#B5462F",
-                            "#1D7874"
+                            "#C85A5A",
+                            "#2D5A60"
                         ]
                     },
                     "legend": {

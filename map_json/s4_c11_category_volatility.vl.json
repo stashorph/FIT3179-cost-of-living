@@ -1,0 +1,107 @@
+{
+    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+    "description": "Price growth volatility and inflation range across 11 primary CPI expenditure categories in Australia.",
+    "width": "container",
+    "height": 340,
+    "background": "transparent",
+    "data": {
+        "url": "./data/cpi_slim.csv"
+    },
+    "transform": [
+        {
+            "filter": "datum.Region == 'Australia' && datum.Category != 'All groups CPI' && datum.Category != 'Non-discretionary' && datum.Category != 'Discretionary'"
+        },
+        {
+            "calculate": "datum.Category == 'Food and non-alcoholic beverages' ? 'Food & Staples' : datum.Category == 'Alcohol and tobacco' ? 'Alcohol & Tobacco' : datum.Category == 'Clothing and footwear' ? 'Clothing & Footwear' : datum.Category == 'Furnishings, household equipment and services' ? 'Furnishings' : datum.Category == 'Insurance and financial services' ? 'Insurance & Finance' : datum.Category == 'Recreation and culture' ? 'Recreation' : datum.Category",
+            "as": "ShortCategory"
+        },
+        {
+            "aggregate": [
+                { "op": "min", "field": "Annual_CPI_Pct", "as": "Min_Rate" },
+                { "op": "max", "field": "Annual_CPI_Pct", "as": "Max_Rate" },
+                { "op": "mean", "field": "Annual_CPI_Pct", "as": "Mean_Rate" }
+            ],
+            "groupby": ["ShortCategory"]
+        },
+        {
+            "calculate": "datum.Max_Rate - datum.Min_Rate",
+            "as": "Volatility_Spread"
+        }
+    ],
+    "encoding": {
+        "y": {
+            "field": "ShortCategory",
+            "type": "nominal",
+            "title": null,
+            "sort": { "field": "Volatility_Spread", "order": "descending" },
+            "axis": {
+                "labelFontSize": 11,
+                "labelColor": "#2C2C2C"
+            }
+        }
+    },
+    "layer": [
+        {
+            "mark": {
+                "type": "rule",
+                "color": "rgba(44, 44, 44, 0.2)",
+                "size": 4
+            },
+            "encoding": {
+                "x": {
+                    "field": "Min_Rate",
+                    "type": "quantitative",
+                    "title": "Annual Inflation Spread (% Min to Peak)",
+                    "axis": { "grid": true, "gridColor": "rgba(0,0,0,0.06)" }
+                },
+                "x2": { "field": "Max_Rate" }
+            }
+        },
+        {
+            "mark": {
+                "type": "point",
+                "filled": true,
+                "size": 90,
+                "color": "#C85A5A"
+            },
+            "encoding": {
+                "x": { "field": "Max_Rate", "type": "quantitative" },
+                "tooltip": [
+                    { "field": "ShortCategory", "type": "nominal", "title": "Category" },
+                    { "field": "Max_Rate", "type": "quantitative", "title": "Peak Inflation (%)", "format": ".1f" },
+                    { "field": "Volatility_Spread", "type": "quantitative", "title": "Total Spread (pts)", "format": ".1f" }
+                ]
+            }
+        },
+        {
+            "mark": {
+                "type": "point",
+                "filled": true,
+                "size": 75,
+                "color": "#2D5A60"
+            },
+            "encoding": {
+                "x": { "field": "Min_Rate", "type": "quantitative" },
+                "tooltip": [
+                    { "field": "ShortCategory", "type": "nominal", "title": "Category" },
+                    { "field": "Min_Rate", "type": "quantitative", "title": "Trough Inflation (%)", "format": ".1f" }
+                ]
+            }
+        },
+        {
+            "mark": {
+                "type": "tick",
+                "color": "#C68A4C",
+                "thickness": 2.5,
+                "size": 14
+            },
+            "encoding": {
+                "x": { "field": "Mean_Rate", "type": "quantitative" },
+                "tooltip": [
+                    { "field": "ShortCategory", "type": "nominal", "title": "Category" },
+                    { "field": "Mean_Rate", "type": "quantitative", "title": "10-Year Average (%)", "format": ".1f" }
+                ]
+            }
+        }
+    ]
+}

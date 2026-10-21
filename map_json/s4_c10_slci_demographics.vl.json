@@ -1,0 +1,123 @@
+{
+    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+    "description": "Annual household spending growth for Discretionary vs Non-Discretionary spending across Australian states.",
+    "width": "container",
+    "height": 340,
+    "background": "transparent",
+    "data": {
+        "url": "./data/household_spending_state.csv"
+    },
+    "transform": [
+        {
+            "filter": "datum.Measure == 'Annual_Pct_Change' && (datum.Category == 'Non Discretionary' || datum.Category == 'Discretionary')"
+        },
+        {
+            "calculate": "toDate(datum.Date)",
+            "as": "Date_Parsed"
+        },
+        {
+            "calculate": "toNumber(datum.Value)",
+            "as": "Spending_Growth_Pct"
+        }
+    ],
+    "params": [
+        {
+            "name": "State_Filter",
+            "value": "Australia",
+            "bind": {
+                "input": "select",
+                "options": [
+                    "Australia",
+                    "New South Wales",
+                    "Victoria",
+                    "Queensland",
+                    "Western Australia",
+                    "South Australia",
+                    "Tasmania",
+                    "Australian Capital Territory",
+                    "Northern Territory"
+                ],
+                "name": "Location: "
+            }
+        }
+    ],
+    "layer": [
+        {
+            "mark": {
+                "type": "rule",
+                "color": "rgba(44, 44, 44, 0.2)",
+                "strokeDash": [3, 3]
+            },
+            "encoding": {
+                "y": { "datum": 0 }
+            }
+        },
+        {
+            "transform": [
+                {
+                    "filter": "datum.State == State_Filter"
+                }
+            ],
+            "mark": {
+                "type": "line",
+                "interpolate": "monotone",
+                "strokeWidth": 2.5
+            },
+            "encoding": {
+                "x": {
+                    "field": "Date_Parsed",
+                    "type": "temporal",
+                    "title": null,
+                    "axis": {
+                        "format": "%Y",
+                        "tickCount": 6,
+                        "grid": false
+                    }
+                },
+                "y": {
+                    "field": "Spending_Growth_Pct",
+                    "type": "quantitative",
+                    "title": "Annual Nominal Spending Growth (%)",
+                    "axis": { "gridColor": "rgba(0,0,0,0.06)" }
+                },
+                "color": {
+                    "field": "Category",
+                    "type": "nominal",
+                    "title": "Spending Type",
+                    "scale": {
+                        "domain": ["Non Discretionary", "Discretionary"],
+                        "range": ["#C85A5A", "#2D5A60"]
+                    },
+                    "legend": {
+                        "orient": "top-left",
+                        "labelFontSize": 11,
+                        "symbolSize": 80
+                    }
+                },
+                "tooltip": [
+                    { "field": "State", "type": "nominal", "title": "State" },
+                    { "field": "Category", "type": "nominal", "title": "Category" },
+                    { "field": "Date_Parsed", "type": "temporal", "title": "Month", "format": "%B %Y" },
+                    { "field": "Spending_Growth_Pct", "type": "quantitative", "title": "Annual Growth (%)", "format": ".2f" }
+                ]
+            }
+        },
+        {
+            "transform": [
+                {
+                    "filter": "datum.State == State_Filter"
+                }
+            ],
+            "mark": {
+                "type": "point",
+                "filled": true,
+                "size": 30
+            },
+            "encoding": {
+                "x": { "field": "Date_Parsed", "type": "temporal" },
+                "y": { "field": "Spending_Growth_Pct", "type": "quantitative" },
+                "color": { "field": "Category", "type": "nominal" }
+            }
+        }
+    ]
+}

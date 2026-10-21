@@ -1,0 +1,167 @@
+{
+    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+    "description": "Net Interstate Migration flows across Australian States (2016-2024).",
+    "width": "container",
+    "height": 360,
+    "background": "transparent",
+    "data": {
+        "url": "./data/interstate_migration_flows.csv"
+    },
+    "transform": [
+        {
+            "filter": "datum.State != 'Australia'"
+        },
+        {
+            "calculate": "toDate(datum.Date)",
+            "as": "Date_Parsed"
+        },
+        {
+            "calculate": "toNumber(datum.Net_Migration)",
+            "as": "Net_Migration_Num"
+        }
+    ],
+    "params": [
+        {
+            "name": "State_Select",
+            "value": "All",
+            "bind": {
+                "input": "select",
+                "options": [
+                    "All",
+                    "Queensland",
+                    "Victoria",
+                    "New South Wales",
+                    "Western Australia",
+                    "South Australia",
+                    "Tasmania",
+                    "Australian Capital Territory",
+                    "Northern Territory"
+                ],
+                "labels": [
+                    "All States & Territories",
+                    "Queensland (+ Inflow Leader)",
+                    "Victoria (Pandemic Outflow)",
+                    "New South Wales (High Cost Outflow)",
+                    "Western Australia",
+                    "South Australia",
+                    "Tasmania",
+                    "Australian Capital Territory",
+                    "Northern Territory"
+                ],
+                "name": "Focus State: "
+            }
+        }
+    ],
+    "layer": [
+        {
+            "mark": {
+                "type": "rule",
+                "color": "rgba(44, 44, 44, 0.2)",
+                "strokeWidth": 1.2,
+                "strokeDash": [4, 4]
+            },
+            "encoding": {
+                "y": {
+                    "datum": 0
+                }
+            }
+        },
+        {
+            "mark": {
+                "type": "line",
+                "interpolate": "monotone"
+            },
+            "encoding": {
+                "x": {
+                    "field": "Date_Parsed",
+                    "type": "temporal",
+                    "title": null,
+                    "axis": {
+                        "format": "%Y",
+                        "tickCount": 8,
+                        "grid": false
+                    }
+                },
+                "y": {
+                    "field": "Net_Migration_Num",
+                    "type": "quantitative",
+                    "title": "Net Quarterly Migration (Persons)",
+                    "axis": {
+                        "format": "~s"
+                    }
+                },
+                "color": {
+                    "field": "State",
+                    "type": "nominal",
+                    "title": "State / Territory",
+                    "scale": {
+                        "domain": [
+                            "Queensland",
+                            "New South Wales",
+                            "Victoria",
+                            "Western Australia",
+                            "South Australia",
+                            "Tasmania",
+                            "Australian Capital Territory",
+                            "Northern Territory"
+                        ],
+                        "range": [
+                            "#2D5A60",
+                            "#C85A5A",
+                            "#C68A4C",
+                            "#5A735E",
+                            "#6B7280",
+                            "#8B5CF6",
+                            "#EC4899",
+                            "#F59E0B"
+                        ]
+                    },
+                    "legend": {
+                        "orient": "bottom",
+                        "columns": 4,
+                        "labelFontSize": 11,
+                        "symbolSize": 80
+                    }
+                },
+                "opacity": {
+                    "condition": {
+                        "test": "State_Select == 'All' || datum.State == State_Select",
+                        "value": 0.95
+                    },
+                    "value": 0.15
+                },
+                "strokeWidth": {
+                    "condition": {
+                        "test": "State_Select != 'All' && datum.State == State_Select",
+                        "value": 3.5
+                    },
+                    "value": 1.8
+                },
+                "tooltip": [
+                    { "field": "State", "type": "nominal", "title": "State" },
+                    { "field": "Date_Parsed", "type": "temporal", "title": "Quarter", "format": "%B %Y" },
+                    { "field": "Net_Migration_Num", "type": "quantitative", "title": "Net Migration", "format": ",d" },
+                    { "field": "Arrivals", "type": "quantitative", "title": "Arrivals", "format": ",d" },
+                    { "field": "Departures", "type": "quantitative", "title": "Departures", "format": ",d" }
+                ]
+            }
+        },
+        {
+            "transform": [
+                {
+                    "filter": "State_Select != 'All' && datum.State == State_Select"
+                }
+            ],
+            "mark": {
+                "type": "point",
+                "filled": true,
+                "size": 45
+            },
+            "encoding": {
+                "x": { "field": "Date_Parsed", "type": "temporal" },
+                "y": { "field": "Net_Migration_Num", "type": "quantitative" },
+                "color": { "field": "State", "type": "nominal" }
+            }
+        }
+    ]
+}

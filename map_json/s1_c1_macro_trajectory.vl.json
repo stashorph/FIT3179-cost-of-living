@@ -71,7 +71,7 @@
             },
             "mark": {
                 "type": "rect",
-                "fill": "#1D7874",
+                "fill": "#2D5A60",
                 "opacity": 0.10
             },
             "encoding": {
@@ -100,7 +100,7 @@
                 "baseline": "bottom",
                 "fontSize": 10.5,
                 "fontStyle": "italic",
-                "color": "#1D7874"
+                "color": "#2D5A60"
             },
             "encoding": {
                 "x": {
@@ -186,9 +186,9 @@
                             "RBA Cash Rate Target"
                         ],
                         "range": [
-                            "#C83E3B",
-                            "#2A4365",
-                            "#D97706"
+                            "#C85A5A",
+                            "#2D5A60",
+                            "#C68A4C"
                         ]
                     }
                 },

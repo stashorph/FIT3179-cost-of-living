@@ -97,7 +97,7 @@
                     "mark": {
                         "type": "area",
                         "interpolate": "monotone",
-                        "fill": "#C83E3B",
+                        "fill": "#C85A5A",
                         "opacity": 0.25
                     },
                     "encoding": {
@@ -125,7 +125,7 @@
                     "mark": {
                         "type": "area",
                         "interpolate": "monotone",
-                        "fill": "#1D7874",
+                        "fill": "#2D5A60",
                         "opacity": 0.25
                     },
                     "encoding": {
@@ -177,9 +177,9 @@
                         "color": {
                             "condition": {
                                 "test": "datum.key == 'nd'",
-                                "value": "#C83E3B"
+                                "value": "#C85A5A"
                             },
-                            "value": "#1D7874"
+                            "value": "#2D5A60"
                         }
                     }
                 },

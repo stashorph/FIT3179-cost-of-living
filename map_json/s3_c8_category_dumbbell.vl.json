@@ -70,7 +70,7 @@
             "as": "Difference"
         },
         {
-            "calculate": "datum.Difference > 0 ? '#C83E3B' : '#1D7874'",
+            "calculate": "datum.Difference > 0 ? '#C85A5A' : '#2D5A60'",
             "as": "ShiftColor"
         }
     ],
