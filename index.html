@@ -1,59 +1,109 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Essentials vs. Luxuries: Where the Australian Paycheque Really Goes (2016–2026)</title>
+    <meta name="description" content="A data-driven investigation into how Australian households have been squeezed by essential non-discretionary costs from 2016 to 2026, using ABS CPI and RBA economic data.">
 
-    <!-- Google Fonts: Editorial Serif (Newsreader & Lora) + Clean Sans (Inter) + Tabular Mono (JetBrains Mono) -->
+    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
         href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Lora:ital,wght@0,400..700;1,400..700&family=Newsreader:ital,opsz,wght@0,6..72,400..800;1,6..72,400..800&display=swap"
         rel="stylesheet">
 
+    <!-- Tailwind CSS v3 Play CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        serif: ['Newsreader', 'Lora', 'Georgia', 'Times New Roman', 'serif'],
+                        sans: ['Inter', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    },
+                    colors: {
+                        page: '#FAF9F6',
+                        'page-alt': '#F3EFE7',
+                        ink: '#2C2C2C',
+                        'ink-secondary': '#58534C',
+                        'ink-muted': '#7A746C',
+                        'ink-faint': '#A6A095',
+                        terracotta: '#C85A5A',
+                        slate: '#2D5A60',
+                        ochre: '#C68A4C',
+                        olive: '#5A735E',
+                    },
+                    maxWidth: {
+                        'prose-col': '680px',
+                        'breakout': '1120px',
+                    },
+                },
+            },
+        }
+    </script>
+
     <!-- Vega, Vega-Lite & Vega-Embed CDN -->
     <script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
     <script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
     <script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
 
-    <link rel="stylesheet" href="css/styles.css?v=5" />
+    <link rel="stylesheet" href="css/styles.css?v=6" />
 </head>
 
-<body>
+<body class="bg-page text-ink font-sans text-[17px] leading-relaxed overflow-x-hidden antialiased">
 
-    <!-- ================= EDITORIAL MASTHEAD ================= -->
-    <header class="site-masthead">
-        <span class="kicker-bar">FIT3179 Data Visualisation II • Australian Cost of Living (2016–2026)</span>
-        <h1 class="masthead-title">Essentials vs. Luxuries</h1>
-        <p class="masthead-subtitle">Where the Australian Paycheque Really Goes</p>
+    <!-- ===================== MASTHEAD ===================== -->
+    <header class="bg-page border-b border-ink/10 text-center py-20 px-6">
+        <span
+            class="inline-block font-sans text-xs font-semibold tracking-[0.16em] uppercase text-terracotta pb-3.5 mb-5 border-b border-ink/10">
+            FIT3179 Data Visualisation II • Australian Cost of Living (2016–2026)
+        </span>
 
-        <div class="byline-bar">
-            <span>By <strong class="byline-author">Saiesh Jitendra Punganur</strong></span>
-            <span class="byline-bullet">•</span>
+        <h1 class="font-serif text-ink font-bold leading-[1.08] tracking-tight mb-4 max-w-[960px] mx-auto
+                   text-[clamp(2.75rem,5.8vw,4.6rem)]">
+            Essentials vs. Luxuries
+        </h1>
+
+        <p class="font-serif italic text-ink-secondary mb-7 max-w-[780px] mx-auto
+                  text-[clamp(1.25rem,2.4vw,1.85rem)]">
+            Where the Australian Paycheque Really Goes
+        </p>
+
+        <div class="flex items-center justify-center gap-3 flex-wrap font-sans text-[0.82rem] text-ink-muted mb-9">
+            <span>By <strong class="font-semibold text-ink">Saiesh Jitendra Punganur</strong></span>
+            <span class="opacity-40">•</span>
             <span>Monash University Data Visualisation</span>
-            <span class="byline-bullet">•</span>
+            <span class="opacity-40">•</span>
             <span>ABS &amp; RBA Economic Series</span>
         </div>
 
-        <div class="prose-column">
-            <p class="lead-narrative">
+        <div class="max-w-3xl mx-auto text-left">
+            <p class="font-serif text-ink leading-relaxed text-[clamp(1.15rem,1.8vw,1.32rem)] has-dropcap">
                 Over the past decade, Australian households haven't been squeezed by extravagant lifestyle choices.
                 From shelter and electricity to insurance and the weekly grocery run, unavoidable
-                <strong>non-discretionary costs</strong> have dramatically outpaced discretionary spending—reshaping
-                how families budget, who falls behind, and where Australians are moving.
+                <strong class="font-semibold text-[#1A1A1A]">non-discretionary costs</strong> have dramatically
+                outpaced discretionary spending—reshaping how families budget, who falls behind, and where Australians
+                are moving.
             </p>
         </div>
     </header>
 
     <main>
 
-        <!-- ================= SECTION 1: THE MACRO SQUEEZE ================= -->
-        <section id="section-1" class="editorial-section">
-            <div class="prose-column">
-                <h2 class="section-headline">The Big Squeeze: Needs Outrunning Wants</h2>
-                <p class="prose-text has-dropcap">
+        <!-- ===================== SECTION 1: THE MACRO SQUEEZE ===================== -->
+        <section id="section-1" class="py-24 px-6">
+
+            <!-- Prose intro -->
+            <div class="story-block max-w-3xl mx-auto mb-16">
+                <h2 class="font-serif text-ink font-bold leading-tight tracking-tight mb-6
+                           text-[clamp(2.1rem,3.8vw,2.9rem)]">
+                    The Big Squeeze: Needs Outrunning Wants
+                </h2>
+                <p class="text-lg leading-relaxed mb-7">
                     Headline inflation figures often obscure the daily reality of household budgets. By separating the
                     Consumer Price Index (CPI) into <strong>Essentials (Non-Discretionary)</strong>—goods and services
                     families cannot easily postpone, such as rent, electricity, medical care, and staple food—and
@@ -62,308 +112,336 @@
                 </p>
             </div>
 
-            <!-- Chart 01: Macro Trajectory (Breakout Width) -->
-            <div class="chart-breakout">
-                <div class="editorial-spread">
-                    <div class="native-chart-block">
-                        <div class="chart-header">
-                            <h3 class="chart-title">Annual CPI Inflation vs. RBA Cash Rate Target</h3>
-                            <p class="chart-dek">Comparing national headline inflation against the Reserve Bank's 2–3%
-                                target band and benchmark policy rates.</p>
+            <!-- Chart 01: Macro Trajectory — sticky side-by-side -->
+            <div class="chart-container max-w-6xl mx-auto mb-20">
+                <div class="grid grid-cols-1 lg:grid-cols-[1.45fr_1fr] gap-14 items-start">
+                    <div>
+                        <div class="chart-header-block border-l-2 border-terracotta pl-4 mb-5">
+                            <h3 class="font-serif text-xl font-semibold text-ink mb-1">Annual CPI Inflation vs. RBA
+                                Cash Rate Target</h3>
+                            <p class="font-sans text-sm text-ink-secondary leading-snug">Comparing national headline
+                                inflation against the Reserve Bank's 2–3% target band and benchmark policy rates.</p>
                         </div>
-                        <div id="vis-s1-c1" class="vis-container"></div>
+                        <div id="vis-s1-c1" class="vis-container w-full min-h-[340px]"></div>
                     </div>
 
-                    <div class="story-aside">
-                        <h3 class="sub-headline">A Decade of Two Regimes</h3>
-                        <p class="prose-text">
+                    <aside class="story-block lg:sticky lg:top-24">
+                        <h3 class="font-serif text-2xl font-semibold text-ink mt-10 mb-4">A Decade of Two Regimes</h3>
+                        <p class="text-lg leading-relaxed mb-5">
                             Following the 2020 pandemic trough, supply disruptions and global stimulus ignited a sharp
-                            upward trajectory
-                            in consumer prices across 2022 and 2023. In response, the Reserve Bank delivered 13
-                            successive rate rises,
-                            elevating borrowing costs to 12-year peaks.
+                            upward trajectory in consumer prices across 2022 and 2023. In response, the Reserve Bank
+                            delivered 13 successive rate rises, elevating borrowing costs to 12-year peaks.
                         </p>
-                        <p class="prose-text">
+                        <p class="text-lg leading-relaxed">
                             Yet unlike discretionary inflation, which cooled rapidly as consumer sentiment weakened,
-                            essential living
-                            costs proved stubbornly sticky.
+                            essential living costs proved stubbornly sticky.
                         </p>
-                    </div>
+                    </aside>
                 </div>
             </div>
 
-            <!-- Bespoke Editorial Quote -->
-            <div class="editorial-quote-wrap">
-                <span class="quote-mark">“</span>
-                <blockquote class="editorial-quote">
+            <!-- Editorial Quote -->
+            <div class="story-block max-w-[760px] mx-auto text-center my-20 px-5 relative">
+                <span
+                    class="block font-serif text-[5.5rem] leading-none text-terracotta/20 mb-[-32px] select-none">"</span>
+                <blockquote class="font-serif italic text-ink border-none p-0 m-0
+                                   text-[clamp(1.35rem,2.3vw,1.7rem)] leading-[1.52]">
                     Families cannot simply 'budget their way out' by skipping small luxuries—the baseline cost of
                     existing has shifted permanently upward.
                 </blockquote>
-                <span class="quote-attribution">Household Expenditure Analysis (2016–2026)</span>
+                <span
+                    class="block font-sans text-[0.8rem] font-semibold uppercase tracking-[0.1em] text-ink-muted mt-4">
+                    Household Expenditure Analysis (2016–2026)
+                </span>
             </div>
 
-            <!-- Editorial Stat Strip (Replaces raw placeholder) -->
-            <div class="chart-breakout">
-                <div class="editorial-stat-strip">
-                    <div class="editorial-stat">
-                        <span class="stat-number">+34.2%</span>
-                        <span class="stat-caption">Cumulative surge in essential non-discretionary prices since
-                            2016</span>
+            <!-- Stat Strip -->
+            <div class="chart-container max-w-6xl mx-auto mb-20">
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 py-9 border-y border-ink/10 text-center">
+                    <div class="flex flex-col items-center px-4">
+                        <span
+                            class="font-serif font-bold text-terracotta leading-none mb-2.5 tabular-nums text-[clamp(2.4rem,4vw,3.4rem)]">+34.2%</span>
+                        <span class="font-sans text-sm text-ink-secondary leading-snug max-w-[24ch]">Cumulative surge
+                            in essential non-discretionary prices since 2016</span>
                     </div>
-                    <div class="editorial-stat">
-                        <span class="stat-number slate">+19.8%</span>
-                        <span class="stat-caption">Discretionary luxury goods growth over the exact same period</span>
+                    <div class="flex flex-col items-center px-4">
+                        <span
+                            class="font-serif font-bold text-slate leading-none mb-2.5 tabular-nums text-[clamp(2.4rem,4vw,3.4rem)]">+19.8%</span>
+                        <span class="font-sans text-sm text-ink-secondary leading-snug max-w-[24ch]">Discretionary
+                            luxury goods growth over the exact same period</span>
                     </div>
-                    <div class="editorial-stat">
-                        <span class="stat-number ochre">4.35%</span>
-                        <span class="stat-caption">Peak cash rate target enacted to curb runaway price pressures</span>
+                    <div class="flex flex-col items-center px-4">
+                        <span
+                            class="font-serif font-bold text-ochre leading-none mb-2.5 tabular-nums text-[clamp(2.4rem,4vw,3.4rem)]">4.35%</span>
+                        <span class="font-sans text-sm text-ink-secondary leading-snug max-w-[24ch]">Peak cash rate
+                            target enacted to curb runaway price pressures</span>
                     </div>
                 </div>
             </div>
 
-            <!-- Chart 02: Essentials vs Luxuries Gap -->
-            <div class="chart-breakout">
-                <div class="editorial-spread reversed">
-                    <div class="story-aside">
-                        <h3 class="sub-headline">When Essentials Lead the Charge</h3>
-                        <p class="prose-text">
+            <!-- Chart 02: Essentials vs Luxuries — sticky side-by-side (reversed) -->
+            <div class="chart-container max-w-6xl mx-auto">
+                <div class="grid grid-cols-1 lg:grid-cols-[1fr_1.45fr] gap-14 items-start">
+                    <aside class="story-block lg:sticky lg:top-24 order-2 lg:order-1">
+                        <h3 class="font-serif text-2xl font-semibold text-ink mt-10 mb-4">When Essentials Lead the
+                            Charge</h3>
+                        <p class="text-lg leading-relaxed mb-5">
                             The persistent divergence between essentials and luxuries illustrates a profound structural
-                            squeeze.
-                            Because household demand for shelter, groceries, and energy is price-inelastic, standard
-                            monetary tightening
-                            disproportionately penalises lower- and middle-income families who allocate the largest
-                            share of their earnings
-                            to basic survival.
+                            squeeze. Because household demand for shelter, groceries, and energy is price-inelastic,
+                            standard monetary tightening disproportionately penalises lower- and middle-income families
+                            who allocate the largest share of their earnings to basic survival.
                         </p>
-                        <div class="stat-callout">
-                            <span class="num">+14.4 pts</span>
-                            <span class="label">Net divergence gap between essential and luxury price indices</span>
+                        <div class="my-8 py-5 px-6 border-l-[3px] border-terracotta">
+                            <span
+                                class="block font-serif text-[2.2rem] font-bold text-terracotta leading-tight mb-1">+14.4
+                                pts</span>
+                            <span class="text-sm text-ink-secondary">Net divergence gap between essential and luxury
+                                price indices</span>
                         </div>
-                    </div>
+                    </aside>
 
-                    <div class="native-chart-block">
-                        <div class="chart-header slate-accent">
-                            <h3 class="chart-title">The Diverging Gap: Essentials vs. Luxuries</h3>
-                            <p class="chart-dek">Annual price growth difference highlights non-discretionary expenses
-                                pulling away from flexible wants.</p>
+                    <div class="order-1 lg:order-2">
+                        <div class="chart-header-block border-l-2 border-slate pl-4 mb-5">
+                            <h3 class="font-serif text-xl font-semibold text-ink mb-1">The Diverging Gap: Essentials vs.
+                                Luxuries</h3>
+                            <p class="font-sans text-sm text-ink-secondary leading-snug">Annual price growth difference
+                                highlights non-discretionary expenses pulling away from flexible wants.</p>
                         </div>
-                        <div id="vis-s1-c2" class="vis-container"></div>
+                        <div id="vis-s1-c2" class="vis-container w-full min-h-[340px]"></div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- ================= SECTION 2: GEOGRAPHY OF COST ================= -->
-        <section id="section-2" class="editorial-section bg-tint">
-            <div class="prose-column">
-                <h2 class="section-headline">Across Borders &amp; Capitals: The Geography of Cost</h2>
-                <p class="prose-text">
-                    Inflation does not press upon the continent uniformly. Disparate state economic structures,
-                    localized
+
+        <!-- ===================== SECTION 2: GEOGRAPHY OF COST ===================== -->
+        <section id="section-2" class="py-24 px-6 bg-page-alt border-y border-ink/[0.05]">
+
+            <div class="story-block max-w-3xl mx-auto mb-16">
+                <h2 class="font-serif text-ink font-bold leading-tight tracking-tight mb-6
+                           text-[clamp(2.1rem,3.8vw,2.9rem)]">
+                    Across Borders &amp; Capitals: The Geography of Cost
+                </h2>
+                <p class="text-lg leading-relaxed">
+                    Inflation does not press upon the continent uniformly. Disparate state economic structures, localized
                     housing markets, and regional supply chains have produced starkly different financial realities
-                    across Australia's
-                    eight States, Territories, and Greater Capital Cities.
+                    across Australia's eight States, Territories, and Greater Capital Cities.
                 </p>
             </div>
 
             <!-- Dual Map Pair -->
-            <div class="chart-breakout">
-                <div class="editorial-chart-pair">
-                    <div class="native-chart-block">
-                        <div class="chart-header">
-                            <h3 class="chart-title">State Household Spending Shifts</h3>
-                            <p class="chart-dek">Annual nominal growth (%) in household spending across states and
-                                territories.</p>
+            <div class="chart-container max-w-6xl mx-auto mb-20">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                    <div>
+                        <div class="chart-header-block border-l-2 border-terracotta pl-4 mb-5">
+                            <h3 class="font-serif text-xl font-semibold text-ink mb-1">State Household Spending Shifts
+                            </h3>
+                            <p class="font-sans text-sm text-ink-secondary leading-snug">Annual nominal growth (%) in
+                                household spending across states and territories.</p>
                         </div>
-                        <div id="vis-s2-m1" class="vis-container"></div>
+                        <div id="vis-s2-m1" class="vis-container w-full min-h-[340px]"></div>
                     </div>
 
-                    <div class="native-chart-block">
-                        <div class="chart-header slate-accent">
-                            <h3 class="chart-title">The Eight Capitals: Where Prices Climbed Fastest</h3>
-                            <p class="chart-dek">Cumulative CPI price inflation across Greater Capital Cities
-                                (2016–2026).</p>
+                    <div>
+                        <div class="chart-header-block border-l-2 border-slate pl-4 mb-5">
+                            <h3 class="font-serif text-xl font-semibold text-ink mb-1">The Eight Capitals: Where Prices
+                                Climbed Fastest</h3>
+                            <p class="font-sans text-sm text-ink-secondary leading-snug">Cumulative CPI price inflation
+                                across Greater Capital Cities (2016–2026).</p>
                         </div>
-                        <div id="vis-s2-m2" class="vis-container"></div>
+                        <div id="vis-s2-m2" class="vis-container w-full min-h-[340px]"></div>
                     </div>
                 </div>
             </div>
 
-            <!-- Chart 05: Net Interstate Migration -->
-            <div class="chart-breakout">
-                <div class="native-chart-block">
-                    <div class="chart-header ochre-accent">
-                        <h3 class="chart-title">Voting with Their Feet: Cost-Driven Interstate Migration</h3>
-                        <p class="chart-dek">Net quarterly interstate migration movements track households seeking
-                            relief from Sydney and Melbourne housing pressures.</p>
-                    </div>
-                    <div id="vis-s2-m3" class="vis-container"></div>
+            <!-- Chart 05: Migration Map (full bleed) -->
+            <div class="chart-container max-w-6xl mx-auto">
+                <div class="chart-header-block border-l-2 border-ochre pl-4 mb-5">
+                    <h3 class="font-serif text-xl font-semibold text-ink mb-1">Voting with Their Feet: Cost-Driven
+                        Interstate Migration</h3>
+                    <p class="font-sans text-sm text-ink-secondary leading-snug">Net quarterly interstate migration
+                        movements track households seeking relief from Sydney and Melbourne housing pressures.</p>
                 </div>
+                <div id="vis-s2-m3" class="vis-container w-full min-h-[340px]"></div>
             </div>
         </section>
 
-        <!-- ================= SECTION 3: INSIDE THE TROLLEY ================= -->
-        <section id="section-3" class="editorial-section">
-            <div class="prose-column">
-                <h2 class="section-headline">Inside the Trolley: Category Winners &amp; Losers</h2>
-                <p class="prose-text">
+
+        <!-- ===================== SECTION 3: INSIDE THE TROLLEY ===================== -->
+        <section id="section-3" class="py-24 px-6">
+
+            <div class="story-block max-w-3xl mx-auto mb-16">
+                <h2 class="font-serif text-ink font-bold leading-tight tracking-tight mb-6
+                           text-[clamp(2.1rem,3.8vw,2.9rem)]">
+                    Inside the Trolley: Category Winners &amp; Losers
+                </h2>
+                <p class="text-lg leading-relaxed">
                     Examining the 11 primary CPI expenditure categories reveals how inflationary momentum migrated
-                    across
-                    the economy—originating from automotive fuel and imported goods before embedding itself into sticky
-                    core services
-                    including rents, healthcare, and education.
+                    across the economy—originating from automotive fuel and imported goods before embedding itself into
+                    sticky core services including rents, healthcare, and education.
                 </p>
             </div>
 
-            <!-- Matrix of 4 Detailed Charts -->
-            <div class="chart-breakout">
-                <div class="chart-matrix">
-                    <div class="native-chart-block">
-                        <div class="chart-header">
-                            <h3 class="chart-title">Changing Inflation Leaders (Rank 1 to 11)</h3>
-                            <p class="chart-dek">Annual rank trajectory of price increases across primary expenditure
-                                categories.</p>
+            <!-- Category charts — 2-up grid, each a wide bleed -->
+            <div class="chart-container max-w-6xl mx-auto mb-16">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-x-11 gap-y-16">
+
+                    <div class="chart-container">
+                        <div class="chart-header-block border-l-2 border-terracotta pl-4 mb-5">
+                            <h3 class="font-serif text-xl font-semibold text-ink mb-1">Changing Inflation Leaders (Rank
+                                1 to 11)</h3>
+                            <p class="font-sans text-sm text-ink-secondary leading-snug">Annual rank trajectory of price
+                                increases across primary expenditure categories.</p>
                         </div>
-                        <div id="vis-s3-c6" class="vis-container"></div>
+                        <div id="vis-s3-c6" class="vis-container w-full min-h-[340px]"></div>
                     </div>
 
-                    <div class="native-chart-block">
-                        <div class="chart-header slate-accent">
-                            <h3 class="chart-title">Inflation Pulse Across Categories</h3>
-                            <p class="chart-dek">Temporal heatmap matrix tracking price acceleration across all 11
-                                basket segments.</p>
+                    <div class="chart-container">
+                        <div class="chart-header-block border-l-2 border-slate pl-4 mb-5">
+                            <h3 class="font-serif text-xl font-semibold text-ink mb-1">Inflation Pulse Across Categories
+                            </h3>
+                            <p class="font-sans text-sm text-ink-secondary leading-snug">Temporal heatmap matrix
+                                tracking price acceleration across all 11 basket segments.</p>
                         </div>
-                        <div id="vis-s3-c7" class="vis-container"></div>
+                        <div id="vis-s3-c7" class="vis-container w-full min-h-[340px]"></div>
                     </div>
 
-                    <div class="native-chart-block">
-                        <div class="chart-header ochre-accent">
-                            <h3 class="chart-title">Pre-Pandemic vs. Today: Real Cost of a $100 Basket</h3>
-                            <p class="chart-dek">Connected dumbbell analysis tracking the real-dollar price shift of
-                                standard representative goods.</p>
+                    <div class="chart-container">
+                        <div class="chart-header-block border-l-2 border-ochre pl-4 mb-5">
+                            <h3 class="font-serif text-xl font-semibold text-ink mb-1">Pre-Pandemic vs. Today: Real Cost
+                                of a $100 Basket</h3>
+                            <p class="font-sans text-sm text-ink-secondary leading-snug">Connected dumbbell analysis
+                                tracking the real-dollar price shift of standard representative goods.</p>
                         </div>
-                        <div id="vis-s3-c8" class="vis-container"></div>
+                        <div id="vis-s3-c8" class="vis-container w-full min-h-[340px]"></div>
                     </div>
 
-                    <div class="native-chart-block">
-                        <div class="chart-header">
-                            <h3 class="chart-title">Shifting Wallet Share: Spending Flow Over Time</h3>
-                            <p class="chart-dek">Streamgraph view of changing household expenditure allocations through
-                                the inflation cycle.</p>
+                    <div class="chart-container">
+                        <div class="chart-header-block border-l-2 border-terracotta pl-4 mb-5">
+                            <h3 class="font-serif text-xl font-semibold text-ink mb-1">Shifting Wallet Share: Spending
+                                Flow Over Time</h3>
+                            <p class="font-sans text-sm text-ink-secondary leading-snug">Streamgraph view of changing
+                                household expenditure allocations through the inflation cycle.</p>
                         </div>
-                        <div id="vis-s3-c9" class="vis-container"></div>
+                        <div id="vis-s3-c9" class="vis-container w-full min-h-[340px]"></div>
                     </div>
+
                 </div>
             </div>
         </section>
 
-        <!-- ================= SECTION 4: DEMOGRAPHIC IMPACT ================= -->
-        <section id="section-4" class="editorial-section bg-tint">
-            <div class="prose-column">
-                <h2 class="section-headline">One Country, Five Realities: Who Bears the Burden?</h2>
-                <p class="prose-text">
+
+        <!-- ===================== SECTION 4: DEMOGRAPHIC IMPACT ===================== -->
+        <section id="section-4" class="py-24 px-6 bg-page-alt border-y border-ink/[0.05]">
+
+            <div class="story-block max-w-3xl mx-auto mb-16">
+                <h2 class="font-serif text-ink font-bold leading-tight tracking-tight mb-6
+                           text-[clamp(2.1rem,3.8vw,2.9rem)]">
+                    One Country, Five Realities: Who Bears the Burden?
+                </h2>
+                <p class="text-lg leading-relaxed">
                     Standard CPI calculations omit mortgage interest rate charges, dampening the reported living cost
-                    surge.
-                    Tracking out-of-pocket expenditure reveals how interest rate adjustments created stark divergences
-                    between
-                    working mortgaged families and debt-free households.
+                    surge. Tracking out-of-pocket expenditure reveals how interest rate adjustments created stark
+                    divergences between working mortgaged families and debt-free households.
                 </p>
             </div>
 
-            <!-- Chart 10: Living Cost Rate by Demographic (Horizon Chart) -->
-            <div class="chart-breakout">
-                <div class="editorial-spread reversed">
-                    <div class="story-aside">
-                        <h3 class="sub-headline">The Mortgaged Majority</h3>
-                        <p class="prose-text">
+            <!-- Chart 10: Horizon Chart — sticky side-by-side (reversed) -->
+            <div class="chart-container max-w-6xl mx-auto mb-20">
+                <div class="grid grid-cols-1 lg:grid-cols-[1fr_1.45fr] gap-14 items-start">
+                    <aside class="story-block lg:sticky lg:top-24 order-2 lg:order-1">
+                        <h3 class="font-serif text-2xl font-semibold text-ink mt-10 mb-4">The Mortgaged Majority</h3>
+                        <p class="text-lg leading-relaxed mb-5">
                             Standard CPI calculations exclude mortgage interest charges, masking the true financial
-                            pressure on everyday families.
-                            The ABS Selected Living Cost Indexes (SLCI) track actual household expenditure, exposing how
-                            rapid policy tightening
-                            penalised employee households far more severely than asset-owning retirees.
+                            pressure on everyday families. The ABS Selected Living Cost Indexes (SLCI) track actual
+                            household expenditure, exposing how rapid policy tightening penalised employee households far
+                            more severely than asset-owning retirees.
                         </p>
-                        <div class="stat-callout">
-                            <span class="num">+9.6%</span>
-                            <span class="label">Peak annual surge in living costs for employee households during the
-                                rate-hiking cycle</span>
+                        <div class="my-8 py-5 px-6 border-l-[3px] border-terracotta">
+                            <span
+                                class="block font-serif text-[2.2rem] font-bold text-terracotta leading-tight mb-1">+9.6%</span>
+                            <span class="text-sm text-ink-secondary">Peak annual surge in living costs for employee
+                                households during the rate-hiking cycle</span>
                         </div>
-                    </div>
+                    </aside>
 
-                    <div class="native-chart-block">
-                        <div class="chart-header">
-                            <h3 class="chart-title">Living Cost Surge by Household Type (SLCI)</h3>
-                            <p class="chart-dek">2-band horizon analysis tracking out-of-pocket living cost indices
-                                across four demographic groups.</p>
+                    <div class="order-1 lg:order-2">
+                        <div class="chart-header-block border-l-2 border-terracotta pl-4 mb-5">
+                            <h3 class="font-serif text-xl font-semibold text-ink mb-1">Living Cost Surge by Household
+                                Type (SLCI)</h3>
+                            <p class="font-sans text-sm text-ink-secondary leading-snug">2-band horizon analysis
+                                tracking out-of-pocket living cost indices across four demographic groups.</p>
                         </div>
-                        <div id="vis-s4-c10" class="vis-container"></div>
+                        <div id="vis-s4-c10" class="vis-container w-full min-h-[340px]"></div>
                     </div>
                 </div>
             </div>
 
-            <!-- Chart 11: Volatility Spread Across Categories -->
-            <div class="chart-breakout">
-                <div class="editorial-spread">
-                    <div class="native-chart-block">
-                        <div class="chart-header slate-accent">
-                            <h3 class="chart-title">Price Growth Volatility Across Categories</h3>
-                            <p class="chart-dek">Interquartile range (IQR), full min-max spread, and typical middle year
-                                across the 11 CPI categories.</p>
+            <!-- Chart 11: Volatility — sticky side-by-side -->
+            <div class="chart-container max-w-6xl mx-auto">
+                <div class="grid grid-cols-1 lg:grid-cols-[1.45fr_1fr] gap-14 items-start">
+                    <div>
+                        <div class="chart-header-block border-l-2 border-slate pl-4 mb-5">
+                            <h3 class="font-serif text-xl font-semibold text-ink mb-1">Price Growth Volatility Across
+                                Categories</h3>
+                            <p class="font-sans text-sm text-ink-secondary leading-snug">Interquartile range (IQR), full
+                                min-max spread, and typical middle year across the 11 CPI categories.</p>
                         </div>
-                        <div id="vis-s4-c11" class="vis-container"></div>
+                        <div id="vis-s4-c11" class="vis-container w-full min-h-[340px]"></div>
                     </div>
 
-                    <div class="story-aside">
-                        <h3 class="sub-headline">Unequal Price Shocks</h3>
-                        <p class="prose-text">
+                    <aside class="story-block lg:sticky lg:top-24">
+                        <h3 class="font-serif text-2xl font-semibold text-ink mt-10 mb-4">Unequal Price Shocks</h3>
+                        <p class="text-lg leading-relaxed mb-5">
                             Across the 11 major expenditure groups, volatility tells the true story of household
-                            instability. While energy
-                            and automotive fuel swung wildly due to geopolitical shocks, non-discretionary categories
-                            like food and rent
-                            rarely retreated, creating a ratchet effect that permanently lifted everyday expenses.
+                            instability. While energy and automotive fuel swung wildly due to geopolitical shocks,
+                            non-discretionary categories like food and rent rarely retreated, creating a ratchet effect
+                            that permanently lifted everyday expenses.
                         </p>
-                        <div class="stat-callout slate-accent">
-                            <span class="num slate">17.8 pts</span>
-                            <span class="label">Peak-to-trough inflation spread in transport and automotive fuel over
-                                the decade</span>
+                        <div class="my-8 py-5 px-6 border-l-[3px] border-slate">
+                            <span
+                                class="block font-serif text-[2.2rem] font-bold text-slate leading-tight mb-1">17.8
+                                pts</span>
+                            <span class="text-sm text-ink-secondary">Peak-to-trough inflation spread in transport and
+                                automotive fuel over the decade</span>
                         </div>
-                    </div>
+                    </aside>
                 </div>
             </div>
         </section>
 
     </main>
 
-    <!-- ================= EDITORIAL FOOTER ================= -->
-    <footer class="site-footer">
-        <div class="footer-grid">
+    <!-- ===================== FOOTER ===================== -->
+    <footer class="bg-[#1C2228] text-[#9A9FA5] py-[72px] px-6 text-sm leading-relaxed">
+        <div class="grid grid-cols-1 md:grid-cols-[1.2fr_1fr] gap-12 max-w-breakout mx-auto">
             <div>
-                <h4>About This Visualisation</h4>
+                <h4 class="font-serif text-white text-lg mb-3">About This Visualisation</h4>
                 <p>
                     Crafted in the tradition of bespoke data journalism to demystify how inflation, shifting expenditure
-                    flows,
-                    and interest rates have restructured Australian household finances between 2016 and 2026. Built with
-                    Vega-Lite and Vega.
+                    flows, and interest rates have restructured Australian household finances between 2016 and 2026.
+                    Built with Vega-Lite and Vega.
                 </p>
-                <p class="authorship">
-                    <strong>Author:</strong> Saiesh Jitendra Punganur • <strong>Unit:</strong> FIT3179 Data
-                    Visualisation (Monash University)
+                <p class="mt-4 text-[#7B8188] text-[0.82rem]">
+                    <strong class="text-[#9A9FA5]">Author:</strong> Saiesh Jitendra Punganur •
+                    <strong class="text-[#9A9FA5]">Unit:</strong> FIT3179 Data Visualisation (Monash University)
                 </p>
             </div>
             <div>
-                <h4>Data Sources &amp; Methodological Attribution</h4>
-                <ul class="source-list">
-                    <li><strong>Australian Bureau of Statistics:</strong> Consumer Price Index (Cat. 6401.0) &amp;
-                        Selected Living Cost Indexes (Cat. 6467.0)</li>
-                    <li><strong>Australian Bureau of Statistics:</strong> Monthly Household Spending Indicator (Cat.
-                        5682.0) &amp; Regional Internal Migration (Cat. 3412.0)</li>
-                    <li><strong>Reserve Bank of Australia:</strong> Statistical Tables F1 (Interest Rates) &amp; E2
-                        (Inflation Expectation Series)</li>
+                <h4 class="font-serif text-white text-lg mb-3">Data Sources &amp; Methodological Attribution</h4>
+                <ul class="list-none space-y-2">
+                    <li><strong class="text-[#C8D1D9]">Australian Bureau of Statistics:</strong> Consumer Price Index
+                        (Cat. 6401.0) &amp; Selected Living Cost Indexes (Cat. 6467.0)</li>
+                    <li><strong class="text-[#C8D1D9]">Australian Bureau of Statistics:</strong> Monthly Household
+                        Spending Indicator (Cat. 5682.0) &amp; Regional Internal Migration (Cat. 3412.0)</li>
+                    <li><strong class="text-[#C8D1D9]">Reserve Bank of Australia:</strong> Statistical Tables F1
+                        (Interest Rates) &amp; E2 (Inflation Expectation Series)</li>
                 </ul>
             </div>
         </div>
     </footer>
 
-    <script src="js/main.js?v=5"></script>
+    <script src="js/main.js?v=6"></script>
 </body>
 
 </html>

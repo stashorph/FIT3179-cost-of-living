@@ -76,7 +76,7 @@
     "encoding": {
         "x": {
             "field": "Date_Parsed",
-            "timeUnit": "yearmonth",
+            "timeUnit": "yearquarter",
             "type": "temporal",
             "title": null,
             "axis": {
@@ -96,6 +96,7 @@
         },
         "color": {
             "field": "Annual_CPI_Pct",
+            "aggregate": "mean",
             "type": "quantitative",
             "title": "Annual CPI (%)",
             "scale": {
@@ -128,12 +129,13 @@
             },
             {
                 "field": "Date_Parsed",
+                "timeUnit": "yearquarter",
                 "type": "temporal",
-                "title": "Month",
-                "format": "%b %Y"
+                "title": "Quarter"
             },
             {
                 "field": "Annual_CPI_Pct",
+                "aggregate": "mean",
                 "type": "quantitative",
                 "title": "Annual Inflation (%)",
                 "format": "+.2f"

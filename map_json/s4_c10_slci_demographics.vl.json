@@ -5,8 +5,8 @@
     "title": {
         "text": "Living Cost Rate by Household Type — 2-Band Horizon Chart",
         "subtitle": "Values exceeding 5% (Band 2, Dark Red) are folded down over 0–5% (Band 1, Light Orange)",
-        "fontSize": 12,
-        "subtitleFontSize": 10.5,
+        "fontSize": 15,
+        "subtitleFontSize": 13,
         "fontWeight": 600,
         "color": "#18202C",
         "subtitleColor": "#525E71",
@@ -18,6 +18,8 @@
         "axis": {
             "labelColor": "#525E71",
             "titleColor": "#18202C",
+            "labelFontSize": 12,
+            "titleFontSize": 13,
             "gridColor": "#E2DDD3",
             "domainColor": "#CBD5E1"
         },
@@ -342,7 +344,7 @@
                 "labelAngle": 0,
                 "labelAlign": "left",
                 "labelFontWeight": 700,
-                "labelFontSize": 11.5,
+                "labelFontSize": 13,
                 "labelColor": "#18202C"
             }
         }
