@@ -8,7 +8,7 @@
         "contains": "padding"
     },
     "padding": {
-        "right": 15,
+        "right": 125,
         "left": 5,
         "top": 10,
         "bottom": 10

@@ -5,7 +5,8 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Essentials vs. Luxuries: Where the Australian Paycheque Really Goes (2016–2026)</title>
-    <meta name="description" content="A data-driven investigation into how Australian households have been squeezed by essential non-discretionary costs from 2016 to 2026, using ABS CPI and RBA economic data.">
+    <meta name="description"
+        content="An interactive data analysis of Australian living costs, essential vs. discretionary inflation, and household expenditure from 2016 to 2026, based on ABS and RBA data.">
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -73,21 +74,12 @@
             Where the Australian Paycheque Really Goes
         </p>
 
-        <div class="flex items-center justify-center gap-3 flex-wrap font-sans text-[0.82rem] text-ink-muted mb-9">
-            <span>By <strong class="font-semibold text-ink">Saiesh Jitendra Punganur</strong></span>
-            <span class="opacity-40">•</span>
-            <span>Monash University Data Visualisation</span>
-            <span class="opacity-40">•</span>
-            <span>ABS &amp; RBA Economic Series</span>
-        </div>
-
         <div class="max-w-3xl mx-auto text-left">
             <p class="font-serif text-ink leading-relaxed text-[clamp(1.15rem,1.8vw,1.32rem)] has-dropcap">
-                Over the past decade, Australian households haven't been squeezed by extravagant lifestyle choices.
-                From shelter and electricity to insurance and the weekly grocery run, unavoidable
-                <strong class="font-semibold text-[#1A1A1A]">non-discretionary costs</strong> have dramatically
-                outpaced discretionary spending—reshaping how families budget, who falls behind, and where Australians
-                are moving.
+                Between 2016 and 2026, Australian inflation was driven not by discretionary splurges, but by
+                non-negotiable living essentials. Rents, electricity bills, insurance premiums, and groceries climbed
+                far faster than wages and consumer goods—straining household cash flows across capital cities and
+                shifting demographic migration across state borders.
             </p>
         </div>
     </header>
@@ -101,14 +93,15 @@
             <div class="story-block max-w-3xl mx-auto mb-16">
                 <h2 class="font-serif text-ink font-bold leading-tight tracking-tight mb-6
                            text-[clamp(2.1rem,3.8vw,2.9rem)]">
-                    The Big Squeeze: Needs Outrunning Wants
+                    Essential Living Costs vs. Discretionary Spending
                 </h2>
                 <p class="text-lg leading-relaxed mb-7">
-                    Headline inflation figures often obscure the daily reality of household budgets. By separating the
-                    Consumer Price Index (CPI) into <strong>Essentials (Non-Discretionary)</strong>—goods and services
-                    families cannot easily postpone, such as rent, electricity, medical care, and staple food—and
-                    <strong>Luxuries (Discretionary)</strong>—such as dining out, holidays, and consumer electronics—we
-                    reveal why living costs feel so punishing even when headline rates moderate.
+                    Headline CPI measures the broad cost of a standard consumer basket, but it masks how price pressures
+                    actually hit household balance sheets. The Australian Bureau of Statistics separates the index into
+                    two distinct components: non-discretionary items that households cannot easily postpone or
+                    avoid—such as rent, electricity, healthcare, and groceries—and discretionary purchases like travel,
+                    recreation, and dining out. Over the past decade, price growth between these two tiers has broken
+                    apart.
                 </p>
             </div>
 
@@ -120,21 +113,26 @@
                             <h3 class="font-serif text-xl font-semibold text-ink mb-1">Annual CPI Inflation vs. RBA
                                 Cash Rate Target</h3>
                             <p class="font-sans text-sm text-ink-secondary leading-snug">Comparing national headline
-                                inflation against the Reserve Bank's 2–3% target band and benchmark policy rates.</p>
+                                inflation against the Reserve Bank of Australia's 2–3% target band and the official cash
+                                rate.</p>
                         </div>
                         <div id="vis-s1-c1" class="vis-container w-full min-h-[340px]"></div>
                     </div>
 
                     <aside class="story-block lg:sticky lg:top-24">
-                        <h3 class="font-serif text-2xl font-semibold text-ink mt-10 mb-4">A Decade of Two Regimes</h3>
+                        <h3 class="font-serif text-2xl font-semibold text-ink mt-10 mb-4">Rate Hikes and Sticky Services
+                        </h3>
                         <p class="text-lg leading-relaxed mb-5">
-                            Following the 2020 pandemic trough, supply disruptions and global stimulus ignited a sharp
-                            upward trajectory in consumer prices across 2022 and 2023. In response, the Reserve Bank
-                            delivered 13 successive rate rises, elevating borrowing costs to 12-year peaks.
+                            Between May 2022 and November 2023, the Reserve Bank of Australia raised the cash rate
+                            target from an emergency low of 0.10% to 4.35%—the fastest tightening cycle in modern
+                            Australian history. While higher borrowing costs cooled consumer demand for imported goods
+                            and discretionary retail, non-discretionary inflation stayed elevated well above the Bank's
+                            2–3% target band, anchored by chronic housing shortages and rising domestic service
+                            contracts.
                         </p>
                         <p class="text-lg leading-relaxed">
-                            Yet unlike discretionary inflation, which cooled rapidly as consumer sentiment weakened,
-                            essential living costs proved stubbornly sticky.
+                            This persistent gap meant that everyday living costs remained high even as the wider economy
+                            slowed.
                         </p>
                     </aside>
                 </div>
@@ -146,12 +144,12 @@
                     class="block font-serif text-[5.5rem] leading-none text-terracotta/20 mb-[-32px] select-none">"</span>
                 <blockquote class="font-serif italic text-ink border-none p-0 m-0
                                    text-[clamp(1.35rem,2.3vw,1.7rem)] leading-[1.52]">
-                    Families cannot simply 'budget their way out' by skipping small luxuries—the baseline cost of
-                    existing has shifted permanently upward.
+                    When price increases are concentrated in housing, groceries, and energy, households cannot economise
+                    by substituting cheaper alternatives. The expenditure floor itself has risen.
                 </blockquote>
                 <span
                     class="block font-sans text-[0.8rem] font-semibold uppercase tracking-[0.1em] text-ink-muted mt-4">
-                    Household Expenditure Analysis (2016–2026)
+                    ABS Consumer Price Index Analysis
                 </span>
             </div>
 
@@ -161,20 +159,20 @@
                     <div class="flex flex-col items-center px-4">
                         <span
                             class="font-serif font-bold text-terracotta leading-none mb-2.5 tabular-nums text-[clamp(2.4rem,4vw,3.4rem)]">+34.2%</span>
-                        <span class="font-sans text-sm text-ink-secondary leading-snug max-w-[24ch]">Cumulative surge
-                            in essential non-discretionary prices since 2016</span>
+                        <span class="font-sans text-sm text-ink-secondary leading-snug max-w-[24ch]">Total increase
+                            in non-discretionary CPI since 2016</span>
                     </div>
                     <div class="flex flex-col items-center px-4">
                         <span
                             class="font-serif font-bold text-slate leading-none mb-2.5 tabular-nums text-[clamp(2.4rem,4vw,3.4rem)]">+19.8%</span>
-                        <span class="font-sans text-sm text-ink-secondary leading-snug max-w-[24ch]">Discretionary
-                            luxury goods growth over the exact same period</span>
+                        <span class="font-sans text-sm text-ink-secondary leading-snug max-w-[24ch]">Total increase
+                            in discretionary CPI over the same period</span>
                     </div>
                     <div class="flex flex-col items-center px-4">
                         <span
                             class="font-serif font-bold text-ochre leading-none mb-2.5 tabular-nums text-[clamp(2.4rem,4vw,3.4rem)]">4.35%</span>
-                        <span class="font-sans text-sm text-ink-secondary leading-snug max-w-[24ch]">Peak cash rate
-                            target enacted to curb runaway price pressures</span>
+                        <span class="font-sans text-sm text-ink-secondary leading-snug max-w-[24ch]">RBA cash rate
+                            target, held at a 12-year high</span>
                     </div>
                 </div>
             </div>
@@ -183,29 +181,29 @@
             <div class="chart-container max-w-6xl mx-auto">
                 <div class="grid grid-cols-1 lg:grid-cols-[1fr_1.45fr] gap-14 items-start">
                     <aside class="story-block lg:sticky lg:top-24 order-2 lg:order-1">
-                        <h3 class="font-serif text-2xl font-semibold text-ink mt-10 mb-4">When Essentials Lead the
-                            Charge</h3>
+                        <h3 class="font-serif text-2xl font-semibold text-ink mt-10 mb-4">A 14-Point Structural Gap</h3>
                         <p class="text-lg leading-relaxed mb-5">
-                            The persistent divergence between essentials and luxuries illustrates a profound structural
-                            squeeze. Because household demand for shelter, groceries, and energy is price-inelastic,
-                            standard monetary tightening disproportionately penalises lower- and middle-income families
-                            who allocate the largest share of their earnings to basic survival.
+                            Because demand for essentials is price-inelastic, households cannot simply stop paying for
+                            shelter, power, or groceries when prices rise. By 2024, cumulative non-discretionary
+                            inflation had pulled more than 14 percentage points ahead of discretionary goods. This
+                            divergence hit lower- and middle-income households hardest, as they commit a much higher
+                            share of their take-home pay to baseline living expenses.
                         </p>
                         <div class="my-8 py-5 px-6 border-l-[3px] border-terracotta">
                             <span
                                 class="block font-serif text-[2.2rem] font-bold text-terracotta leading-tight mb-1">+14.4
                                 pts</span>
-                            <span class="text-sm text-ink-secondary">Net divergence gap between essential and luxury
-                                price indices</span>
+                            <span class="text-sm text-ink-secondary">Difference in cumulative growth between essential
+                                and discretionary price indices</span>
                         </div>
                     </aside>
 
                     <div class="order-1 lg:order-2">
                         <div class="chart-header-block border-l-2 border-slate pl-4 mb-5">
-                            <h3 class="font-serif text-xl font-semibold text-ink mb-1">The Diverging Gap: Essentials vs.
+                            <h3 class="font-serif text-xl font-semibold text-ink mb-1">The Divergence: Essentials vs.
                                 Luxuries</h3>
-                            <p class="font-sans text-sm text-ink-secondary leading-snug">Annual price growth difference
-                                highlights non-discretionary expenses pulling away from flexible wants.</p>
+                            <p class="font-sans text-sm text-ink-secondary leading-snug">Cumulative price growth gap
+                                between non-discretionary essentials and discretionary consumer goods (2016–2026).</p>
                         </div>
                         <div id="vis-s1-c2" class="vis-container w-full min-h-[340px]"></div>
                     </div>
@@ -220,12 +218,12 @@
             <div class="story-block max-w-3xl mx-auto mb-16">
                 <h2 class="font-serif text-ink font-bold leading-tight tracking-tight mb-6
                            text-[clamp(2.1rem,3.8vw,2.9rem)]">
-                    Across Borders &amp; Capitals: The Geography of Cost
+                    State and Capital City Variations
                 </h2>
                 <p class="text-lg leading-relaxed">
-                    Inflation does not press upon the continent uniformly. Disparate state economic structures, localized
-                    housing markets, and regional supply chains have produced starkly different financial realities
-                    across Australia's eight States, Territories, and Greater Capital Cities.
+                    Inflation and spending growth have not played out evenly across Australia. Differences in state tax
+                    regimes, local housing availability, energy grids, and resource-driven wages mean that households in
+                    Perth or Brisbane experienced a very different cost trajectory than those in Melbourne or Sydney.
                 </p>
             </div>
 
@@ -234,20 +232,21 @@
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
                     <div>
                         <div class="chart-header-block border-l-2 border-terracotta pl-4 mb-5">
-                            <h3 class="font-serif text-xl font-semibold text-ink mb-1">State Household Spending Shifts
+                            <h3 class="font-serif text-xl font-semibold text-ink mb-1">Annual Household Spending Growth
+                                by State
                             </h3>
-                            <p class="font-sans text-sm text-ink-secondary leading-snug">Annual nominal growth (%) in
-                                household spending across states and territories.</p>
+                            <p class="font-sans text-sm text-ink-secondary leading-snug">Year-ended change (%) in
+                                monthly household spending from the ABS Monthly Household Spending Indicator.</p>
                         </div>
                         <div id="vis-s2-m1" class="vis-container w-full min-h-[340px]"></div>
                     </div>
 
                     <div>
                         <div class="chart-header-block border-l-2 border-slate pl-4 mb-5">
-                            <h3 class="font-serif text-xl font-semibold text-ink mb-1">The Eight Capitals: Where Prices
-                                Climbed Fastest</h3>
-                            <p class="font-sans text-sm text-ink-secondary leading-snug">Cumulative CPI price inflation
-                                across Greater Capital Cities (2016–2026).</p>
+                            <h3 class="font-serif text-xl font-semibold text-ink mb-1">Capital City Inflation
+                                (2016–2026)</h3>
+                            <p class="font-sans text-sm text-ink-secondary leading-snug">Cumulative consumer price
+                                increases across Australia's eight state and territory capitals.</p>
                         </div>
                         <div id="vis-s2-m2" class="vis-container w-full min-h-[340px]"></div>
                     </div>
@@ -257,10 +256,10 @@
             <!-- Chart 05: Migration Map (full bleed) -->
             <div class="chart-container max-w-6xl mx-auto">
                 <div class="chart-header-block border-l-2 border-ochre pl-4 mb-5">
-                    <h3 class="font-serif text-xl font-semibold text-ink mb-1">Voting with Their Feet: Cost-Driven
-                        Interstate Migration</h3>
-                    <p class="font-sans text-sm text-ink-secondary leading-snug">Net quarterly interstate migration
-                        movements track households seeking relief from Sydney and Melbourne housing pressures.</p>
+                    <h3 class="font-serif text-xl font-semibold text-ink mb-1">Net Interstate Migration Patterns</h3>
+                    <p class="font-sans text-sm text-ink-secondary leading-snug">Quarterly population flows between
+                        states, tracking movements away from high-cost housing markets in New South Wales and Victoria
+                        toward Queensland and Western Australia.</p>
                 </div>
                 <div id="vis-s2-m3" class="vis-container w-full min-h-[340px]"></div>
             </div>
@@ -268,66 +267,243 @@
 
 
         <!-- ===================== SECTION 3: INSIDE THE TROLLEY ===================== -->
-        <section id="section-3" class="py-24 px-6">
+        <section id="section-3" class="py-28 px-6">
 
-            <div class="story-block max-w-3xl mx-auto mb-16">
+            <!-- Section Lead -->
+            <div class="story-block max-w-3xl mx-auto mb-20">
+                <span class="block font-sans text-xs font-bold uppercase tracking-[0.15em] text-terracotta mb-3">
+                    Part III &mdash; Category Dynamics
+                </span>
                 <h2 class="font-serif text-ink font-bold leading-tight tracking-tight mb-6
                            text-[clamp(2.1rem,3.8vw,2.9rem)]">
-                    Inside the Trolley: Category Winners &amp; Losers
+                    CPI Basket Breakdown: Where Prices Rose Fastest
                 </h2>
-                <p class="text-lg leading-relaxed">
-                    Examining the 11 primary CPI expenditure categories reveals how inflationary momentum migrated
-                    across the economy—originating from automotive fuel and imported goods before embedding itself into
-                    sticky core services including rents, healthcare, and education.
+                <p class="text-lg leading-relaxed mb-6">
+                    The headline CPI is composed of 11 expenditure groups. Tracking these categories over time shows how
+                    inflation evolved in stages: initial 2021 price spikes were concentrated in international shipping,
+                    automotive fuel, and imported hardware, but by 2023, inflation shifted into domestic
+                    services—particularly rents, insurance premiums, and electricity bills.
+                </p>
+                <p class="text-lg leading-relaxed text-ink-secondary">
+                    The following charts trace this progression: from the annual rank of fastest-rising goods to
+                    quarterly persistence, long-term baseline resets, and changing household spending shares.
                 </p>
             </div>
 
-            <!-- Category charts — 2-up grid, each a wide bleed -->
-            <div class="chart-container max-w-6xl mx-auto mb-16">
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-x-11 gap-y-16">
-
-                    <div class="chart-container">
+            <!-- ================= SUB-SECTION 3.1: BUMP CHART ================= -->
+            <div class="chart-container max-w-6xl mx-auto mb-28">
+                <div class="grid grid-cols-1 lg:grid-cols-[1.45fr_1fr] gap-14 items-start">
+                    <div>
                         <div class="chart-header-block border-l-2 border-terracotta pl-4 mb-5">
-                            <h3 class="font-serif text-xl font-semibold text-ink mb-1">Changing Inflation Leaders (Rank
-                                1 to 11)</h3>
-                            <p class="font-sans text-sm text-ink-secondary leading-snug">Annual rank trajectory of price
-                                increases across primary expenditure categories.</p>
+                            <span
+                                class="block font-sans text-xs font-semibold uppercase tracking-wider text-terracotta mb-1">Figure
+                                3.1 &bull; Bump Chart</span>
+                            <h3 class="font-serif text-2xl font-semibold text-ink mb-1">Annual Inflation Ranking by
+                                Category (Rank 1 to 11)</h3>
+                            <p class="font-sans text-sm text-ink-secondary leading-snug">Rank of annual price increases
+                                across the 11 ABS CPI groups (1 = fastest rising).</p>
                         </div>
-                        <div id="vis-s3-c6" class="vis-container w-full min-h-[340px]"></div>
+                        <div id="vis-s3-c6" class="vis-container w-full min-h-[440px]"></div>
                     </div>
 
-                    <div class="chart-container">
-                        <div class="chart-header-block border-l-2 border-slate pl-4 mb-5">
-                            <h3 class="font-serif text-xl font-semibold text-ink mb-1">Inflation Pulse Across Categories
-                            </h3>
-                            <p class="font-sans text-sm text-ink-secondary leading-snug">Temporal heatmap matrix
-                                tracking price acceleration across all 11 basket segments.</p>
+                    <aside class="story-block lg:sticky lg:top-24">
+                        <h4 class="font-serif text-2xl font-semibold text-ink mt-8 mb-4">From Imported Goods to Domestic
+                            Services</h4>
+                        <p class="text-base text-ink-secondary leading-relaxed mb-4">
+                            In 2021 and 2022, global shipping delays and surging oil prices pushed
+                            <strong>Transport</strong> and <strong>Furnishings &amp; Services</strong> to the top of
+                            the inflation table. Consumer goods bore the brunt of factory disruptions and international
+                            freight costs.
+                        </p>
+                        <p class="text-base text-ink-secondary leading-relaxed mb-5">
+                            By 2024–2026, the rankings reversed. As international shipping normalized and retail demand
+                            slowed,
+                            consumer goods disinflated—Furnishings dropped from the top tier down to 11th place. In its
+                            place,
+                            domestic services took the lead: <strong>Housing</strong> rose to #1 as rental vacancies
+                            fell
+                            below 1.5%, while <strong>Education</strong>, <strong>Health</strong>, and
+                            <strong>Insurance</strong>
+                            remained in the upper tier.
+                        </p>
+                        <div class="my-6 py-4 px-5 bg-ink/[0.03] border-l-[3px] border-terracotta rounded-r">
+                            <span class="block font-serif text-xl font-bold text-terracotta leading-tight mb-1">Rank 1:
+                                Housing</span>
+                            <span class="text-xs font-sans text-ink-secondary leading-snug">
+                                Driven by low rental vacancy rates and higher building material costs, housing became
+                                Australia's fastest-rising expenditure category.
+                            </span>
                         </div>
-                        <div id="vis-s3-c7" class="vis-container w-full min-h-[340px]"></div>
-                    </div>
-
-                    <div class="chart-container">
-                        <div class="chart-header-block border-l-2 border-ochre pl-4 mb-5">
-                            <h3 class="font-serif text-xl font-semibold text-ink mb-1">Pre-Pandemic vs. Today: Real Cost
-                                of a $100 Basket</h3>
-                            <p class="font-sans text-sm text-ink-secondary leading-snug">Connected dumbbell analysis
-                                tracking the real-dollar price shift of standard representative goods.</p>
-                        </div>
-                        <div id="vis-s3-c8" class="vis-container w-full min-h-[340px]"></div>
-                    </div>
-
-                    <div class="chart-container">
-                        <div class="chart-header-block border-l-2 border-terracotta pl-4 mb-5">
-                            <h3 class="font-serif text-xl font-semibold text-ink mb-1">Shifting Wallet Share: Spending
-                                Flow Over Time</h3>
-                            <p class="font-sans text-sm text-ink-secondary leading-snug">Streamgraph view of changing
-                                household expenditure allocations through the inflation cycle.</p>
-                        </div>
-                        <div id="vis-s3-c9" class="vis-container w-full min-h-[340px]"></div>
-                    </div>
-
+                    </aside>
                 </div>
             </div>
+
+            <!-- ================= SUB-SECTION 3.2: HEATMAP ================= -->
+            <div class="chart-container max-w-6xl mx-auto mb-28">
+                <div class="grid grid-cols-1 lg:grid-cols-[1fr_1.45fr] gap-14 items-start">
+                    <aside class="story-block lg:sticky lg:top-24 order-2 lg:order-1">
+                        <span
+                            class="block font-sans text-xs font-semibold uppercase tracking-wider text-slate mb-1">Figure
+                            3.2 &bull; Temporal Heatmap</span>
+                        <h4 class="font-serif text-2xl font-semibold text-ink mb-4">Transitory Spikes vs. Persistent
+                            Heat</h4>
+                        <p class="text-base text-ink-secondary leading-relaxed mb-4">
+                            Consumer categories absorb price pressures differently depending on whether they depend on
+                            global commodities or domestic wages. Volatile categories like <strong>Transport</strong>
+                            experienced sharp price spikes in 2022 following global oil price shocks, but cooled quickly
+                            once wholesale fuel settled.
+                        </p>
+                        <p class="text-base text-ink-secondary leading-relaxed mb-5">
+                            By contrast, <strong>Housing</strong> and <strong>Food</strong> remained elevated for
+                            multiple consecutive years. Rents and grocery staples showed consistent price growth above
+                            5% per annum, creating a compounding cost burden for families. <strong>Alcohol and
+                                Tobacco</strong> also shows sustained amber bands, driven primarily by biannual federal
+                            excise indexation.
+                        </p>
+                        <div class="my-6 py-4 px-5 bg-ink/[0.03] border-l-[3px] border-slate rounded-r">
+                            <span class="block font-serif text-xl font-bold text-slate leading-tight mb-1">12+ Quarters
+                                Above Target</span>
+                            <span class="text-xs font-sans text-ink-secondary leading-snug">
+                                Rent and grocery categories sustained annual price increases above 5% for more than
+                                three consecutive years.
+                            </span>
+                        </div>
+                    </aside>
+
+                    <div class="order-1 lg:order-2">
+                        <div class="chart-header-block border-l-2 border-slate pl-4 mb-5">
+                            <span
+                                class="block font-sans text-xs font-semibold uppercase tracking-wider text-slate mb-1">Interactive
+                                Matrix</span>
+                            <h3 class="font-serif text-2xl font-semibold text-ink mb-1">Quarterly Inflation Heatmap
+                                Across Categories</h3>
+                            <p class="font-sans text-sm text-ink-secondary leading-snug">Quarterly matrix tracking
+                                annual CPI percentage changes across the 11 major expenditure groups.</p>
+                        </div>
+                        <div id="vis-s3-c7" class="vis-container w-full min-h-[400px]"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Mid-Section Narrative Quote / Divider -->
+            <div class="story-block max-w-[760px] mx-auto text-center my-24 px-5 relative">
+                <span
+                    class="block font-serif text-[5.5rem] leading-none text-ochre/25 mb-[-32px] select-none">&ldquo;</span>
+                <blockquote
+                    class="font-serif italic text-ink border-none p-0 m-0 text-[clamp(1.3rem,2.2vw,1.65rem)] leading-[1.5]">
+                    Unlike manufactured goods, where prices often ease when supply chains normalize, domestic service
+                    contracts, insurance premiums, and rents rarely reset downward once renegotiated.
+                </blockquote>
+                <span
+                    class="block font-sans text-[0.8rem] font-semibold uppercase tracking-[0.1em] text-ink-muted mt-4">
+                    Reserve Bank of Australia, Statement on Monetary Policy
+                </span>
+            </div>
+
+            <!-- ================= SUB-SECTION 3.3: DUMBBELL CHART ================= -->
+            <div class="chart-container max-w-6xl mx-auto mb-28">
+                <div class="grid grid-cols-1 lg:grid-cols-[1.45fr_1fr] gap-14 items-start">
+                    <div>
+                        <div class="chart-header-block border-l-2 border-ochre pl-4 mb-5">
+                            <span
+                                class="block font-sans text-xs font-semibold uppercase tracking-wider text-ochre mb-1">Figure
+                                3.3 &bull; Connected Dumbbell</span>
+                            <h3 class="font-serif text-2xl font-semibold text-ink mb-1">Pre-Pandemic Baseline (2019) vs.
+                                2026 Inflation</h3>
+                            <p class="font-sans text-sm text-ink-secondary leading-snug">Comparing average annual
+                                inflation by category before the pandemic against current rates.</p>
+                        </div>
+                        <div id="vis-s3-c8" class="vis-container w-full min-h-[420px]"></div>
+                    </div>
+
+                    <aside class="story-block lg:sticky lg:top-24">
+                        <h4 class="font-serif text-2xl font-semibold text-ink mt-8 mb-4">The Post-Pandemic Shift</h4>
+                        <p class="text-base text-ink-secondary leading-relaxed mb-4">
+                            In 2019, annual inflation across most expenditure categories sat comfortably between 1.0%
+                            and 2.5%, anchored by moderate wage growth and stable import prices. Housing was growing at
+                            an annual rate of just 1.5%.
+                        </p>
+                        <p class="text-base text-ink-secondary leading-relaxed mb-5">
+                            Comparing that baseline directly against 2026 highlights which sectors have undergone
+                            permanent price shifts. While <strong>Furnishings</strong> and <strong>Transport</strong>
+                            returned close to their 2019 levels once supply chains stabilized, <strong>Housing</strong>
+                            (+4.8 percentage point increase) and <strong>Insurance &amp; Financial Services</strong>
+                            settled on permanently higher growth rates.
+                        </p>
+                        <div class="my-6 py-4 px-5 bg-ink/[0.03] border-l-[3px] border-ochre rounded-r">
+                            <span class="block font-serif text-xl font-bold text-ochre leading-tight mb-1">+4.8
+                                Percentage Points</span>
+                            <span class="text-xs font-sans text-ink-secondary leading-snug">
+                                Increase in annual housing inflation between 2019 (1.5%) and 2026 (6.3%).
+                            </span>
+                        </div>
+                    </aside>
+                </div>
+            </div>
+
+            <!-- ================= SUB-SECTION 3.4: STREAMGRAPH ================= -->
+            <div class="chart-container max-w-6xl mx-auto">
+                <div class="chart-header-block border-l-2 border-terracotta pl-4 mb-6">
+                    <span
+                        class="block font-sans text-xs font-semibold uppercase tracking-wider text-terracotta mb-1">Figure
+                        3.4 &bull; Expenditure Streamgraph</span>
+                    <h3 class="font-serif text-2xl font-semibold text-ink mb-1">Monthly Household Spending Flows
+                        (2019–2026)</h3>
+                    <p class="font-sans text-sm text-ink-secondary leading-snug">Nominal monthly household spending
+                        index across consumption categories from the ABS Monthly Household Spending Indicator.</p>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-[1fr_1fr] gap-10 mb-8 story-block">
+                    <div>
+                        <h4 class="font-serif text-xl font-semibold text-ink mb-2">Nominal Spending vs. Real Volumes
+                        </h4>
+                        <p class="text-base text-ink-secondary leading-relaxed">
+                            The streamgraph shows total nominal spending across Australian households. While total
+                            dollar spending expanded substantially after 2021, National Accounts data confirms that much
+                            of this growth was driven by higher prices rather than greater consumption. Households were
+                            spending more simply to purchase the same basket of goods.
+                        </p>
+                    </div>
+                    <div>
+                        <h4 class="font-serif text-xl font-semibold text-ink mb-2">Discretionary Cutbacks</h4>
+                        <p class="text-base text-ink-secondary leading-relaxed">
+                            As rent, food, and energy absorbed a greater portion of household income, spending on
+                            non-essential categories was constrained. Discretionary spending on recreation and dining
+                            out shows concentrated holiday peaks around December, followed by sharper post-holiday
+                            cutbacks than were typical before 2020.
+                        </p>
+                    </div>
+                </div>
+
+                <div id="vis-s3-c9" class="vis-container w-full min-h-[440px]"></div>
+
+                <!-- Key takeaway cards under streamgraph -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-10 pt-8 border-t border-ink/10">
+                    <div class="p-4 bg-ink/[0.02] rounded border border-ink/5">
+                        <span
+                            class="block font-sans text-xs font-bold uppercase tracking-wider text-terracotta mb-1">Food
+                            &amp; Groceries</span>
+                        <p class="text-sm text-ink-secondary leading-normal">Supermarket spending expanded as a share of
+                            household outlays as food inflation averaged over 5% per annum through 2022 and 2023.</p>
+                    </div>
+                    <div class="p-4 bg-ink/[0.02] rounded border border-ink/5">
+                        <span class="block font-sans text-xs font-bold uppercase tracking-wider text-slate mb-1">Hotels,
+                            Cafes &amp; Restaurants</span>
+                        <p class="text-sm text-ink-secondary leading-normal">Dining out and hospitality show sharp
+                            holiday-season peaks followed by steep pullbacks in the first quarter of each calendar year.
+                        </p>
+                    </div>
+                    <div class="p-4 bg-ink/[0.02] rounded border border-ink/5">
+                        <span
+                            class="block font-sans text-xs font-bold uppercase tracking-wider text-ochre mb-1">Transport
+                            &amp; Fuel</span>
+                        <p class="text-sm text-ink-secondary leading-normal">Transport spending peaked in mid-2022 when
+                            global oil prices spiked above US$110/barrel, before moderating as wholesale fuel costs
+                            stabilized.</p>
+                    </div>
+                </div>
+            </div>
+
         </section>
 
 
@@ -337,12 +513,13 @@
             <div class="story-block max-w-3xl mx-auto mb-16">
                 <h2 class="font-serif text-ink font-bold leading-tight tracking-tight mb-6
                            text-[clamp(2.1rem,3.8vw,2.9rem)]">
-                    One Country, Five Realities: Who Bears the Burden?
+                    Household Impact by Demographic Group
                 </h2>
                 <p class="text-lg leading-relaxed">
-                    Standard CPI calculations omit mortgage interest rate charges, dampening the reported living cost
-                    surge. Tracking out-of-pocket expenditure reveals how interest rate adjustments created stark
-                    divergences between working mortgaged families and debt-free households.
+                    Headline CPI measures consumer price changes across all metropolitan households, but it does not
+                    account for differences in life stage, assets, or debt. Crucially, the CPI excludes mortgage
+                    interest payments. To measure actual out-of-pocket living costs for specific population groups, the
+                    ABS compiles the Selected Living Cost Indexes (SLCI).
                 </p>
             </div>
 
@@ -350,27 +527,34 @@
             <div class="chart-container max-w-6xl mx-auto mb-20">
                 <div class="grid grid-cols-1 lg:grid-cols-[1fr_1.45fr] gap-14 items-start">
                     <aside class="story-block lg:sticky lg:top-24 order-2 lg:order-1">
-                        <h3 class="font-serif text-2xl font-semibold text-ink mt-10 mb-4">The Mortgaged Majority</h3>
+                        <h3 class="font-serif text-2xl font-semibold text-ink mt-10 mb-4">The Impact on Employee
+                            Households</h3>
                         <p class="text-lg leading-relaxed mb-5">
-                            Standard CPI calculations exclude mortgage interest charges, masking the true financial
-                            pressure on everyday families. The ABS Selected Living Cost Indexes (SLCI) track actual
-                            household expenditure, exposing how rapid policy tightening penalised employee households far
-                            more severely than asset-owning retirees.
+                            Because the standard CPI measures only consumer prices, it leaves out mortgage interest
+                            charges. The Selected Living Cost Indexes include interest payments, showing that employee
+                            households (who hold the vast majority of owner-occupier mortgages) faced annual living cost
+                            increases peaking at 9.6% in 2023—nearly two percentage points higher than headline CPI.
+                        </p>
+                        <p class="text-lg leading-relaxed mb-5">
+                            In contrast, self-funded retirees and age pensioners—who generally own their homes
+                            outright—experienced lower peak inflation, primarily driven by groceries, health insurance,
+                            and energy.
                         </p>
                         <div class="my-8 py-5 px-6 border-l-[3px] border-terracotta">
                             <span
                                 class="block font-serif text-[2.2rem] font-bold text-terracotta leading-tight mb-1">+9.6%</span>
-                            <span class="text-sm text-ink-secondary">Peak annual surge in living costs for employee
-                                households during the rate-hiking cycle</span>
+                            <span class="text-sm text-ink-secondary">Peak annual living cost increase for employee
+                                households (September quarter 2023)</span>
                         </div>
                     </aside>
 
                     <div class="order-1 lg:order-2">
                         <div class="chart-header-block border-l-2 border-terracotta pl-4 mb-5">
-                            <h3 class="font-serif text-xl font-semibold text-ink mb-1">Living Cost Surge by Household
-                                Type (SLCI)</h3>
-                            <p class="font-sans text-sm text-ink-secondary leading-snug">2-band horizon analysis
-                                tracking out-of-pocket living cost indices across four demographic groups.</p>
+                            <h3 class="font-serif text-xl font-semibold text-ink mb-1">Living Cost Increases by
+                                Household Type (SLCI)</h3>
+                            <p class="font-sans text-sm text-ink-secondary leading-snug">Two-band horizon analysis
+                                tracking annual living cost index growth across employee, age pensioner, self-funded
+                                retiree, and other income household groups.</p>
                         </div>
                         <div id="vis-s4-c10" class="vis-container w-full min-h-[340px]"></div>
                     </div>
@@ -382,28 +566,33 @@
                 <div class="grid grid-cols-1 lg:grid-cols-[1.45fr_1fr] gap-14 items-start">
                     <div>
                         <div class="chart-header-block border-l-2 border-slate pl-4 mb-5">
-                            <h3 class="font-serif text-xl font-semibold text-ink mb-1">Price Growth Volatility Across
-                                Categories</h3>
-                            <p class="font-sans text-sm text-ink-secondary leading-snug">Interquartile range (IQR), full
-                                min-max spread, and typical middle year across the 11 CPI categories.</p>
+                            <h3 class="font-serif text-xl font-semibold text-ink mb-1">Price Volatility Across CPI
+                                Categories (2016–2026)</h3>
+                            <p class="font-sans text-sm text-ink-secondary leading-snug">Interquartile range (IQR),
+                                min-max range, and median annual inflation rate across the 11 official CPI groups.</p>
                         </div>
                         <div id="vis-s4-c11" class="vis-container w-full min-h-[340px]"></div>
                     </div>
 
                     <aside class="story-block lg:sticky lg:top-24">
-                        <h3 class="font-serif text-2xl font-semibold text-ink mt-10 mb-4">Unequal Price Shocks</h3>
+                        <h3 class="font-serif text-2xl font-semibold text-ink mt-10 mb-4">Dispersion and Volatility
+                            Across Categories</h3>
                         <p class="text-lg leading-relaxed mb-5">
-                            Across the 11 major expenditure groups, volatility tells the true story of household
-                            instability. While energy and automotive fuel swung wildly due to geopolitical shocks,
-                            non-discretionary categories like food and rent rarely retreated, creating a ratchet effect
-                            that permanently lifted everyday expenses.
+                            Not all categories experience inflation the same way. The chart compares the interquartile
+                            range (the middle 50% of annual outcomes) and the total min-to-max spread for each CPI
+                            category between 2016 and 2026.
+                        </p>
+                        <p class="text-lg leading-relaxed mb-5">
+                            Automotive fuel and international travel experienced the widest volatility spreads, swinging
+                            between steep deflation during 2020 lockdowns and double-digit peaks during 2022. In
+                            contrast, essential services like education and healthcare showed narrow volatility bands
+                            but consistently positive, compounding price increases year after year.
                         </p>
                         <div class="my-8 py-5 px-6 border-l-[3px] border-slate">
-                            <span
-                                class="block font-serif text-[2.2rem] font-bold text-slate leading-tight mb-1">17.8
+                            <span class="block font-serif text-[2.2rem] font-bold text-slate leading-tight mb-1">17.8
                                 pts</span>
-                            <span class="text-sm text-ink-secondary">Peak-to-trough inflation spread in transport and
-                                automotive fuel over the decade</span>
+                            <span class="text-sm text-ink-secondary">Peak-to-trough spread in annual transport inflation
+                                between 2020 and 2022</span>
                         </div>
                     </aside>
                 </div>
@@ -418,9 +607,9 @@
             <div>
                 <h4 class="font-serif text-white text-lg mb-3">About This Visualisation</h4>
                 <p>
-                    Crafted in the tradition of bespoke data journalism to demystify how inflation, shifting expenditure
-                    flows, and interest rates have restructured Australian household finances between 2016 and 2026.
-                    Built with Vega-Lite and Vega.
+                    An interactive data analysis examining how inflation, expenditure patterns, and interest rates
+                    affected Australian households between 2016 and 2026. Visualisations built with Vega-Lite and Vega
+                    using official Australian Bureau of Statistics and Reserve Bank of Australia series.
                 </p>
                 <p class="mt-4 text-[#7B8188] text-[0.82rem]">
                     <strong class="text-[#9A9FA5]">Author:</strong> Saiesh Jitendra Punganur •
